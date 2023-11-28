@@ -1,11 +1,17 @@
-//this is going to be where the magic happens
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './components/App/App';
+import reportWebVitals from './reportWebVitals';
 
-//import all of the libraries we will need to use (express, cors, mongoose)
-//see video for help, im need to look more into all of this obviously
-const app = express();
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
-app.use(express.json());
-
-app.use(cors());
-
-app.listen(/*choose a port*/)
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
