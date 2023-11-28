@@ -3,3 +3,6 @@ This git repository contains the source code for a recipe app that allows users 
 CS 35L project
 Fall 2023
 Prof. Eggert
+
+'client' folder for React frontend
+'server' folder for Node.js backend
