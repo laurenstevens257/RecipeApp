@@ -5,4 +5,5 @@ Fall 2023
 Prof. Eggert
 
 'client' folder for React frontend
+
 'server' folder for Node.js backend
