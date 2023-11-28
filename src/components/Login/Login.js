@@ -12,7 +12,20 @@ async function loginUser(credentials) {
       body: JSON.stringify(credentials)
     })
       .then(data => data.json())
-   }
+}
+
+// async function SignupUser(credentials) {
+//   return fetch('http://localhost:8080/login', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(credentials)
+//   })
+//     .then(data => data.json())
+// }
+
+
 
 export default function Login( { setToken } ) {
     const [usernameLogin, setLoginUserName] = useState();
@@ -21,66 +34,84 @@ export default function Login( { setToken } ) {
     const [passwordSignup, setSignupPassword] = useState();
     const [error, setError] = useState('');
 
-    const handleSubmitLogin = async (e) => {
+    const handleSubmitLogin = async e => {
       e.preventDefault();
-      
-      try {
-        const response = await fetch('http://localhost:8080/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ usernameLogin, passwordLogin }),
-        });
-  
-        if (response.ok) {
-          const loginData = await response.json();
-          setToken(loginData.token);
-        } else {
-          setError('Invalid username or password');
-        }
-      } catch (error) {
-        console.error('Error during login:', error);
-        setError('Error during login');
-      }
-    };
-
-    const handleSubmitSignup = async (e) => {
-      e.preventDefault();
-      try {
-          const response = await fetch('http://localhost:8080/signup', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ usernameSignup, passwordSignup }),
-          });
-
-          if (response.ok) {
-              // Automatically log in the user after successful signup
-              const loginResponse = await fetch('http://localhost:8080/login', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({ usernameSignup, passwordSignup }),
-              });
-
-              if (loginResponse.ok) {
-                  const loginData = await loginResponse.json();
-                  setToken(loginData.token);
-              } else {
-                  // Handle login error after signup
-                  console.error('Login failed after signup');
-              }
-          } else {
-              // Handle signup error
-              console.error('Signup failed');
-          }
-      } catch (error) {
-          console.error('Error during signup:', error);
-      }
+      const token = await loginUser({
+        usernameLogin,
+        passwordLogin
+      });
+      setToken(token);
     }
+
+    const handleSubmitSignup = async e => {
+        e.preventDefault();
+        const token = await loginUser({
+          usernameSignup,
+          passwordSignup
+        });
+        setToken(token);
+      }
+  
+    // const handleSubmitLogin = async (e) => {
+    //   e.preventDefault();
+      
+    //   try {
+    //     const response = await fetch('http://localhost:8080/login', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify({ usernameLogin, passwordLogin }),
+    //     });
+  
+    //     if (response.ok) {
+    //       const loginData = await response.json();
+    //       setToken(loginData.token);
+    //     } else {
+    //       setError('Invalid username or password');
+    //     }
+    //   } catch (error) {
+    //     console.error('Error during login:', error);
+    //     setError('Error during login');
+    //   }
+    // };
+
+    // const handleSubmitSignup = async (e) => {
+    //   e.preventDefault();
+    //   try {
+    //       const response = await fetch('http://localhost:8080/signup', {
+    //           method: 'POST',
+    //           headers: {
+    //               'Content-Type': 'application/json',
+    //           },
+    //           body: JSON.stringify({ usernameSignup, passwordSignup }),
+    //       });
+
+    //       if (response.ok) {
+    //           // Automatically log in the user after successful signup
+    //           const loginResponse = await fetch('http://localhost:8080/login', {
+    //               method: 'POST',
+    //               headers: {
+    //                   'Content-Type': 'application/json',
+    //               },
+    //               body: JSON.stringify({ usernameSignup, passwordSignup }),
+    //           });
+
+    //           if (loginResponse.ok) {
+    //               const loginData = await loginResponse.json();
+    //               setToken(loginData.token);
+    //           } else {
+    //               // Handle login error after signup
+    //               console.error('Login failed after signup');
+    //           }
+    //       } else {
+    //           // Handle signup error
+    //           console.error('Signup failed');
+    //       }
+    //   } catch (error) {
+    //       console.error('Error during signup:', error);
+    //   }
+    // }
     
     return(
       <div className="login-wrapper">
