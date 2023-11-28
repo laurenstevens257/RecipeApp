@@ -34,5 +34,8 @@ app.post('/login', (req, res) => {
 });
 
 app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));
+<<<<<<< HEAD
 
+=======
+>>>>>>> UserAuth/master
 
