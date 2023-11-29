@@ -15,8 +15,5 @@
   "bugs": {
     "url": "https://github.com/laurenstevens257/RecipeApp/issues"
   },
-  "homepage": "https://github.com/laurenstevens257/RecipeApp/tree/main#readme",
-  "dependencies": {
-    "express": "^4.18.2"
-  }
+  "homepage": "https://github.com/laurenstevens257/RecipeApp/tree/main#readme"
 }
