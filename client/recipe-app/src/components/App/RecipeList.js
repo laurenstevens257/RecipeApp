@@ -1,10 +1,13 @@
 import React from 'react';
 
 function RecipeList({ recipes }) {
+  // Apply the 'recipe-list' and 'recipe-item' CSS classes
   return (
-    <div>
+    <div className="recipe-list">
       {recipes.map((recipe, index) => (
-        <div key={index}>{recipe}</div>
+        <div key={index} className="recipe-item">
+          {recipe}
+        </div>
       ))}
     </div>
   );
