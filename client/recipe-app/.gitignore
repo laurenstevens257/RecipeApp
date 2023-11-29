@@ -1,4 +1,37 @@
+//so this is just some gitignore template I found online just for now
+//since all the files are annoying me
+
+# Node modules
+node_modules/
+
 # IDE and system files
 .vs/
 *.suo
-*.slnx.sqlitea
+*.slnx.sqlite
+
+# Windows Thumbnail Cache
+Thumbs.db
+
+# Windows Image File Execution Options
+*.db
+
+# Python byte-code files
+__pycache__/
+*.py[cod]
+
+# packages
+*.package
+*.userprefs
+*.usertasks
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
