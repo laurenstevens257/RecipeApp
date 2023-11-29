@@ -62,13 +62,13 @@ export default function Login( { setToken } ) {
             const data = await response.json();
     
             // Check if token exists in the response
-            if (data.token) {
-                setError(data.token);
-                setToken(response);
-            } else {
-                // Handle case where token is not provided
-                setError('Signup successful, but no token received');
-            }
+            // if (data.token) {
+            //     setError(data.token);
+            //     setToken(response);
+            // } else {
+            //     // Handle case where token is not provided
+            //     setError('Signup successful, but no token received');
+            // }
         } catch (error) {
             // Handle network errors
             setError('other error occurred during signup');

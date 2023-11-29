@@ -27,15 +27,17 @@ app.post('/login', (req, res) => {
   const { username, password } = req.body;
   console.log(username);
   console.log(password)
-  res.send({
-    token: 'test321',
-    success: true
-  });
+
+  if(userCredentials.get(username) == password){
+    res.send({
+      token: 'test321',
+      success: true
+    });
+  }
+  else{
+    console.log('failed login')
+    res.status(400).json({ error: 'incorrect password', success: false });
+  }
 });
 
 app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));
-<<<<<<< HEAD
-
-=======
->>>>>>> UserAuth/master
-
