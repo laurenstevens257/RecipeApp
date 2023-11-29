@@ -40,11 +40,24 @@ export default function Login( { setToken } ) {
 
     const handleSubmitLogin = async e => {
         e.preventDefault();
-        const token = await loginUser();
-        setToken(token);
+        try {
+            const response = await loginUser();
+    
+            if (!response.success) {
+                // Handle server errors
+                setError('Login failed: ' + response.statusText);
+                return;
+            } else{
+                setToken(response);
+            }
+            
+        } catch (error) {
+            // Handle network errors
+            setError('other error occurred during login');
+        }
       }
 
-      const handleSubmitSignup = async e => {
+    const handleSubmitSignup = async e => {
         e.preventDefault();
         try {
             const response = await SignupUser();
@@ -55,10 +68,8 @@ export default function Login( { setToken } ) {
                 return;
             } else{
                 setToken(response);
-            }
-    
-            const data = await response.json();
-    
+            }    
+
         } catch (error) {
             // Handle network errors
             setError('other error occurred during signup');
