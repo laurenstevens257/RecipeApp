@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-function AddRecipe({ onAdd }) {
+function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
   const [recipeName, setRecipeName] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/recipes', { // Replace with your API endpoint
+      const response = await fetch('/api/recipes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -14,11 +14,9 @@ function AddRecipe({ onAdd }) {
         body: JSON.stringify({ name: recipeName }),
       });
       if (response.ok) {
-        const addedRecipe = await response.json();
-        onAdd(addedRecipe); // Update parent state or re-fetch recipes
         setRecipeName(''); // Reset input field after submission
+        onRecipeAdded(); // Notify parent to update the recipe list
       } else {
-        // Handle errors
         console.error('Failed to add recipe');
       }
     } catch (error) {
