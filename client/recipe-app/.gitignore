@@ -1,0 +1,4 @@
+# IDE and system files
+.vs/
+*.suo
+*.slnx.sqlitea
