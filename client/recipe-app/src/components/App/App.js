@@ -4,8 +4,8 @@ import Login from '../Login/Login';
 import useToken from './useToken';
 import Dashboard from '../Dashboard/Dashboard';
 import Preferences from '../Preferences/Preferences';
-import AddRecipe from './AddRecipe/AddRecipe'; // Adjust the path as needed
-import RecipeList from './RecipeList/RecipeList'; // Adjust the path as needed
+import AddRecipe from './AddRecipe'; // Adjust the path as needed
+import RecipeList from './RecipeList'; // Adjust the path as needed
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
