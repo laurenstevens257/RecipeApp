@@ -4,29 +4,30 @@ import Login from '../Login/Login';
 import useToken from './useToken';
 import Dashboard from '../Dashboard/Dashboard';
 import Preferences from '../Preferences/Preferences';
-import AddRecipe from './AddRecipe';
-import RecipeList from './RecipeList';
+import AddRecipe from './AddRecipe'; // Adjust the import path as needed
+import RecipeList from './RecipeList'; // Adjust the import path as needed
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   const { token, setToken } = useToken();
   const [recipes, setRecipes] = useState([]);
 
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const response = await fetch('/api/recipes');
-        if (response.ok) {
-          const recipesData = await response.json();
-          setRecipes(recipesData);
-        } else {
-          console.error('Failed to fetch recipes');
-        }
-      } catch (error) {
-        console.error('Error fetching recipes:', error);
+  // Define fetchRecipes outside of useEffect so it can be called elsewhere
+  const fetchRecipes = async () => {
+    try {
+      const response = await fetch('/api/recipes');
+      if (response.ok) {
+        const recipesData = await response.json();
+        setRecipes(recipesData);
+      } else {
+        console.error('Failed to fetch recipes');
       }
-    };
+    } catch (error) {
+      console.error('Error fetching recipes:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchRecipes();
   }, []);
 
