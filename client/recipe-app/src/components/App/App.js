@@ -18,6 +18,7 @@ function App() {
       const response = await fetch('/api/recipes');
       if (response.ok) {
         const recipesData = await response.json();
+        console.log('Recipes fetched:', recipesData); // Log to see what's fetched
         setRecipes(recipesData);
       } else {
         console.error('Failed to fetch recipes');
@@ -26,6 +27,7 @@ function App() {
       console.error('Error fetching recipes:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchRecipes();
