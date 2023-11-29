@@ -41,3 +41,18 @@ app.post('/login', (req, res) => {
 });
 
 app.listen(8080, () => console.log('API is running on http://localhost:8080/login'));
+
+//Set up endpoints for adding recipes and viewing them
+let recipes = []; //to store recipes
+
+//endpoint for adding recipes
+app.post('/recipe', (req, res) => {
+  const recipeName = req.body.name;
+  recipes.push(recipeName)
+  res.status(201).send('Recipe added: ${recipeName}');
+});
+
+//endpoint for retrieving recipes to view them
+app.get('/recipes', (req, res) => {
+  res.json(recipes);
+});
