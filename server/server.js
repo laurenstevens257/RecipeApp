@@ -13,13 +13,15 @@ app.post('/signup', (req, res) => {
   console.log(username);
   console.log(password);
 
-  if (userCredentials.has(username)) {
-      console.log('username already exists');
-      res.status(400).json({ error: 'Username already exists', success: false });
-  } else {
-      userCredentials.set(username, password);
-      console.log('username DNE');
-      res.send({ token: 'test123', success: true });
+  if(!(username === '' || password === '')){  
+    if (userCredentials.has(username)) {
+        console.log('username already exists');
+        res.status(400).json({ error: 'Username already exists', success: false });
+    } else {
+        userCredentials.set(username, password);
+        console.log('username DNE');
+        res.send({ token: 'test123', success: true });
+    }
   }
 });
 
