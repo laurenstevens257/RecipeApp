@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+
+//commenting this out because if RecipeForm.js works this file will proababy go away
+
+/*import React, { useState } from 'react';
 
 function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
   const [recipeName, setRecipeName] = useState('');
@@ -44,4 +47,4 @@ function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
   );
 }
 
-export default AddRecipe;
+export default AddRecipe;*/
