@@ -6,7 +6,14 @@ import Dashboard from '../Dashboard/Dashboard';
 import Preferences from '../Preferences/Preferences';
 import AddRecipe from './AddRecipe'; // Adjust the import path as needed
 import RecipeList from './RecipeList'; // Adjust the import path as needed
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+//check to see if any of these are redundant, as i just added them 
+//import React from 'react';
+//import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Toolbar from './Toolbar';
+import FavoritesPage from './FavoritesPage'; // Your component for Favorites
+import SearchPage from './SearchPage';     // Your component for Search
+import CreatePage from './CreatePage';     // Your component for Create
 
 function App() {
   const { token, setToken } = useToken();
@@ -20,11 +27,12 @@ function App() {
   if (!token) {
     return <Login setToken={setToken} />;
   }
-//  we will eventually have a route path for edit-page, liked-recipes, search, login
+
   return (
-    <div className="wrapper">
-      <h1>Application</h1>
-      <BrowserRouter>
+   //this is what we had before
+    //<div className="wrapper">
+      //<h1>Application</h1>
+     /* <BrowserRouter>
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/preferences" element={<Preferences />} />
@@ -33,7 +41,22 @@ function App() {
           
         </Routes>
       </BrowserRouter>
-    </div>
+    </div>*/
+
+    //NOTE: rn theres a create page with a plus sign, but what we i think we want instead is in the home page there is instead like a plus there and if you click the plus then it swtiches pages to add-recipe
+    //Also note that we want recipe-list or atleast its functionality to probably be in home right
+    //is there a wat to pipe directly from login user to /home
+    <Router>
+      <Toolbar />
+      <Routes>
+        <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/create" element={<CreatePage />} />
+        <Route path="/add-recipe" element={<AddRecipe onRecipeAdded={addRecipe} />} />
+        <Route path="/home" element={<RecipeList recipes={recipes} />} />
+
+      </Routes>
+    </Router>
   );
 }
 

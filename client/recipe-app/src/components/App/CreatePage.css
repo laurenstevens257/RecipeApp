@@ -1,0 +1,15 @@
+/* CreatePage.css */
+
+button {
+    /* Style your button here */
+    font-size: 24px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  p {
+    /* Style for the 'Feature coming soon' text */
+    font-size: 20px;
+    color: #333;
+  }
+  
