@@ -20,7 +20,7 @@ function App() {
   if (!token) {
     return <Login setToken={setToken} />;
   }
-
+//  we will eventually have a route path for edit-page, liked-recipes, search, login
   return (
     <div className="wrapper">
       <h1>Application</h1>
@@ -29,7 +29,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/add-recipe" element={<AddRecipe onRecipeAdded={addRecipe} />} />
-          <Route path="/recipe-list" element={<RecipeList recipes={recipes} />} />
+          <Route path="/home" element={<RecipeList recipes={recipes} />} />
+          
         </Routes>
       </BrowserRouter>
     </div>

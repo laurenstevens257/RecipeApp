@@ -6,7 +6,7 @@ function RecipeList() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('http://localhost:8080/recipe-list', {
+        const response = await fetch('http://localhost:8080/home', {
           method: 'GET', // Setting the request method to GET
           headers: {
             'Content-Type': 'application/json', // Assuming JSON response
@@ -30,7 +30,7 @@ function RecipeList() {
   }, []);
 
   return (
-    <div className="home">
+    <div className="recipe-list">
       {recipes.map((recipe, index) => (
         <div key={index} className="recipe-item">
           {recipe}

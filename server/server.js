@@ -77,6 +77,7 @@ app.post('/recipe', (req, res) => {   //RENAME THIS
 
 //endpoint for retrieving recipes to view them
 app.get('/home', (req, res) => {
+  console.log('inside!');
   res.json(recipes);
 });
 
