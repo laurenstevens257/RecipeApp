@@ -17,31 +17,6 @@ function App() {
     setRecipes(recipesCopy);
   }
 
-  // Define fetchRecipes outside of useEffect so it can be called elsewhere
-  // const fetchRecipes = async () => {
-  //   try {
-  //     const response = await fetch('/api/recipes');
-  //     if (response.ok) {
-  //       const recipesData = await response.json();
-  //       console.log('Recipes fetched:', recipesData); // Log to see what's fetched
-  //       setRecipes(recipesData);
-  //     } else {
-  //       console.error('Failed to fetch recipes');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching recipes:', error);
-  //   }
-  // };
-  
-
-  // useEffect(() => {
-  //   fetchRecipes();
-  // }, []);
-
-  // const handleAddRecipe = async () => {
-  //   await fetchRecipes(); // Re-fetch recipes after adding
-  // };
-
   if (!token) {
     return <Login setToken={setToken} />;
   }
@@ -54,7 +29,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/add-recipe" element={<AddRecipe onRecipeAdded={addRecipe} />} />
-          <Route path="/recipes" element={<RecipeList recipes={recipes} />} />
+          <Route path="/recipe-list" element={<RecipeList recipes={recipes} />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -48,13 +48,13 @@ let recipes = []; //to store recipes
 //endpoint for adding recipes
 app.post('/recipe', (req, res) => {   //RENAME THIS
   const recipeName = req.body.name;
-  recipes.push(recipeName)
+  recipes.push(recipeName);
   console.log(recipes);
   res.status(201).send({message: 'Recipe added: ${recipeName}', success: true});
 });
 
 //endpoint for retrieving recipes to view them
-app.get('/recipes', (req, res) => {
+app.get('/recipe-list', (req, res) => {
   res.json(recipes);
 });
 

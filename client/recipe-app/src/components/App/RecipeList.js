@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function RecipeList() {
   const [recipes, setRecipes] = useState([]);
@@ -6,7 +6,14 @@ function RecipeList() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('/api/recipes'); // Replace with your API endpoint
+        const response = await fetch('http://localhost:8080/recipe-list', {
+          method: 'GET', // Setting the request method to GET
+          headers: {
+            'Content-Type': 'application/json', // Assuming JSON response
+            // You can add other headers if needed
+          },
+        });
+
         if (response.ok) {
           const recipesData = await response.json();
           setRecipes(recipesData);
@@ -26,7 +33,7 @@ function RecipeList() {
     <div className="recipe-list">
       {recipes.map((recipe, index) => (
         <div key={index} className="recipe-item">
-          {recipe.name} {/* Assuming recipe object has a 'name' property */}
+          {recipe}
         </div>
       ))}
     </div>
