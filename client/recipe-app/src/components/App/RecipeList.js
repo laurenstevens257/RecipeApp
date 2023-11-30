@@ -30,7 +30,7 @@ function RecipeList() {
   }, []);
 
   return (
-    <div className="recipe-list">
+    <div className="home">
       {recipes.map((recipe, index) => (
         <div key={index} className="recipe-item">
           {recipe}

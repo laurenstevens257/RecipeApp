@@ -76,7 +76,7 @@ app.post('/recipe', (req, res) => {   //RENAME THIS
 });
 
 //endpoint for retrieving recipes to view them
-app.get('/recipe-list', (req, res) => {
+app.get('/home', (req, res) => {
   res.json(recipes);
 });
 
