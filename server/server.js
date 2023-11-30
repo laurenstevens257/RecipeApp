@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+//const MongoClient = require('mongodb').MongoClient;
 const express = require('express');
 const cors = require('cors')
 const app = express();
@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 /////////////////////////////all new for mongodb stuff//////////////////////////////////////////////
-const uri = 'mongodb://localhost:27017/recipesdb';
+/*const uri = 'mongodb://localhost:27017/recipesdb';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Connect to MongoDB
@@ -23,7 +23,7 @@ client.connect()
 // example of syntax where database name is recipesdb and collection is called recipes:
 // const recipesCollection = client.db('recipesdb').collection('recipes');
 
-//then below are the api endpoints, get and post but i think we need to sort these out together
+//then below are the api endpoints, get and post but i think we need to sort these out together*/
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
