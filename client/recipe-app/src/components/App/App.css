@@ -35,7 +35,7 @@ button:hover {
 }
 
 /* Styles for RecipeList */
-.recipe-list {
+.home {
   text-align: left;
   max-width: 600px;
   margin: 20px auto;
