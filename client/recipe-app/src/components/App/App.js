@@ -45,7 +45,7 @@ function App() {
 
     //NOTE: rn theres a create page with a plus sign, but what we i think we want instead is in the home page there is instead like a plus there and if you click the plus then it swtiches pages to add-recipe
     //Also note that we want recipe-list or atleast its functionality to probably be in home right
-    //is there a wat to pipe directly from login user to /home
+    //is there a way to pipe directly from login user to /home
     <Router>
       <Toolbar />
       <Routes>

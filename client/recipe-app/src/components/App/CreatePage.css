@@ -5,6 +5,13 @@ button {
     font-size: 24px;
     padding: 10px 20px;
     cursor: pointer;
+
+    background-color: darkolivegreen;
+    color: white;
+
+    position: fixed;
+    bottom: 100;
+    left: 100;
   }
   
   p {
