@@ -26,4 +26,4 @@ yarn-error.log*
 # IDE and system files
 .vs/
 *.suo
-*.slnx.sqlitea
+*.slnx.sqlite
