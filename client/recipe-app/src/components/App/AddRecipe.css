@@ -1,6 +1,21 @@
-/* CreatePage.css */
+/* AddRecipe.css */
 
-button {
+.add-container {
+    display: flex;
+    justify-content: left;
+    padding: 20px;
+    margin: 20px;
+  }
+
+.add-input {
+    padding: 10px;
+    margin-right: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+.add-button {
     font-size: 18px;
     padding: 8px 10px;
     cursor: pointer;
@@ -14,14 +29,7 @@ button {
     left: 20px;
   }
 
-button:hover {
+.add-button:hover {
     /* button gets slightly darker when hovering*/
     background-color: rgb(79, 101, 64); 
 }
-  
-  p {
-    /* Style for the 'Feature coming soon' text */
-    font-size: 20px;
-    color: #333;
-  }
-  

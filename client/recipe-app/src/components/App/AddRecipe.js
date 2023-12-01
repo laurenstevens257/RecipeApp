@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './AddRecipe.css';
 
 function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
   const [recipeName, setRecipeName] = useState('');
@@ -32,15 +33,17 @@ function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={recipeName}
-        onChange={(e) => setRecipeName(e.target.value)}
-        placeholder="Enter recipe name"
-      />
-      <button type="submit">Add Recipe</button>
-    </form>
+    <div className="add-container"> 
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={recipeName}
+          onChange={(e) => setRecipeName(e.target.value)}
+          placeholder="Enter recipe name"
+        />
+        <button type="submit" className="add-button">Add Recipe</button>
+      </form>
+    </div>
   );
 }
 
