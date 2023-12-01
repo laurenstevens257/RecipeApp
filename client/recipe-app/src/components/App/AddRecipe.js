@@ -33,17 +33,36 @@ function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
   };
 
   return (
-    <div className="add-container"> 
+    <div>
+      <h1 className='header-text'>New Recipe</h1>
+      <h2 className='title-text'>Recipe Name</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={recipeName}
           onChange={(e) => setRecipeName(e.target.value)}
           placeholder="Enter recipe name"
+          className='title-input'
+        />
+        <input
+          type="text"
+          placeholder="Enter prep time in mins"
+          className='prep-input'
+        />
+        <input
+          type="text"
+          placeholder="Enter cook time in mins"
+          className='cook-input'
+        />
+        <input
+          type="text"
+          placeholder="Enter cooking instructions..."
+          className='instructions-input'
         />
         <button type="submit" className="add-button">Add Recipe</button>
       </form>
-    </div>
+   </div>
+    
   );
 }
 

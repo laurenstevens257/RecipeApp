@@ -12,7 +12,7 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 //import React from 'react';
 //import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Toolbar from './Toolbar';
-import FavoritesPage from './FavoritesPage'; // Your component for Favorites
+import FavoritesPage from './FlavoritesPage'; // Your component for Favorites
 import SearchPage from './SearchPage';     // Your component for Search
 import CreatePage from './CreatePage';     // Your component for Create
 import HomeDisplay from './HomeDisplay';

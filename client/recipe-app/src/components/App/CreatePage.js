@@ -13,7 +13,7 @@ const CreatePage = () => {
     <div>
       {featureAvailable ? (
         <button onClick={handleClick}>
-          <span>+ Create New Recipe</span> {/* You can replace this with an actual icon */}
+          <span>+ Create New Recipe</span>
         </button>
       ) : (
         <p>Feature coming soon</p>

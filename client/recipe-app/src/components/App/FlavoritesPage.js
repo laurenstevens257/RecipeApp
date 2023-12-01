@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import './FavoritesPage.css'; // Create and import your CSS file for styling
+//import './FlavoritesPage.css'; // Create and import your CSS file for styling
 /*
 const FavoritesPage = () => {
   const [isFavorited, setIsFavorited] = useState(false);

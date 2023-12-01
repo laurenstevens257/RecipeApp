@@ -3,7 +3,7 @@ import CreatePage from './CreatePage';
 import RecipeList from './RecipeList';
 
 const HomeDisplay = () => {
-  const recipes = []; // Your recipes data - replace with your actual recipe data
+  const recipes = [];
 
   return (
     <div>

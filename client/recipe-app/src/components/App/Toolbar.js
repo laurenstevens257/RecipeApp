@@ -6,9 +6,9 @@ import './Toolbar.css'; // Import the CSS file for styling
 const Toolbar = () => {
   return (
     <div className="toolbar">
-      <Link to="/favorites" className="toolbar-link">Favorites</Link>
+      <Link to="/home" className="toolbar-link">Home</Link>
+      <Link to="/flavorites" className="toolbar-link">Flavorites</Link>
       <Link to="/search" className="toolbar-link">Search</Link>
-      <Link to="/create" className="toolbar-link">Create</Link>
     </div>
   );
 };

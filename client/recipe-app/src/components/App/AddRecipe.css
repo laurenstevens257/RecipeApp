@@ -1,19 +1,68 @@
 /* AddRecipe.css */
 
-.add-container {
+/*.add-container {
     display: flex;
-    justify-content: left;
-    padding: 20px;
-    margin: 20px;
+    justify-content: center;
+    max-width: 400px;
+    padding: 40px 20px;
+    margin: 40px 20px;
   }
+*/
 
-.add-input {
+.header-text {
+    font-size: 35px;
+    color:rgb(81, 119, 71);
+    margin: 40px;
+}
+
+.title-text {
+    font-size: 24px;
+    color: rgb(112, 85, 69);
+    margin: 40px 40px;
+}
+
+.prep-text {
+    font-size: 24px;
+    color: rgb(112, 85, 69);
+    margin: 0px 250px;
+}
+
+.title-input {
+    margin: 0px 20px;
+    font-size: 18px;
     padding: 10px;
-    margin-right: 10px;
-    width: 300px;
-    border: 1px solid #ccc;
+    width: 200px;
+    height: 20px;
+    border: 1px solid rgb(120, 74, 47);
     border-radius: 4px;
   }
+
+.prep-input {
+    font-size: 18px;
+    padding: 10px;
+    width: 200px;
+    height: 20px;
+    border: 1px solid rgb(120, 74, 47);
+    border-radius: 4px;
+}
+
+.cook-input {
+    font-size: 18px;
+    padding: 10px;
+    width: 200px;
+    height: 20px;
+    border: 1px solid rgb(120, 74, 47);
+    border-radius: 4px;
+}
+
+.instructions-input {
+    font-size: 18px;
+    padding: 10px;
+    width: 300px;
+    height: 100px;
+    border: 1px solid rgb(120, 74, 47);
+    border-radius: 4px;
+}
 
 .add-button {
     font-size: 18px;
@@ -25,7 +74,7 @@
     color: white;
 
     position: static;
-    bottom: position * 50 + 10 + px;
+    bottom: 40px;
     left: 20px;
   }
 
