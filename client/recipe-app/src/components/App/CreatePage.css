@@ -2,17 +2,23 @@
 
 button {
     /* Style your button here */
-    font-size: 24px;
+    font-size: 20px;
     padding: 10px 20px;
     cursor: pointer;
 
-    background-color: darkolivegreen;
+    /*chose random color that I thought was cute and earthy -- we can change if necessary*/
+    background-color: rgb(64, 137, 46); 
     color: white;
 
-    position: fixed;
-    bottom: 100;
-    left: 100;
+    position: static;
+    bottom: position * 50 + 10 + px;
+    left: 20px;
   }
+
+button:hover {
+    /* button gets slightly darker when hovering*/
+    background-color: rgb(81, 119, 71); 
+}
   
   p {
     /* Style for the 'Feature coming soon' text */

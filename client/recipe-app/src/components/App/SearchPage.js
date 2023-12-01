@@ -26,7 +26,7 @@ const SearchPage = () => {
         value={searchTerm} 
         onChange={handleInputChange} 
         onKeyDown={handleKeyDown} 
-        placeholder="Search..." 
+        placeholder="Search for a recipe..." 
         className="search-input"
       />
       <button onClick={handleSearch} className="search-button">Search</button>

@@ -21,6 +21,7 @@
     background-color: #007bff;
     color: white;
     cursor: pointer;
+    position: static;
   }
   
   .search-button:hover {

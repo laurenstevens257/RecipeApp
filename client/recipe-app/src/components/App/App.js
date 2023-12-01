@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import './CreatePage.css';
 import Login from '../Login/Login';
 import useToken from './useToken';
 import Dashboard from '../Dashboard/Dashboard';
@@ -14,6 +15,7 @@ import Toolbar from './Toolbar';
 import FavoritesPage from './FavoritesPage'; // Your component for Favorites
 import SearchPage from './SearchPage';     // Your component for Search
 import CreatePage from './CreatePage';     // Your component for Create
+import HomeDisplay from './HomeDisplay';
 
 function App() {
   const { token, setToken } = useToken();
@@ -53,7 +55,7 @@ function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/create" element={<CreatePage />} />
         <Route path="/add-recipe" element={<AddRecipe onRecipeAdded={addRecipe} />} />
-        <Route path="/home" element={<RecipeList recipes={recipes} />} />
+        <Route path="/home" element={<HomeDisplay recipes={recipes} />} />
 
       </Routes>
     </Router>

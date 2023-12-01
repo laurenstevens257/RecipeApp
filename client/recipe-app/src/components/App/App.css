@@ -10,7 +10,7 @@
 
 /* Styles for AddRecipe form */
 form {
-  margin: 20px 0;
+  margin: 40px 20px;
 }
 
 input[type="text"] {
@@ -28,6 +28,12 @@ button {
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
+  
+  /*
+  position: fixed;
+  bottom: 540px;
+  left: 100px; 
+  */
 }
 
 button:hover {
@@ -37,8 +43,8 @@ button:hover {
 /* Styles for RecipeList */
 .home {
   text-align: left;
-  max-width: 600px;
-  margin: 20px auto;
+  max-width: 550px;
+  margin: 20px 40px;
 }
 
 .recipe-item {
