@@ -132,12 +132,12 @@ const userSchema = new mongoose.Schema({
 });
 const recipeSchema = new mongoose.Schema({
   name: String,
-  ingredients: [String],
-  instructions: String,
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }
+  // ingredients: [String],
+  // instructions: String,
+  // createdBy: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User'
+  // }
 });
 
 // Create Models
@@ -182,13 +182,27 @@ app.post('/login', async (req, res) => {
 });
 
 // Add Recipe Route
-app.post('/addrecipe', async (req, res) => {
-    // Implement route to add a recipe
+app.post('/add-recipe', async (req, res) => {
+  const { name } = req.body;
+  try {
+    const recipe = new Recipe({
+      name,
+    });
+    await recipe.save();
+    res.status(201).json({ success: true, message: 'Recipe added successfully' });
+  } catch (error) {
+    res.status(500).send('Error in adding recipe');
+  }
 });
 
 // Fetch Recipes Route
-app.get('/recipes', async (req, res) => {
-  // Implement route to get recipes
+app.get('/recipe-list', async (req, res) => {
+  try {
+    const recipes = await Recipe.find({});
+    res.status(200).json(recipes);
+  } catch (error) {
+    res.status(500).send('Error in fetching recipes');
+  }
 });
 
 // const PORT = process.env.PORT || 3000;

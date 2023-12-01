@@ -4,7 +4,7 @@ function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
   const [recipeName, setRecipeName] = useState('');
   
   async function SendRecipe(){
-    return (fetch('http://localhost:8080/recipe', {
+    return (fetch('http://localhost:8080/add-recipe', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

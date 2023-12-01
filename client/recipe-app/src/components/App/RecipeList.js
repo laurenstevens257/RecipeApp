@@ -29,11 +29,33 @@ function RecipeList() {
     fetchRecipes();
   }, []);
 
+  // return (
+  //   <div className="recipe-list">
+  //     {recipes.map((recipe, index) => (
+  //       <div key={index} className="recipe-item">
+  //         {recipe}
+  //       </div>
+  //     ))}
+  //   </div>
+  // );
+  // }
+
+
+  //IMPORTANT - TO CHECK 
+  //check our div names
+  //do we even need this css stuff?
   return (
     <div className="recipe-list">
       {recipes.map((recipe, index) => (
         <div key={index} className="recipe-item">
-          {recipe}
+          {/* Displaying recipe details */}
+          <h3>{recipe.name}</h3>
+          {/* <ul>
+            {recipe.ingredients.map((ingredient, idx) => (
+              <li key={idx}>{ingredient}</li>
+            ))}
+          </ul>
+          <p>{recipe.instructions}</p> */}
         </div>
       ))}
     </div>
