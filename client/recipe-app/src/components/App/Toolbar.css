@@ -1,6 +1,6 @@
 /* Toolbar.css */
 .toolbar {
-    background-color: #333;
+    background-color: rgb(221, 105, 32);
     color: white;
     display: flex;
     justify-content: space-around;
