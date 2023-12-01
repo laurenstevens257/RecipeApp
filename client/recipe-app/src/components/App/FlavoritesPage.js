@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 //import './FlavoritesPage.css'; // Create and import your CSS file for styling
 /*
-const FavoritesPage = () => {
+const FlavoritesPage = () => {
   const [isFavorited, setIsFavorited] = useState(false);
 
   const toggleHeart = () => {
@@ -19,7 +19,7 @@ const FavoritesPage = () => {
   );
 };
 
-export default FavoritesPage;
+export default FlavoritesPage;
 */   
 
 //THIS IS NOT WORKING, ITS OK THO FIX LATER

@@ -30,27 +30,13 @@ function App() {
   }
 
   return (
-   //this is what we had before
-    //<div className="wrapper">
-      //<h1>Application</h1>
-     /* <BrowserRouter>
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/preferences" element={<Preferences />} />
-          <Route path="/add-recipe" element={<AddRecipe onRecipeAdded={addRecipe} />} />
-          <Route path="/home" element={<RecipeList recipes={recipes} />} />
-          
-        </Routes>
-      </BrowserRouter>
-    </div>*/
 
-    //NOTE: rn theres a create page with a plus sign, but what we i think we want instead is in the home page there is instead like a plus there and if you click the plus then it swtiches pages to add-recipe
-    //Also note that we want recipe-list or atleast its functionality to probably be in home right
+    //NOTE: want home page with a plus there and if you click the plus then it swtiches pages to add-recipe
     //is there a way to pipe directly from login user to /home
     <Router>
       <Toolbar />
       <Routes>
-        <Route path="/favorites" element={<FlavoritesPage />} />
+        <Route path="/flavorites" element={<FlavoritesPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/add-recipe" element={<AddRecipe onRecipeAdded={addRecipe} />} />
         <Route path="/home" element={<HomeDisplay recipes={recipes} />} />
