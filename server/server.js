@@ -92,6 +92,9 @@ const app = express();
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://recipeapp33:recipe123@recipedb.3evocay.mongodb.net/?retryWrites=true&w=majority";
 
+// for password hashing
+const argon2 = require('argon2');
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 // const client = new MongoClient(uri, {
 //   serverApi: {
@@ -159,7 +162,11 @@ app.post('/signup', async (req, res) => {
     if (user) {
       return res.status(400).json({ error: 'Username already exists', success: false });
     }
-    user = new User({ username, password });
+
+    // Hashing the password with Argon2id
+    const hash = await argon2.hash(password, { type: argon2.argon2id });
+
+    user = new User({ username, password: hash });
     await user.save();
     res.send({ token: 'generated-token', success: true }); // Implement token generation
   } catch (error) {
@@ -172,9 +179,15 @@ app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
     const user = await User.findOne({ username });
-    if (!user || user.password !== password) {
+    if (!user) {
       return res.status(400).send('Invalid Credentials');
     }
+
+    // Verifying the provided password with the stored hash
+    if (!(await argon2.verify(user.password, password))) {
+      return res.status(400).send('Invalid Credentials');
+    }
+    
     res.send({ token: 'generated-token', success: true }); // Implement token validation
   } catch (error) {
     res.status(500).send('Internal Server Error');
