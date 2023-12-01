@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import './CreatePage.css';
+import './HomeDisplay.css';
 import Login from '../Login/Login';
 import useToken from './useToken';
 import Dashboard from '../Dashboard/Dashboard';
@@ -12,9 +12,8 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 //import React from 'react';
 //import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Toolbar from './Toolbar';
-import FavoritesPage from './FlavoritesPage'; // Your component for Favorites
+import FlavoritesPage from './FlavoritesPage'; // Your component for Favorites
 import SearchPage from './SearchPage';     // Your component for Search
-import CreatePage from './CreatePage';     // Your component for Create
 import HomeDisplay from './HomeDisplay';
 
 function App() {
@@ -31,32 +30,16 @@ function App() {
   }
 
   return (
-   //this is what we had before
-    //<div className="wrapper">
-      //<h1>Application</h1>
-     /* <BrowserRouter>
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/preferences" element={<Preferences />} />
-          <Route path="/add-recipe" element={<AddRecipe onRecipeAdded={addRecipe} />} />
-          <Route path="/home" element={<RecipeList recipes={recipes} />} />
-          
-        </Routes>
-      </BrowserRouter>
-    </div>*/
 
-    //NOTE: rn theres a create page with a plus sign, but what we i think we want instead is in the home page there is instead like a plus there and if you click the plus then it swtiches pages to add-recipe
-    //Also note that we want recipe-list or atleast its functionality to probably be in home right
+    //NOTE: want home page with a plus there and if you click the plus then it swtiches pages to add-recipe
     //is there a way to pipe directly from login user to /home
     <Router>
       <Toolbar />
       <Routes>
-        <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/flavorites" element={<FlavoritesPage />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/create" element={<CreatePage />} />
         <Route path="/add-recipe" element={<AddRecipe onRecipeAdded={addRecipe} />} />
         <Route path="/home" element={<HomeDisplay recipes={recipes} />} />
-
       </Routes>
     </Router>
   );
