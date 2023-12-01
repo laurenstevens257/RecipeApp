@@ -48,8 +48,10 @@ function RecipeList() {
     <div className="recipe-list">
       {recipes.map((recipe, index) => (
         <div key={index} className="recipe-item">
-          {/* Displaying recipe details */}
           <h3>{recipe.name}</h3>
+          {/* Check if createdBy exists and has a username */}
+          <p>Author: {recipe.createdBy ? recipe.createdBy.username : 'Unknown'}</p>
+          {/* Uncomment and use if ingredients and instructions are part of your recipe model */}
           {/* <ul>
             {recipe.ingredients.map((ingredient, idx) => (
               <li key={idx}>{ingredient}</li>
