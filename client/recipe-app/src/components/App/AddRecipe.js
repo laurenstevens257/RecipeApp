@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './AddRecipe.css';
+import { useNavigate } from 'react-router-dom';
 
 function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
   const [recipeName, setRecipeName] = useState('');
-  
+  const navigate = useNavigate();
+
   async function SendRecipe(){
     return (fetch('http://localhost:8080/recipe', {
       method: 'POST',
@@ -23,6 +25,7 @@ function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
       if (response.success) {
         setRecipeName(''); // Reset input field after submission
         onRecipeAdded(); // Notify parent to update the recipe list
+        navigate('/home');
         console.error('kinda worked??');
       } else {
         console.error('Failed to add recipe');
