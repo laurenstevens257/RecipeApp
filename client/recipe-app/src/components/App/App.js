@@ -18,12 +18,6 @@ import HomeDisplay from './HomeDisplay';
 
 function App() {
   const { token, setToken } = useToken();
-  const [recipes, setRecipes] = useState([]);
-
-  const addRecipe = (newRecipe) => {
-    const recipesCopy = [...recipes, newRecipe];
-    setRecipes(recipesCopy);
-  }
 
   if (!token) {
     return <Login setToken={setToken} />;
@@ -38,7 +32,7 @@ function App() {
       <Routes>
         <Route path="/flavorites" element={<FlavoritesPage />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/add-recipe" element={<AddRecipe onRecipeAdded={addRecipe} />} />
+        <Route path="/add-recipe" element={<AddRecipe />} />
         <Route path="/home" element={<HomeDisplay />} /> 
         
       </Routes>

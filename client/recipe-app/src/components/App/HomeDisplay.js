@@ -16,7 +16,7 @@ const HomeDisplay = ({ recipes }) => {
         <button onClick={handleClick}>
           <span>+ Create New Recipe</span>
         </button>
-        <RecipeList recipes={recipes} />
+        <RecipeList />
     </div>
   );
 };
