@@ -153,6 +153,21 @@ app.post('/add-recipe', authenticate, async (req, res) => {
 
 // Fetch Recipes Route - Modified to support search functionality
 app.get('/home', async (req, res) => {
+  try {
+    const recipes = await Recipe.find().populate({
+      path: 'createdBy',
+      select: 'username' // Selects only the 'username' field from the User model
+    });
+
+    console.log('recipes: ', recipes);
+    
+    res.status(200).json(recipes);
+  } catch (error) {
+    res.status(500).send('Error in fetching recipes');
+  }
+});
+
+app.get('/search', async (req, res) => {    // NOTE: renamed to search
   const { search, searchByUser } = req.query;
 
   try {
@@ -174,6 +189,7 @@ app.get('/home', async (req, res) => {
     res.status(500).send('Error in fetching recipes');
   }
 });
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
