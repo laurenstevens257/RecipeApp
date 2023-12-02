@@ -9,6 +9,7 @@ export default function Login( { setToken } ) {
     const [usernameSignup, setSignupUserName] = useState('');
     const [passwordSignup, setSignupPassword] = useState('');
     const [error, setError] = useState('');
+    const [isLoginFormVisible, setIsLoginFormVisible] = useState(true);
 
     async function loginUser() {
         return fetch('http://localhost:8080/login', {
@@ -76,13 +77,17 @@ export default function Login( { setToken } ) {
         }
     }
     
+  const handleToggleForm = () => {
+    setIsLoginFormVisible(!isLoginFormVisible);
+  };
 
-    return(
-        <div>
-            <div className="login-wrapper">
-                <h1>Please Log In</h1>
-                <form onSubmit={handleSubmitLogin}>
-                    <label>
+  return (
+    <div>
+      <div className="login-wrapper">
+        <h1>{isLoginFormVisible ? 'Please Log In' : 'Create an Account'}</h1>
+        {isLoginFormVisible ? (
+          <form onSubmit={handleSubmitLogin}>
+             <label>
                         <p>Username</p>
                         <input type="text" onChange={e => setLoginUserName(e.target.value)}/>
                     </label>
@@ -93,11 +98,11 @@ export default function Login( { setToken } ) {
                     <div>
                         <button type="submit">Submit</button>
                     </div>
-                </form>
 
-                <h1>Or Sign Up</h1>
-                <form onSubmit={handleSubmitSignup}>
-                    <label>
+          </form>
+        ) : (
+          <form onSubmit={handleSubmitSignup}>
+                                <label>
                         <p>Username</p>
                         <input type="text" onChange={e => setSignupUserName(e.target.value)}/>
                     </label>
@@ -106,16 +111,26 @@ export default function Login( { setToken } ) {
                         <input type="password" onChange={e => setSignupPassword(e.target.value)}/>
                     </label>
                     <div>
-                        <button type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-        </div>
-    )
+                <button type="submit">Submit</button>
+                </div> 
+          </form>
+        )}
+    
+        {isLoginFormVisible ? (
+          <p className="signup-link" onClick={handleToggleForm}>
+            Don't have an Account? Sign Up
+          </p>
+        ) : (
+          <p className="signup-link" onClick={handleToggleForm}>
+            Back to Login
+          </p>
+        )}
+      </div>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+    </div>
+  );
 }
 
 Login.propTypes = {
-    setToken: PropTypes.func.isRequired
-  }
-
+  setToken: PropTypes.func.isRequired,
+};
