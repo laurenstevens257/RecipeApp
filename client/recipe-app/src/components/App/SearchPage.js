@@ -1,37 +1,54 @@
-import React, { useState } from 'react';
-import './SearchPage.css'; // Make sure the path to the CSS file is correct
+import React, { useState, useEffect } from 'react';
+import SearchBar from './SearchBar'; // Make sure this path is correct
 
-const SearchPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+function SearchPage() {
+  const [recipes, setRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
 
-  const handleSearch = () => {
-    console.log('Searching for:', searchTerm);
-    // Implement your search logic here
-  };
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
 
-  const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+  const fetchRecipes = async (searchTerm /*= ''*/, searchByUser /*= false*/) => {
+    try {
+      const response = await fetch(`http://localhost:8080/search?search=${searchTerm}&searchByUser=${searchByUser}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handleSearch();
+      
+      if (response.ok) {
+        const recipesData = await response.json();
+        setRecipes(recipesData);
+        setFilteredRecipes(recipesData);
+      } else {
+        console.error('Failed to fetch recipes');
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
+  const handleSearch = (searchTerm, searchByUser) => {
+    fetchRecipes(searchTerm, searchByUser);
+  };
+
   return (
-    <div className="search-container">
-      <input 
-        type="text" 
-        value={searchTerm} 
-        onChange={handleInputChange} 
-        onKeyDown={handleKeyDown} 
-        placeholder="Search for a recipe..." 
-        className="search-input"
-      />
-      <button onClick={handleSearch} className="search-button">Search</button>
+    <div>
+      <SearchBar onSearch={handleSearch} />
+      <div className="recipe-list">
+        {filteredRecipes.map((recipe, index) => (
+          <div key={index} className="recipe-item">
+            <h3>{recipe.name}</h3>
+            <p>Author: {recipe.createdBy ? recipe.createdBy.username : 'Unknown'}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
-};
+}
 
 export default SearchPage;
+

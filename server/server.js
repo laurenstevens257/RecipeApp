@@ -164,7 +164,7 @@ app.get('/home', authenticate, async (req, res) => {
       select: 'username'
     });
 
-    console.log('recipes: ', recipes);
+    //console.log('recipes: ', recipes);
     
     res.status(200).json(recipes);
   } catch (error) {
@@ -172,12 +172,13 @@ app.get('/home', authenticate, async (req, res) => {
   }
 });
 
-app.get('/search', async (req, res) => {    // NOTE: renamed to search
+app.get('/search', async (req, res) => {
   const { search, searchByUser } = req.query;
 
   try {
     let query = {};
     if (searchByUser === 'true') {
+
       // Search by User
       const users = await User.find({ username: { $regex: search, $options: 'i' } });
       const userIds = users.map(user => user._id);
@@ -187,7 +188,10 @@ app.get('/search', async (req, res) => {    // NOTE: renamed to search
       query.name = { $regex: search, $options: 'i' };
     }
 
+
     const recipes = await Recipe.find(query).populate('createdBy', 'username');
+
+    console.log('recipes: ', recipes);
 
     res.status(200).json(recipes);
   } catch (error) {
