@@ -7,7 +7,9 @@ function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
   async function sendRecipe() {
     try {
       const token = sessionStorage.getItem('token'); // Fetch the authentication token
-      console.error(token);
+      //commented out so token isn't visible in console log
+      //keyword: MAKE-TOKEN-VISIBLE
+      //console.error(token);
       const response = await fetch('http://localhost:8080/add-recipe', {
         method: 'POST',
         headers: {
