@@ -1,11 +1,11 @@
-// SearchBar.js
 import React, { useState } from 'react';
 
 function SearchBar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchByUser, setSearchByUser] = useState(false);
 
   const handleSearch = () => {
-    onSearch(searchTerm);
+    onSearch(searchTerm, searchByUser);
   };
 
   return (
@@ -17,8 +17,16 @@ function SearchBar({ onSearch }) {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <button onClick={handleSearch}>
-        <img src="magnifying-glass-icon.png" alt="Search" />
+        Search
       </button>
+      <div>
+        <input
+          type="checkbox"
+          checked={searchByUser}
+          onChange={() => setSearchByUser(!searchByUser)}
+        />
+        <label>Search by User</label>
+      </div>
     </div>
   );
 }

@@ -10,9 +10,9 @@ function RecipeList() {
     fetchRecipes();
   }, []);
 
-  const fetchRecipes = async (searchTerm = '') => {
+  const fetchRecipes = async (searchTerm = '', searchByUser = false) => {
     try {
-      const response = await fetch(`http://localhost:8080/recipe-list?search=${searchTerm}`);
+      const response = await fetch(`http://localhost:8080/recipe-list?search=${searchTerm}&searchByUser=${searchByUser}`);
       if (response.ok) {
         const recipesData = await response.json();
         setRecipes(recipesData);
@@ -25,8 +25,8 @@ function RecipeList() {
     }
   };
 
-  const handleSearch = (searchTerm) => {
-    fetchRecipes(searchTerm);
+  const handleSearch = (searchTerm, searchByUser) => {
+    fetchRecipes(searchTerm, searchByUser);
   };
 
   return (

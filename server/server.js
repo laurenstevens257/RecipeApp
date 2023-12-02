@@ -153,16 +153,21 @@ app.post('/add-recipe', authenticate, async (req, res) => {
 
 // Fetch Recipes Route - Modified to support search functionality
 app.get('/recipe-list', async (req, res) => {
-  const search = req.query.search;
+  const { search, searchByUser } = req.query;
+
   try {
     let query = {};
-    if (search) {
-      query.name = { $regex: search, $options: 'i' }; // Case-insensitive search
+    if (searchByUser === 'true') {
+      // Search by User
+      const users = await User.find({ username: { $regex: search, $options: 'i' } });
+      const userIds = users.map(user => user._id);
+      query.createdBy = { $in: userIds };
+    } else {
+      // Search by Recipe Name
+      query.name = { $regex: search, $options: 'i' };
     }
-    const recipes = await Recipe.find(query).populate({
-      path: 'createdBy',
-      select: 'username' // Selects only the 'username' field from the User model
-    });
+
+    const recipes = await Recipe.find(query).populate('createdBy', 'username');
 
     res.status(200).json(recipes);
   } catch (error) {
