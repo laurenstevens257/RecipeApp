@@ -152,11 +152,16 @@ app.post('/add-recipe', authenticate, async (req, res) => {
 
 
 // Fetch Recipes Route - Modified to support search functionality
-app.get('/home', async (req, res) => {
+app.get('/home', authenticate, async (req, res) => {
   try {
-    const recipes = await Recipe.find().populate({
+    // const recipes = await Recipe.find().populate({
+    //   path: 'createdBy',
+    //   select: 'username' // Selects only the 'username' field from the User model
+    // });
+
+    const recipes = await Recipe.find({ createdBy: req.user.id }).populate({
       path: 'createdBy',
-      select: 'username' // Selects only the 'username' field from the User model
+      select: 'username'
     });
 
     console.log('recipes: ', recipes);
