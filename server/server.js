@@ -160,7 +160,7 @@ app.post('/add-recipe', authenticate, async (req, res) => {
 // Fetch Recipes Route
 
 
-app.get('/recipe-list', async (req, res) => {
+app.get('/home', async (req, res) => {
   try {
     const recipes = await Recipe.find().populate({
       path: 'createdBy',
@@ -179,6 +179,3 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`API is running on http://localhost:${PORT}/login`);
 });
-
-
-

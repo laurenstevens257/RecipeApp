@@ -1,0 +1,32 @@
+/* SearchPage.css */
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    margin: 80px;
+  }
+  
+  .search-input {
+    padding: 10px;
+    margin-right: 10px;
+    width: 300px; /* Adjust the width as needed */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 18px;
+  }
+  
+  .search-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(86, 112, 69);
+    color: white;
+    cursor: pointer;
+    position: static;
+  }
+  
+  .search-button:hover {
+    background-color: rgb(79, 101, 64);
+  }
+  

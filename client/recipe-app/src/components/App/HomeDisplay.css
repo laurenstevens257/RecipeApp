@@ -1,0 +1,31 @@
+/* CreatePage.css */
+/* 
+button {
+    font-size: 18px;
+    padding: 8px 10px;
+    cursor: pointer; */
+
+    /*chose random color that I thought was cute and earthy -- we can change if necessary*/
+    /* background-color: rgb(81, 119, 71); 
+    color: white;
+
+    position: static;
+    bottom: position * 50 + 10 + px;
+    left: 20px;
+  }
+
+button:hover { */
+    /* button gets slightly darker when hovering*/
+    /* background-color: rgb(79, 101, 64); 
+}
+  
+  p { */
+    /* Style for the 'Feature coming soon' text */
+    /* font-size: 20px;
+    color: #333;
+  }
+   */
+
+/* CreatePage.css */
+
+/* Target the button within CreatePage specifically, if necessary use a class or id */

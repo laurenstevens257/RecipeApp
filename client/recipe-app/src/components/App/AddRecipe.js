@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
+import './AddRecipe.css';
+import { useNavigate } from 'react-router-dom';
 
 function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
   const [recipeName, setRecipeName] = useState('');
+  const navigate = useNavigate();
+  const[ingredients, setIngredients] = useState([]);
+  const [ingredientInput, setIngredientInput] = useState('');
+
+  const handleAddIngredient = () => {
+    if (ingredientInput) {
+      setIngredients(prevIngredients => [...prevIngredients, ingredientInput]);
+      setIngredientInput(''); // Clear the input field
+    }
+  };
 
   // Front-end function to send recipe data to the server
   async function sendRecipe() {
@@ -37,7 +49,8 @@ function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
       if (response.success) {
         setRecipeName(''); // Reset input field after submission
         onRecipeAdded(); // Notify parent to update the recipe list
-        console.log('Recipe added successfully');
+        navigate('/home');
+        console.error('kinda worked??');
       } else {
         console.error('Failed to add recipe');
       }
@@ -48,15 +61,47 @@ function AddRecipe({ onRecipeAdded }) { // Changed from onAdd to onRecipeAdded
 
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={recipeName}
-        onChange={(e) => setRecipeName(e.target.value)}
-        placeholder="Enter recipe name"
-      />
-      <button type="submit">Add Recipe</button>
-    </form>
+    <div>
+      <h1 className='header-text'>New Recipe</h1>
+      <h2 className='title-text'>Recipe Name</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={recipeName}
+          onChange={(e) => setRecipeName(e.target.value)}
+          placeholder="Enter recipe name"
+          className='title-input'
+        />
+
+        <input
+          type="text"
+          placeholder="Enter prep time in mins"
+          className='prep-input'
+        />
+        <input
+          type="text"
+          value={ingredientInput}
+          onChange={(e) => setIngredientInput(e.target.value)}
+          placeholder="Enter an ingredient"
+          className='ingredient-input'
+        />
+        <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+</button>
+        
+        
+        <input
+          type="text"
+          placeholder="Enter cook time in mins"
+          className='cook-input'
+        />
+        <input
+          type="text"
+          placeholder="Enter cooking instructions..."
+          className='instructions-input'
+        />
+        <button type="submit" className="add-button">Add Recipe</button>
+      </form>
+   </div>
+    
   );
 }
 
