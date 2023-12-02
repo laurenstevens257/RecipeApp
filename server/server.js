@@ -3,15 +3,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const app = express();
 const jwt = require('jsonwebtoken');
+const argon2 = require('argon2');
 
 app.use(cors());
 app.use(express.json());
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://recipeapp33:recipe123@recipedb.3evocay.mongodb.net/?retryWrites=true&w=majority";
-
-// for password hashing
-const argon2 = require('argon2');
 
 mongoose.connect(uri, {
   useNewUrlParser: true,
@@ -31,8 +29,6 @@ const userSchema = new mongoose.Schema({
 });
 const recipeSchema = new mongoose.Schema({
   name: String,
-  // ingredients: [String],
-  // instructions: String,
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
@@ -98,8 +94,6 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Add Recipe Route
-
 // Middleware to authenticate and set user in the request
 const authenticate = async (req, res, next) => {
   // const token = req.headers.authorization?.split(' ')[1]; // Assuming token is sent in the "Authorization" header
@@ -131,7 +125,7 @@ const authenticate = async (req, res, next) => {
   } catch (error) {
     res.status(400).json({ error: 'Invalid token.' });
   }
-};
+}
 
 // Add Recipe Route
 app.post('/add-recipe', authenticate, async (req, res) => {
@@ -157,18 +151,19 @@ app.post('/add-recipe', authenticate, async (req, res) => {
 });
 
 
-// Fetch Recipes Route
-
-
+// Fetch Recipes Route - Modified to support search functionality
 app.get('/recipe-list', async (req, res) => {
+  const search = req.query.search;
   try {
-    const recipes = await Recipe.find().populate({
+    let query = {};
+    if (search) {
+      query.name = { $regex: search, $options: 'i' }; // Case-insensitive search
+    }
+    const recipes = await Recipe.find(query).populate({
       path: 'createdBy',
       select: 'username' // Selects only the 'username' field from the User model
     });
 
-    console.log('recipes: ', recipes);
-    
     res.status(200).json(recipes);
   } catch (error) {
     res.status(500).send('Error in fetching recipes');
@@ -177,8 +172,5 @@ app.get('/recipe-list', async (req, res) => {
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`API is running on http://localhost:${PORT}/login`);
+  console.log(`API is running on http://localhost:${PORT}`);
 });
-
-
-
