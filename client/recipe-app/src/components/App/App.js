@@ -15,6 +15,8 @@ import Toolbar from './Toolbar';
 import FlavoritesPage from './FlavoritesPage'; // Your component for Favorites
 import SearchPage from './SearchPage';     // Your component for Search
 import HomeDisplay from './HomeDisplay';
+//import CalculatorPage from './calculatorPage';
+import CalculatorPage from './calculatorPage';
 
 function App() {
   const { token, setToken } = useToken();
@@ -25,7 +27,7 @@ function App() {
 
   return (
 
-    //NOTE: want home page with a plus there and if you click the plus then it swtiches pages to add-recipe
+    
     //is there a way to pipe directly from login user to /home
     <Router>
       <Toolbar />
@@ -34,10 +36,9 @@ function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/add-recipe" element={<AddRecipe />} />
         <Route path="/home" element={<HomeDisplay />} /> 
-        
+        <Route path="/calculatorPage" element={<CalculatorPage />} />
       </Routes>
     </Router>
   );
 }
-// <Route path="/recipe-list" element={<RecipeList recipes={recipes}/>}/>
 export default App;
