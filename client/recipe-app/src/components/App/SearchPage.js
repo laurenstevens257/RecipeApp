@@ -1,3 +1,4 @@
+import './SearchPage.css';
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar'; // Make sure this path is correct
 
@@ -37,7 +38,9 @@ function SearchPage() {
 
   return (
     <div>
-      <SearchBar onSearch={handleSearch} />
+      <div class="search-container">
+        <SearchBar onSearch={handleSearch} />
+      </div>
       <div className="recipe-list">
         {filteredRecipes.map((recipe, index) => (
           <div key={index} className="recipe-item">

@@ -4,7 +4,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const HomeDisplay = ({ recipes }) => {
-  //const recipes = [];
 
   const navigate = useNavigate();
   const handleClick = () => {
