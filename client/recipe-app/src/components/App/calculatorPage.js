@@ -24,7 +24,7 @@ const CalculatorPage = () => {
       return;
     }
 
-    const convertedValue = (value * conversions[fromUnit]) / conversions[toUnit];
+    const convertedValue = (value * conversions[toUnit]) / conversions[fromUnit];
     setResult(`${value} ${fromUnit} is equal to ${convertedValue} ${toUnit}`);
   };
 
