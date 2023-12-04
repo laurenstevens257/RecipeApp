@@ -1,6 +1,6 @@
 .calculator-wrapper {
     max-width: 400px;
-    margin: auto;
+    margin: 50px auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -9,22 +9,21 @@
   
   label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   
   input,
-  select {
+  select,
+  button {
     width: 100%;
     padding: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
   }
   
   button {
     background-color: #4caf50;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
+    color: #fff;
     cursor: pointer;
   }
   
@@ -33,7 +32,7 @@
   }
   
   p {
-    margin-top: 16px;
+    margin-top: 10px;
     font-weight: bold;
   }
   
