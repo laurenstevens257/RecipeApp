@@ -5,7 +5,17 @@
     display: flex;
     justify-content: space-around;
     padding: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .secondary-toolbar {
+    background-color: rgb(191, 79, 16); /* Slightly darker shade of orange */
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 4px; /* Adjust padding to make the secondary toolbar less tall */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+   
   }
   
   .toolbar-link {
@@ -18,7 +28,12 @@
     transition: background-color 0.3s;
   }
   
+  .secondary-toolbar .toolbar-link {
+    font-size: 18px; /* Adjust font size for the secondary toolbar */
+  }
+  
   .toolbar-link:hover {
     background-color: rgb(197, 94, 30);
   }
+  
   
