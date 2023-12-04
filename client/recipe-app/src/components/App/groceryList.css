@@ -1,0 +1,70 @@
+/* groceryList.css */
+
+.add-item-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ingredient-input {
+    flex: 7;
+    padding: 8px;
+    margin-right: 4px;
+  }
+  
+  .add-item-button {
+    flex: 1;
+    padding: 4px;
+    font-size: 14px; /* Adjust the font size as needed */
+    background-color: #4caf50; /* Green color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .discard-button {
+    padding: 8px 12px;
+    background-color: rgb(241, 56, 56); /* Red color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .discard-button:hover {
+    background-color: darkred; /* Darker red on hover */
+  }
+  
+  .checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px; /* Add margin to separate each item */
+  }
+  
+  .checkbox input {
+    margin-left: 4px;
+  }
+  
+  .checkbox label {
+    margin: 0;
+  }
+  
+  .header {
+    color: #0f699e !important; /* Blue color */
+    padding: 16px;
+    text-align: center;
+  }
+  
+  .header-line1 {
+    font-weight: bold;
+    color: #1486c7 !important; /* Blue color */
+    font-size: 18px; /* Adjust the font size as needed */
+  }
+  
+  .header-line2 {
+    color: #093f5f !important; /* Blue color */
+    font-size: 14px; /* Adjust the font size as needed */
+  }
+
+  
+  
