@@ -8,7 +8,6 @@ function AddRecipe() {
   const [ingredientInput, setIngredientInput] = useState('');
   
   const [ingredientsList, setIngredientsList] = useState([]);
-  const [ingredientName, setIngredientName] = useState('');
   const [ingredientUnit, setIngredientUnit] = useState('');
   const [ingredientQty, setIngredientQty] = useState('');
 
@@ -20,11 +19,10 @@ function AddRecipe() {
 
   const handleAddIngredient = () => {
     if (ingredientInput !== '' && ingredientUnit !== '' && ingredientQty !== '') {
-      setIngredientName(ingredientInput);
       const prevIngredients = ingredientsList.slice();
       setIngredientsList((prevIngredients) => [
         ...prevIngredients,
-        { name: ingredientName, quantity: ingredientQty, unit: ingredientUnit },
+        { name: ingredientInput, quantity: ingredientQty, units: ingredientUnit },
       ]);
 
       console.log('ingredients: ', ingredientsList);

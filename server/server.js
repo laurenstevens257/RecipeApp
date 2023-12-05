@@ -147,18 +147,12 @@ const authenticate = async (req, res, next) => {
 app.post('/add-recipe', authenticate, async (req, res) => {
   const { name, cookTime, prepTime, ingredients, instructions, tags } = req.body;
 
-  // console.log('name: ', name);
-  // console.log('cookTime', cookTime);
-  // console.log('prepTime', prepTime);
-  // console.log('ingredients', ingredients);
-  // console.log('instructions', instructions);
-  // console.log('tags', tags);
-
-
   try {
     if (!req.user) {
       return res.status(400).json({ error: 'User authentication failed' });
     }
+
+    console.log('ingredients: ', ingredients);
 
     const recipe = new Recipe({
       name,
@@ -173,6 +167,7 @@ app.post('/add-recipe', authenticate, async (req, res) => {
     console.log('recipe: ', recipe);
 
     await recipe.save();
+
     res.status(201).json({ success: true, message: 'Recipe added successfully' });
   } catch (error) {
     res.status(500).send('Error in adding recipe: ' + error.message);
@@ -188,8 +183,6 @@ app.get('/home', authenticate, async (req, res) => {
       path: 'createdBy',
       select: 'username'
     });
-
-    //console.log('recipes: ', recipes);
     
     res.status(200).json(recipes);
   } catch (error) {
@@ -223,7 +216,6 @@ app.get('/search', async (req, res) => {
     res.status(500).send('Error in fetching recipes');
   }
 });
-
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
