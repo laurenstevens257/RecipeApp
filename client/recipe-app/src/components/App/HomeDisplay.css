@@ -1,23 +1,24 @@
 /* HomeDisplay.css */
 
-button {
-    font-size: 18px;
-    padding: 8px 10px;
-    cursor: pointer;
+.home-display {
+  position: relative;
+  margin: 30px 30px 80px 30px; /* manually add bottom margin since the button extends below the container */
+}
 
-    /*chose random color that I thought was cute and earthy -- we can change if necessary*/
-    background-color: rgb(81, 119, 71); 
-    color: white;
+button.create-recipe-button {
+  font-size: 18px;
+  padding: 8px 10px;
+  cursor: pointer;
+  background-color: rgb(81, 119, 71);
+  color: white;
 
-    /* pin button beneath growing list of recipes */
-    position: static;
-    bottom: position * 50 + 10 + px;
-    left: 20px;
-  }
+  /* Position the button at the bottom of its container */
+  position: absolute;
+  bottom: -60px; /* shift down 50px for the last recipe item and 10px for a buffer between last item and buffer */
+}
 
-button:hover {
-    /* button gets slightly darker when hovering*/
-    background-color: rgb(79, 101, 64); 
+button.create-recipe-button:hover {
+  background-color: rgb(79, 101, 64);
 }
 
 /* Target the button within HomeDisplay specifically, if necessary use a class or id */

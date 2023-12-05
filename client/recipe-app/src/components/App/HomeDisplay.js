@@ -11,11 +11,11 @@ const HomeDisplay = ({ recipes }) => {
   };
 
   return (
-    <div>
-        <button onClick={handleClick}>
-          <span>+ Create New Recipe</span>
-        </button>
-        <RecipeList />
+    <div className="home-display">
+      <RecipeList />
+      <button onClick={handleClick} className="create-recipe-button">
+        <span>+ Create New Recipe</span>
+      </button>
     </div>
   );
 };
