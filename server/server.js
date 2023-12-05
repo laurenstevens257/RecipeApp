@@ -36,6 +36,13 @@ const recipeSchema = new mongoose.Schema({
   name: String,
   cookTime: Number,
   prepTime: Number,
+  ingredients: [
+    {
+      name: String,
+      quantity: String,
+      units: String
+    }
+  ],
   instructions: String,
   tags: String,
   createdBy: {
@@ -140,12 +147,13 @@ const authenticate = async (req, res, next) => {
 app.post('/add-recipe', authenticate, async (req, res) => {
   const { name, cookTime, prepTime, ingredients, instructions, tags } = req.body;
 
-  console.log('name: ', name);
-  console.log('cookTime', cookTime);
-  console.log('prepTime', prepTime);
-  console.log('ingredients', ingredients);
-  console.log('instructions', instructions);
-  console.log('tags', tags);
+  // console.log('name: ', name);
+  // console.log('cookTime', cookTime);
+  // console.log('prepTime', prepTime);
+  // console.log('ingredients', ingredients);
+  // console.log('instructions', instructions);
+  // console.log('tags', tags);
+
 
   try {
     if (!req.user) {
@@ -157,9 +165,12 @@ app.post('/add-recipe', authenticate, async (req, res) => {
       cookTime,
       prepTime,
       ingredients,
+      instructions,
       tags,
       createdBy: req.user.id // Set the createdBy field to the authenticated user's ID
     });
+
+    console.log('recipe: ', recipe);
 
     await recipe.save();
     res.status(201).json({ success: true, message: 'Recipe added successfully' });

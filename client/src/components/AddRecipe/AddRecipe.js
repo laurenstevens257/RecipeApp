@@ -6,21 +6,29 @@ function AddRecipe() {
   const navigate = useNavigate();
 
   const [ingredientInput, setIngredientInput] = useState('');
-  const [ingredientUnit, setIngredientUnit] = useState(''); // New state for ingredient unit
+  
+  const [ingredientsList, setIngredientsList] = useState([]);
+  const [ingredientName, setIngredientName] = useState('');
+  const [ingredientUnit, setIngredientUnit] = useState('');
+  const [ingredientQty, setIngredientQty] = useState('');
 
   const [recipeName, setRecipeName] = useState('');
-  const [ingredients, setIngredients] = useState([]);
   const [cookTime, setCookTime] = useState('');
   const [prepTime, setPrepTime] = useState('');
   const [instructions, setInstructions] = useState('');
   const [tags, setTags] = useState('');
 
   const handleAddIngredient = () => {
-    if (ingredientInput && ingredientUnit) {
-      setIngredients((prevIngredients) => [
+    if (ingredientInput !== '' && ingredientUnit !== '' && ingredientQty !== '') {
+      setIngredientName(ingredientInput);
+      const prevIngredients = ingredientsList.slice();
+      setIngredientsList((prevIngredients) => [
         ...prevIngredients,
-        { name: ingredientInput, unit: ingredientUnit },
+        { name: ingredientName, quantity: ingredientQty, unit: ingredientUnit },
       ]);
+
+      console.log('ingredients: ', ingredientsList);
+
       setIngredientInput('');
       setIngredientUnit(''); // Clear input fields
     }
@@ -41,7 +49,7 @@ function AddRecipe() {
           name: recipeName,
           cookTime,
           prepTime,
-          ingredients,
+          ingredients: ingredientsList,
           instructions,
           tags,
         }),
@@ -102,6 +110,14 @@ function AddRecipe() {
           className='ingredient-input'
         />
 
+        <input
+          type="text"
+          value={ingredientQty}
+          onChange={(e) => setIngredientQty(e.target.value)}
+          placeholder="Enter the quantity"
+          className='ingredient-quantity'
+        />
+
         {/* New dropdown/select for ingredient unit */}
         <select
           value={ingredientUnit}
@@ -109,6 +125,7 @@ function AddRecipe() {
           className='unit-dropdown'
         >
           <option value="">Select Unit</option>
+          <option value="none"> </option>
           <option value="cups">Cups</option>
           <option value="tablespoons">Tablespoons</option>
           <option value="teaspoons">Teaspoons</option>
