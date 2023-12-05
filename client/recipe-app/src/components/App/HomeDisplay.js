@@ -12,6 +12,7 @@ const HomeDisplay = ({ recipes }) => {
 
   return (
     <div className="home-display">
+      <h1>Your Recipes:</h1>
       <RecipeList />
       <button onClick={handleClick} className="create-recipe-button">
         <span>+ Create New Recipe</span>
