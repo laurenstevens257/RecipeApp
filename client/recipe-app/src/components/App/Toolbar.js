@@ -15,7 +15,7 @@ const Toolbar = () => {
         
         {/* Second Toolbar */}
         <div className="secondary-toolbar">
-          <Link to="/calculatorPage" className="toolbar-link">Measurement Calculator</Link>
+          <Link to="/calculatorPage" className="toolbar-link">Measurement Converter</Link>
           <Link to="/groceryList" className="toolbar-link">Grocery List</Link>
         </div>
       </div>
