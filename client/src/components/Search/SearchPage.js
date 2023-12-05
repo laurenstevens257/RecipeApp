@@ -1,5 +1,5 @@
 import './SearchPage.css';
-import './HomeDisplay.css';
+import '../Home/HomeDisplay.css';
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar'; // Make sure this path is correct
 

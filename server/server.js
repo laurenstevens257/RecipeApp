@@ -25,8 +25,13 @@ mongoose.connect(uri, {
 // Define User and Recipe Schemas
 const userSchema = new mongoose.Schema({
   username: String,
-  password: String
+  password: String,
+  likedRecipes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Recipe'
+  }]
 });
+
 const recipeSchema = new mongoose.Schema({
   name: String,
   createdBy: {
@@ -154,11 +159,7 @@ app.post('/add-recipe', authenticate, async (req, res) => {
 // Fetch Recipes Route - Modified to support search functionality
 app.get('/home', authenticate, async (req, res) => {
   try {
-    // const recipes = await Recipe.find().populate({
-    //   path: 'createdBy',
-    //   select: 'username' // Selects only the 'username' field from the User model
-    // });
-
+    
     const recipes = await Recipe.find({ createdBy: req.user.id }).populate({
       path: 'createdBy',
       select: 'username'

@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import './HomeDisplay.css';
+import '../Home/HomeDisplay.css';
 import Login from '../Login/Login';
 import useToken from './useToken';
-import Dashboard from '../Dashboard/Dashboard';
-import Preferences from '../Preferences/Preferences';
-import AddRecipe from './AddRecipe'; // Adjust the import path as needed
-import RecipeList from './RecipeList'; // Adjust the import path as needed
+import AddRecipe from '../AddRecipe/AddRecipe'; // Adjust the import path as needed
+import Toolbar from './Toolbar';
+import FlavoritesPage from '../Flavorites/FlavoritesPage'; // Your component for Favorites
+import SearchPage from '../Search/SearchPage';     // Your component for Search
+import HomeDisplay from '../Home/HomeDisplay';
+//import CalculatorPage from './calculatorPage';
+import CalculatorPage from '../Calculator/calculatorPage';
+import GroceryList from '../GroceryList/groceryList';
+// import RecipeList from './RecipeList'; // Adjust the import path as needed
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 //check to see if any of these are redundant, as i just added them 
 //import React from 'react';
 //import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Toolbar from './Toolbar';
-import FlavoritesPage from './FlavoritesPage'; // Your component for Favorites
-import SearchPage from './SearchPage';     // Your component for Search
-import HomeDisplay from './HomeDisplay';
-//import CalculatorPage from './calculatorPage';
-import CalculatorPage from './calculatorPage';
-import GroceryList from './groceryList';
+
 
 function App() {
   const { token, setToken } = useToken();

@@ -3,10 +3,16 @@ import './AddRecipe.css';
 import { useNavigate } from 'react-router-dom';
 
 function AddRecipe() { // Changed from onAdd to onRecipeAdded
-  const [recipeName, setRecipeName] = useState('');
   const navigate = useNavigate();
-  const[ingredients, setIngredients] = useState([]);
+
   const [ingredientInput, setIngredientInput] = useState('');
+
+  const [recipeName, setRecipeName] = useState('');
+  const [ingredients, setIngredients] = useState([]);
+  const [cookTime, setCookTime] = useState('');
+  const [prepTime, setPrepTime] = useState('');
+  const [instructions, setInstructions] = useState('');
+  const [tags, setTags] = useState('');
 
   const handleAddIngredient = () => {
     if (ingredientInput) {
@@ -19,16 +25,20 @@ function AddRecipe() { // Changed from onAdd to onRecipeAdded
   async function sendRecipe() {
     try {
       const token = sessionStorage.getItem('token'); // Fetch the authentication token
-      //commented out so token isn't visible in console log
-      //keyword: MAKE-TOKEN-VISIBLE
-      //console.error(token);
+
       const response = await fetch('http://localhost:8080/add-recipe', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`, // Send the token in the Authorization header
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: recipeName }),
+        body: JSON.stringify({ name: recipeName, 
+                                cookTime, 
+                                prepTime,
+                                ingredients, 
+                                instructions,
+                                tags
+                              }),
       });
 
       if (!response.ok) {
@@ -54,7 +64,7 @@ function AddRecipe() { // Changed from onAdd to onRecipeAdded
         console.error('Failed to add recipe');
       }
     } catch (error) {
-      console.error('Error:', error.message);
+        console.error('Error:', error.message);
     }
   };
 
@@ -74,6 +84,8 @@ function AddRecipe() { // Changed from onAdd to onRecipeAdded
 
         <input
           type="text"
+          value={prepTime}
+          onChange={(e) => setPrepTime(e.target.value)}
           placeholder="Enter prep time in mins"
           className='prep-input'
         />
@@ -89,14 +101,27 @@ function AddRecipe() { // Changed from onAdd to onRecipeAdded
         
         <input
           type="text"
+          value={cookTime}
+          onChange={(e) => setCookTime(e.target.value)}
           placeholder="Enter cook time in mins"
           className='cook-input'
         />
         <input
           type="text"
+          value={instructions}
+          onChange={(e) => setInstructions(e.target.value)}
           placeholder="Enter cooking instructions..."
           className='instructions-input'
         />
+
+        <input
+          type="text"
+          value={tags}
+          onChange={(e) => setTags(e.target.value)}
+          placeholder="Enter tags (Gluten free, vegan, etc)"
+          className='tags-input'
+        />
+
         <button type="submit" className="add-button">Add Recipe</button>
       </form>
    </div>
