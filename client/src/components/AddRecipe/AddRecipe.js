@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import './AddRecipe.css';
 import { useNavigate } from 'react-router-dom';
 
-function AddRecipe() { // Changed from onAdd to onRecipeAdded
+function AddRecipe() {
   const navigate = useNavigate();
 
   const [ingredientInput, setIngredientInput] = useState('');
+  const [ingredientUnit, setIngredientUnit] = useState(''); // New state for ingredient unit
 
   const [recipeName, setRecipeName] = useState('');
   const [ingredients, setIngredients] = useState([]);
@@ -15,9 +16,13 @@ function AddRecipe() { // Changed from onAdd to onRecipeAdded
   const [tags, setTags] = useState('');
 
   const handleAddIngredient = () => {
-    if (ingredientInput) {
-      setIngredients(prevIngredients => [...prevIngredients, ingredientInput]);
-      setIngredientInput(''); // Clear the input field
+    if (ingredientInput && ingredientUnit) {
+      setIngredients((prevIngredients) => [
+        ...prevIngredients,
+        { name: ingredientInput, unit: ingredientUnit },
+      ]);
+      setIngredientInput('');
+      setIngredientUnit(''); // Clear input fields
     }
   };
 
@@ -32,13 +37,14 @@ function AddRecipe() { // Changed from onAdd to onRecipeAdded
           'Authorization': `Bearer ${token}`, // Send the token in the Authorization header
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: recipeName, 
-                                cookTime, 
-                                prepTime,
-                                ingredients, 
-                                instructions,
-                                tags
-                              }),
+        body: JSON.stringify({
+          name: recipeName,
+          cookTime,
+          prepTime,
+          ingredients,
+          instructions,
+          tags,
+        }),
       });
 
       if (!response.ok) {
@@ -64,10 +70,9 @@ function AddRecipe() { // Changed from onAdd to onRecipeAdded
         console.error('Failed to add recipe');
       }
     } catch (error) {
-        console.error('Error:', error.message);
+      console.error('Error:', error.message);
     }
   };
-
 
   return (
     <div>
@@ -96,9 +101,26 @@ function AddRecipe() { // Changed from onAdd to onRecipeAdded
           placeholder="Enter an ingredient"
           className='ingredient-input'
         />
+
+        {/* New dropdown/select for ingredient unit */}
+        <select
+          value={ingredientUnit}
+          onChange={(e) => setIngredientUnit(e.target.value)}
+          className='unit-dropdown'
+        >
+          <option value="">Select Unit</option>
+          <option value="cups">Cups</option>
+          <option value="tablespoons">Tablespoons</option>
+          <option value="teaspoons">Teaspoons</option>
+          <option value="ounces">Ounces</option>
+          <option value="quarts">Quarts</option>
+          <option value="liters">Liters</option>
+          <option value="grams">Grams</option>
+          <option value="pounds">Pounds</option>
+        </select>
+
         <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+</button>
-        
-        
+
         <input
           type="text"
           value={cookTime}
@@ -124,8 +146,7 @@ function AddRecipe() { // Changed from onAdd to onRecipeAdded
 
         <button type="submit" className="add-button">Add Recipe</button>
       </form>
-   </div>
-    
+    </div>
   );
 }
 
