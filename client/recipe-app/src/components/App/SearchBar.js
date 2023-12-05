@@ -1,3 +1,4 @@
+import './SearchPage.css';
 import React, { useState } from 'react';
 
 function SearchBar({ onSearch }) {
@@ -10,16 +11,17 @@ function SearchBar({ onSearch }) {
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Search recipes..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button onClick={handleSearch}>
-        Search
-      </button>
-      <div>
+      <div class='search-container'> 
+        <input
+          class='search-input'
+          type="text"
+          placeholder="Search recipes..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button class='search-button' onClick={handleSearch}>Search</button>
+      </div>
+      <div class='search-checkbox'>
         <input
           type="checkbox"
           checked={searchByUser}

@@ -38,7 +38,7 @@ function SearchPage() {
 
   return (
     <div>
-      <div class="search-container">
+      <div>
         <SearchBar onSearch={handleSearch} />
       </div>
       <div className="recipe-list">

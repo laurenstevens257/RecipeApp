@@ -1,10 +1,11 @@
 /* SearchPage.css */
 
-.search-container {
+  .search-container {
     display: flex;
     justify-content: center;
     padding: 20px;
-    margin: 20px;
+    margin: 20px 0px 10px 0px;
+    position: relative;
   }
   
   .search-input {
@@ -24,6 +25,16 @@
     color: white;
     cursor: pointer;
     position: static;
+    width: 200px;
+  }
+
+  .search-checkbox {
+    display: flex;
+    justify-content: center;
+    position: static;
+    width: 400px;
+    height: 25px;
+    font-size: 16px;
   }
   
   .search-button:hover {
