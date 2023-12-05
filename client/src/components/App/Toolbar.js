@@ -8,7 +8,7 @@ const Toolbar = () => {
       <div>
         {/* First Toolbar */}
         <div className="toolbar">
-          <Link to="/home" className="toolbar-link">Home</Link>
+          <Link to="/" className="toolbar-link">Home</Link>
           <Link to="/flavorites" className="toolbar-link">Flavorites</Link>
           <Link to="/search" className="toolbar-link">Search</Link>
         </div>
