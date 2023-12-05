@@ -1,4 +1,3 @@
-// GroceryList.js
 import React, { useState } from 'react';
 import './groceryList.css';
 
@@ -27,6 +26,12 @@ const GroceryList = () => {
     setGroceryList([]);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleAddItem();
+    }
+  };
+
   return (
     <div className="container">
       <div className="header">
@@ -40,6 +45,7 @@ const GroceryList = () => {
           type="text"
           value={inputValue}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown} // Handle Enter key press
           placeholder="Enter ingredient..."
           className="ingredient-input"
         />
