@@ -35,7 +35,7 @@ function App() {
         <Route path="/flavorites" element={<FlavoritesPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/add-recipe" element={<AddRecipe />} />
-        <Route path="/home" element={<HomeDisplay />} /> 
+        <Route path="/" element={<HomeDisplay />} /> 
         <Route path="/calculatorPage" element={<CalculatorPage />} />
         <Route path="/groceryList" element={<GroceryList />} />
       </Routes>
