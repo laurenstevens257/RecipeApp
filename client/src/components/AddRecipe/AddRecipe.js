@@ -9,7 +9,7 @@ function AddRecipe() {
   
   const [ingredientsList, setIngredientsList] = useState([]);
   const [ingredientUnit, setIngredientUnit] = useState('');
-  const [ingredientQty, setIngredientQty] = useState('');
+  const [ingredientQtyInput, setIngredientQtyInput] = useState('');
 
   const [recipeName, setRecipeName] = useState('');
   const [cookTime, setCookTime] = useState('');
@@ -18,17 +18,18 @@ function AddRecipe() {
   const [tags, setTags] = useState('');
 
   const handleAddIngredient = () => {
-    if (ingredientInput !== '' && ingredientUnit !== '' && ingredientQty !== '') {
+    if (ingredientInput !== '' && ingredientUnit !== '' && ingredientQtyInput !== '') {
       const prevIngredients = ingredientsList.slice();
       setIngredientsList((prevIngredients) => [
         ...prevIngredients,
-        { name: ingredientInput, quantity: ingredientQty, units: ingredientUnit },
+        { name: ingredientInput, quantity: ingredientQtyInput, units: ingredientUnit },
       ]);
 
       console.log('ingredients: ', ingredientsList);
 
       setIngredientInput('');
       setIngredientUnit(''); // Clear input fields
+      setIngredientQtyInput('');
     }
   };
 
@@ -110,8 +111,8 @@ function AddRecipe() {
 
         <input
           type="text"
-          value={ingredientQty}
-          onChange={(e) => setIngredientQty(e.target.value)}
+          value={ingredientQtyInput}
+          onChange={(e) => setIngredientQtyInput(e.target.value)}
           placeholder="Enter the quantity"
           className='ingredient-quantity'
         />
