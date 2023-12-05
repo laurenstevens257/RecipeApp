@@ -9,6 +9,12 @@ function SearchBar({ onSearch }) {
     onSearch(searchTerm, searchByUser);
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <div>
       <div className='search-container'>
@@ -18,6 +24,7 @@ function SearchBar({ onSearch }) {
           placeholder="Search recipes..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={handleKeyPress} // Handle Enter key press
         />
         <button className='search-button' onClick={handleSearch}>
           Search
