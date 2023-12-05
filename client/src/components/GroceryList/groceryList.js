@@ -45,7 +45,7 @@ const GroceryList = () => {
           type="text"
           value={inputValue}
           onChange={handleInputChange}
-          onKeyDown={handleKeyDown} // Handle Enter key press
+          onKeyDown={handleKeyDown} 
           placeholder="Enter ingredient..."
           className="ingredient-input"
         />
@@ -57,15 +57,10 @@ const GroceryList = () => {
         {groceryList.map((item, index) => (
           <li
             key={index}
-            className="checkbox"
-            style={{ textDecoration: item.checked ? 'line-through' : 'none', color: item.checked ? 'red' : 'black' }}
+            className={`grocery-item ${item.checked ? 'checked' : ''}`}
+            onClick={() => handleToggleItem(index)}
           >
-            <input
-              type="checkbox"
-              checked={item.checked}
-              onChange={() => handleToggleItem(index)}
-            />
-            <label>{item.text}</label>
+            {item.text}
           </li>
         ))}
       </ul>

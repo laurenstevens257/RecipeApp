@@ -38,3 +38,10 @@
     height: 25px;
     font-size: 16px;
   }
+
+  .no-results {
+    color: red;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+  }
