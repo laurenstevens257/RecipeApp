@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
 
 const recipeSchema = new mongoose.Schema({
   name: String,
+  cookTime: Number,
+  prepTime: Number,
+  instructions: String,
+  tags: String,
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
@@ -89,7 +93,7 @@ app.post('/login', async (req, res) => {
     if (!(await argon2.verify(user.password, password))) {
       return res.status(400).send('Invalid Credentials');
     }
-    console.log(user);
+    // console.log(user);
     
     const token = generateToken(user);
     res.send({ token, success: true });
@@ -102,7 +106,7 @@ app.post('/login', async (req, res) => {
 // Middleware to authenticate and set user in the request
 const authenticate = async (req, res, next) => {
   // const token = req.headers.authorization?.split(' ')[1]; // Assuming token is sent in the "Authorization" header
-  console.log('check1');
+  // console.log('check1');
 
   const authorizationHeader = req.headers.authorization;
   const tokenIndex = authorizationHeader.indexOf('Bearer ') + 'Bearer '.length;
@@ -110,7 +114,7 @@ const authenticate = async (req, res, next) => {
   const parsedToken = JSON.parse(tokenString);
   const token = parsedToken.token;
   
-  console.log('token: ', token);
+  // console.log('token: ', token);
 
   if (!token) {
     console.log('token messed up');
@@ -119,11 +123,11 @@ const authenticate = async (req, res, next) => {
   }
 
   try {
-    console.log('checkpoint');
+    // console.log('checkpoint');
 
     const decoded = jwt.verify(token, 'your_jwt_secret'); // Replace 'your_jwt_secret' with your secret key
 
-    console.log('decoded: ', decoded);
+    // console.log('decoded: ', decoded);
 
     req.user = decoded; // Assuming the JWT has user information encoded
     next();
@@ -134,9 +138,14 @@ const authenticate = async (req, res, next) => {
 
 // Add Recipe Route
 app.post('/add-recipe', authenticate, async (req, res) => {
-  const { name } = req.body;
+  const { name, cookTime, prepTime, ingredients, instructions, tags } = req.body;
 
   console.log('name: ', name);
+  console.log('cookTime', cookTime);
+  console.log('prepTime', prepTime);
+  console.log('ingredients', ingredients);
+  console.log('instructions', instructions);
+  console.log('tags', tags);
 
   try {
     if (!req.user) {
@@ -145,6 +154,10 @@ app.post('/add-recipe', authenticate, async (req, res) => {
 
     const recipe = new Recipe({
       name,
+      cookTime,
+      prepTime,
+      ingredients,
+      tags,
       createdBy: req.user.id // Set the createdBy field to the authenticated user's ID
     });
 
@@ -159,7 +172,7 @@ app.post('/add-recipe', authenticate, async (req, res) => {
 // Fetch Recipes Route - Modified to support search functionality
 app.get('/home', authenticate, async (req, res) => {
   try {
-    
+
     const recipes = await Recipe.find({ createdBy: req.user.id }).populate({
       path: 'createdBy',
       select: 'username'
@@ -192,7 +205,7 @@ app.get('/search', async (req, res) => {
 
     const recipes = await Recipe.find(query).populate('createdBy', 'username');
 
-    console.log('recipes: ', recipes);
+    // console.log('recipes: ', recipes);
 
     res.status(200).json(recipes);
   } catch (error) {
