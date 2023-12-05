@@ -1,4 +1,5 @@
 import './SearchPage.css';
+import './HomeDisplay.css';
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar'; // Make sure this path is correct
 
@@ -41,13 +42,15 @@ function SearchPage() {
       <div>
         <SearchBar onSearch={handleSearch} />
       </div>
-      <div className="recipe-list">
-        {filteredRecipes.map((recipe, index) => (
-          <div key={index} className="recipe-item">
-            <h3>{recipe.name}</h3>
-            <p>Author: {recipe.createdBy ? recipe.createdBy.username : 'Unknown'}</p>
-          </div>
-        ))}
+      <div class='home-display'>
+        <div className="recipe-list">
+          {filteredRecipes.map((recipe, index) => (
+            <div key={index} className="recipe-item">
+              <h3>{recipe.name}</h3>
+              <p>Author: {recipe.createdBy ? recipe.createdBy.username : 'Unknown'}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

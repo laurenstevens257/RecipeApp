@@ -11,23 +11,27 @@ function SearchBar({ onSearch }) {
 
   return (
     <div>
-      <div class='search-container'> 
+      <div className='search-container'>
         <input
-          class='search-input'
+          className='search-input'
           type="text"
           placeholder="Search recipes..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button class='search-button' onClick={handleSearch}>Search</button>
+        <button className='search-button' onClick={handleSearch}>
+          Search
+        </button>
       </div>
-      <div class='search-checkbox'>
+      <div className='search-container'>
+      <div className='search-user'>
         <input
           type="checkbox"
           checked={searchByUser}
           onChange={() => setSearchByUser(!searchByUser)}
         />
-        <label>Search by User</label>
+        <label className='search-user'>Search by User</label>
+      </div>
       </div>
     </div>
   );
