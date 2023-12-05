@@ -18,6 +18,9 @@ const Toolbar = () => {
           <Link to="/calculatorPage" className="toolbar-link">Measurement Converter</Link>
           <Link to="/groceryList" className="toolbar-link">Grocery List</Link>
         </div>
+        <div className="header-container">
+          <img className="png-iframe" src='Banner.png'></img>
+      </div>
       </div>
     );
   };

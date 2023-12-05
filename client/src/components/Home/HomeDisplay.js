@@ -11,12 +11,17 @@ const HomeDisplay = ({ recipes }) => {
   };
 
   return (
-    <div className="home-display">
-      <h1>Your Recipes:</h1>
-      <RecipeList />
-      <button onClick={handleClick} className="create-recipe-button">
-        <span>+ Create New Recipe</span>
-      </button>
+    <div>
+      <div className="home-display">
+        <h1>Your Recipes:</h1>
+        <RecipeList />
+        <button onClick={handleClick} className="create-recipe-button">
+          <span>+ Create New Recipe</span>
+        </button>
+      </div>
+      <div className="footer-container">
+          <img className="png-iframe" src='Banner.png'></img>
+      </div>
     </div>
   );
 };

@@ -21,4 +21,15 @@ button.create-recipe-button:hover {
   background-color: rgb(79, 101, 64);
 }
 
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.png-iframe {
+  width: 1500px;
+  height: 80px;
+  border: none;
+}
 /* Target the button within HomeDisplay specifically, if necessary use a class or id */

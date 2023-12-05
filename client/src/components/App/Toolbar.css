@@ -36,4 +36,15 @@
     background-color: rgb(197, 94, 30);
   }
   
+  .header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .png-iframe {
+    width: 1500px;
+    height: 80px;
+    border: none;
+  }
   
