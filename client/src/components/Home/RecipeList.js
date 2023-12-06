@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import './RecipeList.css';
 
 function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
 
   const [expandRecipe, setExpandRecipe] = useState(expandToggles);
 
-  console.log('rendered!');
+
 
   const handleRecipeClick = (id, index) => {
     // Toggle expanded recipe view
@@ -24,6 +25,14 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
     // Add any other logic for the button action here
 
   };
+
+  const handleVClick = (event, index) => {
+    event.stopPropagation(); // Prevent click event from reaching the recipe item handler
+    toggleExpandRecipe(index);
+  };
+
+
+ 
 
   const flaveRecipe = async (recipe) => {
     const token = sessionStorage.getItem('token'); // Fetch the authentication token
@@ -57,15 +66,24 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
   return (
     <div className="recipe-list">
       {recipes.map((recipe, index) => (
-        <div key={index} className="recipe-item" onClick={() => handleRecipeClick(recipe._id, index)}>
+        <div
+          key={index}
+          className={`recipe-item ${expandRecipe[index] ? 'expanded' : ''}`}
+          onClick={() => handleRecipeClick(recipe._id, index)}
+        >
           <h3>{recipe.name}</h3>
-          {showAuthor &&(
+          {showAuthor && (
             <p>Author: {recipe.createdBy ? recipe.createdBy.username : 'Unknown'}</p>
           )}
-          <div className="like-button">
-            <button onClick={(event) => handleButtonAction(event, recipe)}>
-              Flave
-            </button>
+          <div className="button-container">
+            <div className="like-button">
+              <button onClick={(event) => handleButtonAction(event, recipe)}>
+                Flave
+              </button>
+              <div className="expand-icon" onClick={(event) => handleVClick(event, index)}>
+              {expandRecipe[index] ? '^' : 'v'}
+            </div>
+            </div>
           </div>
           {expandRecipe[index] && (
             <div className="recipe-details">
@@ -74,14 +92,16 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
               <p>Ingredients:</p>
               <ul>
                 {(recipe.ingredients || []).map((ingredient, idx) => (
-                  <li key={idx}>{ingredient.name} - {ingredient.quantity} {ingredient.units}</li>
+                  <li key={idx}>
+                    {ingredient.name} - {ingredient.quantity} {ingredient.units}
+                  </li>
                 ))}
               </ul>
               <p>{recipe.instructions}</p>
               <p>Tags:</p>
               {(recipe.tags || []).map((tag, idx) => (
-                  <li key={idx}>#{tag}</li>
-                ))}
+                <li key={idx}>#{tag}</li>
+              ))}
             </div>
           )}
         </div>
@@ -89,5 +109,6 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
     </div>
   );
 }
+  
 
 export default RecipeList;

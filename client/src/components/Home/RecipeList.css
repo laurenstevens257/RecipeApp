@@ -1,0 +1,18 @@
+
+
+.recipe-item {
+    /* Your existing styles for recipe items */
+  
+    transition: background-color 0.3s ease; /* Add a transition effect for a smoother color change */
+  }
+  
+
+  
+  .button-container {
+    display: flex;
+    align-items: center; /* Vertical alignment */
+  }
+  
+  .expand-icon {
+    margin-right: 8px; /* Add some spacing between the icon and the button */
+  }
