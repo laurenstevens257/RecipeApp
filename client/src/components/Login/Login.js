@@ -83,7 +83,9 @@ export default function Login( { setToken } ) {
 
   return (
     <div>
-      <img src="/GoodEatsLogo2.png"  />
+      <div className='logo-container'>
+        <img src="/GoodEatsLogo2.png"/>
+      </div>
       <div className="login-wrapper">
         <h1>{isLoginFormVisible ? 'Please Log In' : 'Create an Account'}</h1>
         {isLoginFormVisible ? (

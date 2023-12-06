@@ -3,10 +3,12 @@ import '../Home/HomeDisplay.css';
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar'; // Make sure this path is correct
 
+
 function SearchPage() {
   const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [noResultsFound, setNoResultsFound] = useState(false);
+  const [showError, setShowError] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false); // State to track if a search has been performed
 
   const fetchRecipes = async (searchTerm = '', searchByUser = false) => {
@@ -22,7 +24,7 @@ function SearchPage() {
         const recipesData = await response.json();
         setRecipes(recipesData);
         setFilteredRecipes(recipesData);
-        setNoResultsFound(recipesData.length === 0);
+        setShowError(recipesData.length === 0);
       } else {
         console.error('Failed to fetch recipes');
       }
@@ -32,18 +34,26 @@ function SearchPage() {
   };
 
   const handleSearch = (searchTerm, searchByUser) => {
-    setSearchPerformed(true); // Set that a search has been performed here
+    setSearchPerformed(true);
+    setShowError(false); // Reset the error state before each search
     fetchRecipes(searchTerm, searchByUser);
+  };
+
+  // Function to show the error message after a delay
+  const showErrorAfterDelay = () => {
+    setTimeout(() => {
+      setShowError(true);
+    }, 1000); // Adjust the delay time (in milliseconds) based on your needs
   };
 
   return (
     <div>
       <div>
-        <SearchBar onSearch={handleSearch} />
+        {/* Your SearchBar component */}
       </div>
       <div className='home-display'>
         <div className="recipe-list">
-          {searchPerformed && filteredRecipes.length === 0 && (
+          {showError && (
             <div className="no-results">No results found</div>
           )}
           {filteredRecipes.map((recipe, index) => (
