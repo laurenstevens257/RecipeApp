@@ -89,8 +89,20 @@ app.post('/signup', async (req, res) => {
   const { username, password } = req.body;
   try {
     if (username === '' || password === ''){
-      return res.status(401).json({error: 'please enter a username and password', success: false});
+        return res.status(401).json({
+            error: 'please enter a username and password',
+            success: false
+        });//if username is blank or if password is blank do error 400 to HTTP that is bad respose due to clienr, display error and set the sucsess token
     }
+
+      //for password controll
+      const passwordPolicyRegex = /^(?=.*\d)[A-Za-z\d]{5,20}$/;
+      if (!passwordPolicyRegex.test(password)) {
+          return res.status(401).json({
+              error: 'Your password should be 5-20 symbols and should include at least 1 number',
+              succsess: false
+          });
+      }
 
     let user = await User.findOne({ username });
     if (user) {

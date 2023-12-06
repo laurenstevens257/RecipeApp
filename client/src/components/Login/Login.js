@@ -65,7 +65,7 @@ export default function Login( { setToken } ) {
     
             if (!response.success) {
                 // Handle server errors
-                setError('Signup failed: ' + response.statusText);
+                setError(response.error);
                 return;
             } else{
                 setToken(response);
@@ -129,7 +129,7 @@ export default function Login( { setToken } ) {
           </p>
         )}
       </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 }
