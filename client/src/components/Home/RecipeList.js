@@ -32,23 +32,27 @@ function RecipeList() {
     fetchRecipes();
   }, []);
 
+  console.log('recipes: ', recipes);
+
   const handleRecipeClick = (id) => {
     // Toggle expanded recipe view
     setExpandedRecipeId(expandedRecipeId === id ? null : id);
+    console.log('id: ', id);
   };
 
   return (
     <div className="recipe-list">
       {recipes.map((recipe, index) => (
-        <div key={index} className="recipe-item" onClick={() => handleRecipeClick(recipe.id)}>
+        <div key={index} className="recipe-item" onClick={() => handleRecipeClick(recipe._id)}>
           <h3>{recipe.name}</h3>
-          {expandedRecipeId === recipe.id && (
+          {expandedRecipeId === recipe._id && (
             <div className="recipe-details">
               <p>Prep Time: {recipe.prepTime} minutes</p>
               <p>Cook Time: {recipe.cookTime} minutes</p>
+              <p>Ingredients:</p>
               <ul>
                 {(recipe.ingredients || []).map((ingredient, idx) => (
-                  <li key={idx}>{ingredient.name} - {ingredient.quantity}</li>
+                  <li key={idx}>{ingredient.name} - {ingredient.quantity} {ingredient.units}</li>
                 ))}
               </ul>
               <p>{recipe.instructions}</p>
