@@ -21,6 +21,15 @@ function AddRecipe() {
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState('');
 
+  //for removing 
+  const handleRemoveIngredient = index => {
+    setIngredientsList(prevIngredients => prevIngredients.filter((_, i) => i !== index));
+  };
+  const handleRemoveTag = index => {
+    setTags(prevTags => prevTags.filter((_, i) => i !== index));
+  };
+
+
   const handleAddIngredient = () => {
     if (ingredientInput !== '' && ingredientUnit !== '' && ingredientQtyInput !== '') {
       const newIngredient = { name: ingredientInput, quantity: ingredientQtyInput, units: ingredientUnit };
@@ -100,9 +109,9 @@ function AddRecipe() {
   return (
     <div>
       <h1 className='header-text'>New Recipe</h1>
-  
+
       <form onSubmit={handleSubmit}>
-        <div className='label-container'>
+      <div className='label-container'>
           <h2 className='label-text'>Recipe Name</h2>
         </div>
         <div className='add-container'>
@@ -141,35 +150,36 @@ function AddRecipe() {
             />
           </div>
         </div>
+
+
         <div className='label-container'>
           <h2 className='label-text'>Ingredients</h2>
-        </div>
-        <div className='add-container'>
-          <div className='ingredient-input'>
+          {/* Display added ingredients */}
           <div className="added-ingredients">
             {ingredientsList.map((ingredient, index) => (
-              <p key={index}>{ingredient.name} - {ingredient.quantity} {ingredient.units}</p>
+              <p key={index} onClick={() => handleRemoveIngredient(index)} className="removable-item">
+                {ingredient.name} - {ingredient.quantity} {ingredient.units}
+              </p>
             ))}
           </div>
-            <input
-              type="text"
-              value={ingredientInput}
-              onChange={(e) => setIngredientInput(e.target.value)}
-              placeholder="Enter an ingredient"
-            />
-            <input
-              type="text"
-              value={ingredientQtyInput}
-              onChange={(e) => setIngredientQtyInput(e.target.value)}
-              placeholder="Enter its quantity"
-            />
-            {/* New dropdown/select for ingredient unit */}
-            <select
-              value={ingredientUnit}
-              onChange={(e) => setIngredientUnit(e.target.value)}
-              className='unit-dropdown'
-            >
-              <option value="">Select a unit</option>
+          <input
+            type="text"
+            value={ingredientInput}
+            onChange={(e) => setIngredientInput(e.target.value)}
+            placeholder="Enter an ingredient"
+          />
+          <input
+            type="text"
+            value={ingredientQtyInput}
+            onChange={(e) => setIngredientQtyInput(e.target.value)}
+            placeholder="Enter its quantity"
+          />
+          <select
+            value={ingredientUnit}
+            onChange={(e) => setIngredientUnit(e.target.value)}
+            className='unit-dropdown'
+          >
+           <option value="">Select a unit</option>
               <option value=" "> </option>
               <option value="cup(s)">Cups</option>
               <option value="tablespoon(s)">Tablespoons</option>
@@ -179,50 +189,38 @@ function AddRecipe() {
               <option value="liter(s)">Liters</option>
               <option value="gram(s)">Grams</option>
               <option value="pound(s)">Pounds</option>
-            </select>
-            <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+ Add Ingredient</button>
-          </div>  
-          
+
+          </select>
+          <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+ Add Ingredient</button>
         </div>
-        <div className='label-container'>
-          <h2 className='label-text'>Instructions</h2>
-        </div>
-        <div className='add-container'>
-          <div className='ingredient-input'>
-            <input
-              type="text"
-              value={instructions}
-              onChange={(e) => setInstructions(e.target.value)}
-              placeholder="Enter cooking instructions"
-            />
-          </div>
-        </div>
+
         <div className='label-container'>
           <h2 className='label-text'>Tags</h2>
-        </div>
-        <div className='add-container'>
-          <div className='ingredient-input'>
-            <input
-              type="text"
-              value={tagInput}
-              onChange={(e) => setTagInput(e.target.value)}
-              placeholder="Enter tags to help people discover your recipe (eg. #glutenfree, #vegan, #italian)"
-            />
+          <input
+            type="text"
+            value={tagInput}
+            onChange={(e) => setTagInput(e.target.value)}
+            placeholder="Enter tags to help people discover your recipe (eg. #glutenfree, #vegan, #italian)"
+          />
+          <button type="button" onClick={handleAddTag} className="add-ingredient-button">+ Add Tag</button>
+          {/* Display added tags */}
+          <div className="added-tags">
+            {tags.map((tag, index) => (
+              <p key={index} onClick={() => handleRemoveTag(index)} className="removable-item">
+                {tag}
+              </p>
+            ))}
           </div>
         </div>
-        <button type="button" onClick={handleAddTag} className="add-ingredient-button">+ Add Tag</button>
-        <div className="added-tags">
-          {tags.map((tag, index) => (
-            <p key={index}>{tag}</p>
-          ))}
-        </div>
+
         <button type="submit" className="add-button">+ Add Recipe</button>
       </form>
+
       <div className='add-error'>
         {formError && <p>{formError}</p>}
       </div>
     </div>
   );
-  }  
+}
 
 export default AddRecipe;

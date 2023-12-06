@@ -56,3 +56,14 @@
     margin-top: -45px;
     color: rgb(193, 66, 54);
 }
+
+
+.removable-item {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.removable-item:hover {
+  color: red;
+  text-decoration: line-through;
+}
