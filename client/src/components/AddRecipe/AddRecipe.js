@@ -23,13 +23,12 @@ function AddRecipe() {
       const newIngredient = { name: ingredientInput, quantity: ingredientQtyInput, units: ingredientUnit };
       setIngredientsList(prevIngredients => [...prevIngredients, newIngredient]);
 
-        console.log('ingredients: ', ingredientsList);
+      // Clear input fields after adding an ingredient
       setIngredientInput('');
       setIngredientUnit('');
       setIngredientQtyInput('');
     }
   };
-
 
   // Front-end function to send recipe data to the server
   async function sendRecipe() {
@@ -92,9 +91,6 @@ function AddRecipe() {
     <div>
       <h1 className='header-text'>New Recipe</h1>
   
-      {/* Form error message */}
-      {formError && <p style={{ color: 'red' }}>{formError}</p>}
-  
       <form onSubmit={handleSubmit}>
         <div className='label-container'>
           <h2 className='label-text'>Recipe Name</h2>
@@ -140,6 +136,11 @@ function AddRecipe() {
         </div>
         <div className='add-container'>
           <div className='ingredient-input'>
+          <div className="added-ingredients">
+            {ingredientsList.map((ingredient, index) => (
+              <p key={index}>{ingredient.name} - {ingredient.quantity} {ingredient.units}</p>
+            ))}
+          </div>
             <input
               type="text"
               value={ingredientInput}
@@ -171,6 +172,7 @@ function AddRecipe() {
             </select>
             <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+ Add Ingredient</button>
           </div>  
+          
         </div>
         <div className='label-container'>
           <h2 className='label-text'>Instructions</h2>
@@ -200,6 +202,9 @@ function AddRecipe() {
         </div>
         <button type="submit" className="add-button">+ Add Recipe</button>
       </form>
+      <div className='add-container'>
+        {formError && <p style={{ color: 'red' }}>{formError}</p>}</div>
+      
     </div>
   );
   }  
