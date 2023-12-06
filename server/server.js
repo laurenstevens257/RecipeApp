@@ -63,7 +63,11 @@ const recipeSchema = new mongoose.Schema({
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  flavedBy: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 });
 
 // Create Models
@@ -178,7 +182,8 @@ app.post('/add-recipe', authenticate, async (req, res) => {
       ingredients,
       instructions,
       tags,
-      createdBy: req.user.id // Set the createdBy field to the authenticated user's ID
+      createdBy: req.user.id, // Set the createdBy field to the authenticated user's ID
+      flavedBy: []
     });
 
     console.log('recipe: ', recipe);
@@ -242,6 +247,12 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
   try {
     const { recipe } = req.body;
 
+    console.log('recipe: ', recipe);
+
+    const recipeToModify = await Recipe.findById(recipe._id);
+
+    console.log(recipeToModify);
+
     const user = await User.findById(req.user.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -249,25 +260,41 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
 
     console.log('initial: ', user);
 
-    const recipeIndex = user.likedRecipes.indexOf(recipe._id);
+    const recipeIndex = user.likedRecipes.indexOf(recipeToModify._id);
 
     if (!(recipeIndex > -1)) {
-      user.likedRecipes.push(recipe._id); // Append only if not already liked
+      user.likedRecipes.push(recipeToModify._id); // Append only if not already liked
+      recipeToModify.flavedBy.push(user._id);
 
       console.log('liked: ', user);
 
+      console.log('recipe: ', recipeToModify);
+
+      await recipeToModify.save();
+
+      console.log('recipe saved');
+
+      await user.save(); // Save the user with the updated likedRecipes
+
+      
       res.status(200).json({ message: 'Recipe flaved', likedRecipes: user.likedRecipes });
       
     } else {
+
       user.likedRecipes.splice(recipeIndex, 1);
 
+      const userIndex = recipeToModify.flavedBy.indexOf(user._id);
+      if(userIndex === -1){
+        recipeToModify.flavedBy.splice(userIndex, 1);
+
+      }
       console.log('unliked: ', user);
+
+      await recipeToModify.save();
+      await user.save(); // Save the user with the updated likedRecipes
 
       res.status(200).json({ message: 'Recipe unflaved' });
     }
-
-    await user.save(); // Save the user with the updated likedRecipes
-
   } catch (error) {
     res.status(500).send('Error in flaving recipes');
   }
