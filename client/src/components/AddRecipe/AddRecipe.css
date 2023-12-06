@@ -46,3 +46,14 @@
 .add-ingredient-button {
     background-color: rgb(85, 57, 80);
 }
+
+.add-ingredient-button:hover {
+    background-color: rgb(62, 43, 58); /* Darker shade of purple for hover */
+    
+  }
+
+  .added-ingredients p {
+    margin: 5px 0;
+    /* Add more styles as needed */
+  }
+  

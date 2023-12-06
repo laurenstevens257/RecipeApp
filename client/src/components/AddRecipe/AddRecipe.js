@@ -16,19 +16,16 @@ function AddRecipe() {
   const [prepTime, setPrepTime] = useState('');
   const [instructions, setInstructions] = useState('');
   const [tags, setTags] = useState('');
+  const [formError, setFormError] = useState('');
 
   const handleAddIngredient = () => {
     if (ingredientInput !== '' && ingredientUnit !== '' && ingredientQtyInput !== '') {
-      const prevIngredients = ingredientsList.slice();
-      setIngredientsList((prevIngredients) => [
-        ...prevIngredients,
-        { name: ingredientInput, quantity: ingredientQtyInput, units: ingredientUnit },
-      ]);
+      const newIngredient = { name: ingredientInput, quantity: ingredientQtyInput, units: ingredientUnit };
+      setIngredientsList(prevIngredients => [...prevIngredients, newIngredient]);
 
-      console.log('ingredients: ', ingredientsList);
-
+      // Clear input fields after adding an ingredient
       setIngredientInput('');
-      setIngredientUnit(''); // Clear input fields
+      setIngredientUnit('');
       setIngredientQtyInput('');
     }
   };
@@ -66,12 +63,21 @@ function AddRecipe() {
 //somewhere in here there should also throw and error that says 'please fill out all the fields if any property is empty'
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!recipeName.trim() || !prepTime.trim() || !cookTime.trim() || !instructions.trim() || ingredientsList.length === 0) {
+      setFormError('Please fill out all of the fields');
+      return;
+    }
     try {
       const response = await sendRecipe();
 
       if (response.success) {
-        setRecipeName(''); // Reset input field after submission
-        navigate('/home');
+        setRecipeName('');
+        setPrepTime('');
+        setCookTime('');
+        setInstructions('');
+        setIngredientsList([]);
+        setTags('');
+        navigate('/');
         console.error('kinda worked??');
       } else {
         console.error('Failed to add recipe');
@@ -84,6 +90,7 @@ function AddRecipe() {
   return (
     <div>
       <h1 className='header-text'>New Recipe</h1>
+  
       <form onSubmit={handleSubmit}>
         <div className='label-container'>
           <h2 className='label-text'>Recipe Name</h2>
@@ -129,6 +136,11 @@ function AddRecipe() {
         </div>
         <div className='add-container'>
           <div className='ingredient-input'>
+          <div className="added-ingredients">
+            {ingredientsList.map((ingredient, index) => (
+              <p key={index}>{ingredient.name} - {ingredient.quantity} {ingredient.units}</p>
+            ))}
+          </div>
             <input
               type="text"
               value={ingredientInput}
@@ -160,6 +172,7 @@ function AddRecipe() {
             </select>
             <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+ Add Ingredient</button>
           </div>  
+          
         </div>
         <div className='label-container'>
           <h2 className='label-text'>Instructions</h2>
@@ -189,8 +202,11 @@ function AddRecipe() {
         </div>
         <button type="submit" className="add-button">+ Add Recipe</button>
       </form>
+      <div className='add-container'>
+        {formError && <p style={{ color: 'red' }}>{formError}</p>}</div>
+      
     </div>
   );
-}
+  }  
 
 export default AddRecipe;
