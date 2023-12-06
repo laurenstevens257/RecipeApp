@@ -7,7 +7,12 @@ function SearchBar({ onSearch }) {
   const [searchByTags, setSearchByTags] = useState(false); // State for searching by tags
 
   const handleSearch = () => {
-    onSearch(searchTerm, searchByUser, searchByTags); // Pass both searchByUser and searchByTags to onSearch
+    if(searchTerm.startsWith('#')){
+      const newTerm = searchTerm.substring(1);
+      onSearch(newTerm, searchByUser, searchByTags);
+    } else{
+      onSearch(searchTerm, searchByUser, searchByTags); // Pass both searchByUser and searchByTags to onSearch
+    }
   };
 
   const handleKeyPress = (event) => {
