@@ -16,22 +16,20 @@ function AddRecipe() {
   const [prepTime, setPrepTime] = useState('');
   const [instructions, setInstructions] = useState('');
   const [tags, setTags] = useState('');
+  const [formError, setFormError] = useState('');
 
   const handleAddIngredient = () => {
     if (ingredientInput !== '' && ingredientUnit !== '' && ingredientQtyInput !== '') {
-      const prevIngredients = ingredientsList.slice();
-      setIngredientsList((prevIngredients) => [
-        ...prevIngredients,
-        { name: ingredientInput, quantity: ingredientQtyInput, units: ingredientUnit },
-      ]);
+      const newIngredient = { name: ingredientInput, quantity: ingredientQtyInput, units: ingredientUnit };
+      setIngredientsList(prevIngredients => [...prevIngredients, newIngredient]);
 
-      console.log('ingredients: ', ingredientsList);
-
+        console.log('ingredients: ', ingredientsList);
       setIngredientInput('');
-      setIngredientUnit(''); // Clear input fields
+      setIngredientUnit('');
       setIngredientQtyInput('');
     }
   };
+
 
   // Front-end function to send recipe data to the server
   async function sendRecipe() {
@@ -66,12 +64,21 @@ function AddRecipe() {
 //somewhere in here there should also throw and error that says 'please fill out all the fields if any property is empty'
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!recipeName.trim() || !prepTime.trim() || !cookTime.trim() || !instructions.trim() || ingredientsList.length === 0) {
+      setFormError('Please fill out all of the fields');
+      return;
+    }
     try {
       const response = await sendRecipe();
 
       if (response.success) {
-        setRecipeName(''); // Reset input field after submission
-        navigate('/home');
+        setRecipeName('');
+        setPrepTime('');
+        setCookTime('');
+        setInstructions('');
+        setIngredientsList([]);
+        setTags('');
+        navigate('/');
         console.error('kinda worked??');
       } else {
         console.error('Failed to add recipe');
@@ -84,6 +91,10 @@ function AddRecipe() {
   return (
     <div>
       <h1 className='header-text'>New Recipe</h1>
+  
+      {/* Form error message */}
+      {formError && <p style={{ color: 'red' }}>{formError}</p>}
+  
       <form onSubmit={handleSubmit}>
         <div className='label-container'>
           <h2 className='label-text'>Recipe Name</h2>
@@ -191,6 +202,6 @@ function AddRecipe() {
       </form>
     </div>
   );
-}
+  }  
 
 export default AddRecipe;
