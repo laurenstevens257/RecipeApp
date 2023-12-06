@@ -34,13 +34,11 @@ function AddRecipe() {
   };
 
   const handleAddTag = () => {
-    if(tagInput !== ''){
+    if (tagInput.trim() !== '') {
       setTags(prevTags => [...prevTags, tagInput]);
-      console.log(tags);
-      setTagInput('');
-      console.log(tagInput);
+      setTagInput(''); // Clear the tag input field
     }
-  }  
+  };
 
   // Front-end function to send recipe data to the server
   async function sendRecipe() {
@@ -213,7 +211,11 @@ function AddRecipe() {
           </div>
         </div>
         <button type="button" onClick={handleAddTag} className="add-ingredient-button">+ Add Tag</button>
-
+        <div className="added-tags">
+          {tags.map((tag, index) => (
+            <p key={index}>{tag}</p>
+          ))}
+        </div>
         <button type="submit" className="add-button">+ Add Recipe</button>
       </form>
       <div className='add-error'>
