@@ -1,1 +1,10 @@
  /*FlavoritesPage.css */
+
+.flavorites-container {
+    position: relative;
+    margin: 30px 30px 80px 30px; /* manually add bottom margin since the button extends below the container */
+  }
+
+.flav-header {
+    color: rgb(54, 97, 69);
+}
