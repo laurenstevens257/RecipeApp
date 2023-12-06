@@ -273,6 +273,26 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
   }
 });
 
+// Route to get the user's Flavorites
+app.get('/user/flavorites', authenticate, async (req, res) => {
+  try {
+      // Assuming the authenticate middleware adds the user's ID to `req.user`
+      const user = await User.findById(req.user.id).populate({
+          path: 'likedRecipes',
+          populate: { path: 'createdBy', select: 'username' } // Populate the createdBy field in each recipe
+      });
+
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Respond with the populated list of liked recipes
+      res.json(user.likedRecipes);
+  } catch (error) {
+      console.error('Error fetching favorite recipes:', error);
+      res.status(500).json({ message: 'Error fetching favorite recipes' });
+  }
+});
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`API is running on http://localhost:${PORT}`);
