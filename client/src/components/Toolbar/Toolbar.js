@@ -10,6 +10,7 @@ const Toolbar = ({ onLogout }) => (
       <Link to="/" className="toolbar-link">Home</Link>
       <Link to="/flavorites" className="toolbar-link">Flavorites</Link>
       <Link to="/search" className="toolbar-link">Search</Link>
+      <Link to="/random-recipe" className="toolbar-link">Random</Link> 
     </div>
     
     {/* Second Toolbar */}
@@ -22,7 +23,7 @@ const Toolbar = ({ onLogout }) => (
     <div className="header-container">
       <img className="png-iframe" src='Banner.png' alt='Banner'></img>
     </div>
-  </div>
+  </div>  
 );
 
 export default Toolbar;

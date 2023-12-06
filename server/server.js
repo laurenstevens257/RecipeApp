@@ -356,6 +356,20 @@ app.get('/user/grocerylist', authenticate, async (req, res) => {
   }
 });
 
+//Get random recipe
+app.get('/random-recipe', async (req, res) => {
+  try {
+    const count = await Recipe.countDocuments();
+    const random = Math.floor(Math.random() * count);
+    const randomRecipe = await Recipe.findOne().skip(random).populate({
+      path: 'createdBy',
+      select: 'username'
+    });
+    res.json(randomRecipe);
+  } catch (error) {
+    res.status(500).send('Error fetching random recipe');
+  }
+});
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -13,7 +13,7 @@ import SearchPage from '../Search/SearchPage';
 import HomeDisplay from '../Home/HomeDisplay';
 import CalculatorPage from '../Calculator/calculatorPage';
 import GroceryList from '../GroceryList/groceryList';
-
+import RandomRecipe from '../RandomRecipe/RandomRecipe';
 
 
 
@@ -42,9 +42,9 @@ function App() {
         <Route path="/" element={<HomeDisplay />} /> 
         <Route path="/calculatorPage" element={<CalculatorPage />} />
         <Route path="/groceryList" element={<GroceryList />} />
+        <Route path="/random-recipe" element={<RandomRecipe />} />
       </Routes>
     </Router>
   );
 }
-
 export default App;
