@@ -59,7 +59,7 @@ const recipeSchema = new mongoose.Schema({
     }
   ],
   instructions: String,
-  tags: String,
+  tags: [String],
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
@@ -320,6 +320,7 @@ app.get('/user/flavorites', authenticate, async (req, res) => {
       res.status(500).json({ message: 'Error fetching favorite recipes' });
   }
 });
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`API is running on http://localhost:${PORT}`);
