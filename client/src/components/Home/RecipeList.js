@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 function RecipeList() {
   const [recipes, setRecipes] = useState([]);
   const [expandedRecipeId, setExpandedRecipeId] = useState(null); // State for expanded recipe
+  const [expandRecipe, setExpandRecipe] = useState([]);
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -32,20 +33,28 @@ function RecipeList() {
     fetchRecipes();
   }, []);
 
-  console.log('recipes: ', recipes);
+  useEffect(() => {
+    setExpandRecipe(Array(recipes.length).fill(false));
+  }, [recipes]);
 
-  const handleRecipeClick = (id) => {
+  const handleRecipeClick = (id, index) => {
     // Toggle expanded recipe view
-    setExpandedRecipeId(expandedRecipeId === id ? null : id);
-    console.log('id: ', id);
+    //setExpandedRecipeId(expandedRecipeId === id ? null : id);
+    toggleExpandRecipe(index);
+  };
+
+  const toggleExpandRecipe = (index) => {
+    const expandRecipeCopy = expandRecipe.slice();
+    expandRecipeCopy[index] = !expandRecipeCopy[index];
+    setExpandRecipe(expandRecipeCopy);
   };
 
   return (
     <div className="recipe-list">
       {recipes.map((recipe, index) => (
-        <div key={index} className="recipe-item" onClick={() => handleRecipeClick(recipe._id)}>
+        <div key={index} className="recipe-item" onClick={() => handleRecipeClick(recipe._id, index)}>
           <h3>{recipe.name}</h3>
-          {expandedRecipeId === recipe._id && (
+          {expandRecipe[index] && (
             <div className="recipe-details">
               <p>Prep Time: {recipe.prepTime} minutes</p>
               <p>Cook Time: {recipe.cookTime} minutes</p>
