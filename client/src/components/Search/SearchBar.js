@@ -1,13 +1,13 @@
-import './SearchPage.css';
 import React, { useState } from 'react';
+import './SearchPage.css';
 
 function SearchBar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchByUser, setSearchByUser] = useState(false);
-  const [searchByTags, setSearchByTags] = useState(false);
+  const [searchByTags, setSearchByTags] = useState(false); // State for searching by tags
 
   const handleSearch = () => {
-    onSearch(searchTerm, searchByUser);
+    onSearch(searchTerm, searchByUser, searchByTags); // Pass both searchByUser and searchByTags to onSearch
   };
 
   const handleKeyPress = (event) => {
@@ -41,24 +41,23 @@ function SearchBar({ onSearch }) {
           Search
         </button>
       </div>
-      <div className='search-container'>
-        <div className='search-user'>
+      <p>options:</p>
+      <div className='search-options-container'>
+        <div className='search-option'>
           <input
             type="checkbox"
             checked={searchByUser}
-            onChange={() => handleUserCheckbox}
+            onChange={handleUserCheckbox}
           />
-          <label className='search-user'>Search by User</label>
+          <label>Search by User</label>
         </div>
-      </div>
-      <div className='search-container'>
-        <div className='search-tag'>
-            <input
-              type="checkbox"
-              checked={searchByTags}
-              onChange={handleTagCheckbox}
-            />
-            <label>Search by Tags</label>
+        <div className='search-option'>
+          <input
+            type="checkbox"
+            checked={searchByTags}
+            onChange={handleTagCheckbox}
+          />
+          <label>Search by Tags</label>
         </div>
       </div>
     </div>

@@ -227,15 +227,17 @@ app.get('/search', async (req, res) => {
   try {
     let query = {};
     if (searchByUser === 'true') {
-
+      console.log('user search');
       // Search by User
       const users = await User.find({ username: { $regex: search, $options: 'i' } });
       const userIds = users.map(user => user._id);
       query.createdBy = { $in: userIds };
     } else if (searchByTags){
+      console.log('tag search');
       query.tags = { $regex: search, $options: 'i' };
     }
     else {
+      console.log('name search');
       // Search by Recipe Name
       query.name = { $regex: search, $options: 'i' };
     }
