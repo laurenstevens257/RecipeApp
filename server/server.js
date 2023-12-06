@@ -127,17 +127,15 @@ app.post('/login', async (req, res) => {
 
 // Middleware to authenticate and set user in the request
 const authenticate = async (req, res, next) => {
-  // const token = req.headers.authorization?.split(' ')[1]; // Assuming token is sent in the "Authorization" header
-  // console.log('check1');
 
   const authorizationHeader = req.headers.authorization;
   const tokenIndex = authorizationHeader.indexOf('Bearer ') + 'Bearer '.length;
   const tokenString = authorizationHeader.slice(tokenIndex);
   const parsedToken = JSON.parse(tokenString);
   const token = parsedToken.token;
-  
-  // console.log('token: ', token);
 
+  console.log('parsed token: ', token);
+  
   if (!token) {
     console.log('token messed up');
 
@@ -147,13 +145,17 @@ const authenticate = async (req, res, next) => {
   try {
     // console.log('checkpoint');
 
+    console.log('pre-decode');
+
     const decoded = jwt.verify(token, 'your_jwt_secret'); // Replace 'your_jwt_secret' with your secret key
 
-    // console.log('decoded: ', decoded);
+    console.log('decoded: ', decoded);
 
     req.user = decoded; // Assuming the JWT has user information encoded
+
     next();
   } catch (error) {
+    console.log('invalid token');
     res.status(400).json({ error: 'Invalid token.' });
   }
 }
@@ -194,10 +196,14 @@ app.post('/add-recipe', authenticate, async (req, res) => {
 app.get('/home', authenticate, async (req, res) => {
   try {
 
+    console.log('chckpt1: ', req.user);
+
     const recipes = await Recipe.find({ createdBy: req.user.id }).populate({
       path: 'createdBy',
       select: 'username'
     });
+
+    console.log('checkpoint2: ', recipes);
     
     res.status(200).json(recipes);
   } catch (error) {
