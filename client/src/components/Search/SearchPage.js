@@ -17,8 +17,8 @@ function SearchPage() {
   };
 
   useEffect(() => {
-    setExpandRecipe(Array(recipes.length).fill(false));
-  }, [recipes]);
+    setExpandRecipe(Array(filteredRecipes.length).fill(false));
+  }, [filteredRecipes]);
 
   
     const fetchRecipes = async (searchTerm = '', searchByUser = false, searchByTags = false) => {
@@ -52,7 +52,7 @@ function SearchPage() {
     <div>
       <SearchBar onSearch={handleSearch} />
       <div className='search-display'>
-        {searchPerformed && recipes.length === 0 && (
+        {searchPerformed && filteredRecipes.length === 0 && (
           <div className="no-results">No results found</div>
         )}
         <RecipeList recipes={filteredRecipes} 
