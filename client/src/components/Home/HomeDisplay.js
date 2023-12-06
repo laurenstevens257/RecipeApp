@@ -54,7 +54,9 @@ const HomeDisplay = () => {
   return (
     <div>
       <div className="home-display">
-        <h1>Your Recipes:</h1>
+        <div className='home-header'>
+          <h1>Your Recipes:</h1>
+        </div>
         <RecipeList recipes={recipesToShow} expandToggles={expandRecipe} showAuthor={false} />
         <button onClick={handleClick} className="create-recipe-button">
           <span>+ Create New Recipe</span>

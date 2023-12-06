@@ -1,5 +1,5 @@
 // FlavoritesPage.js
-
+import './FlavoritesPage.css';
 import React, { useState, useEffect } from 'react';
 import RecipeList from '../Home/RecipeList'; // Adjust the path as needed
 
@@ -38,12 +38,14 @@ const FlavoritesPage = () => {
     // Define handlers for RecipeList component if needed
 
     return (
-        <div>
-            <h1>Your Flavored Recipes</h1>
+        <div className='flavorites-container'>
+            <div className='flav-header'>
+                <h1>Your FLAVorite Recipes:</h1>
+            </div>
             <RecipeList 
                 recipes={flavoredRecipes} 
                 expandToggles={expandToggles}
-                showAuthor={true} // Assuming you want to show authors on this page
+                showAuthor={true}
             />
         </div>
     );
