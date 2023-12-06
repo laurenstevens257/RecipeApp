@@ -1,9 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './groceryList.css';
 
 const GroceryList = () => {
   const [inputValue, setInputValue] = useState('');
   const [groceryList, setGroceryList] = useState([]);
+
+  useEffect(() => {
+    const fetchGroceryList = async () => {
+      const token = sessionStorage.getItem('token');
+      try {
+        const response = await fetch('http://localhost:8080/user/grocerylist', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        if (response.ok) {
+          const list = await response.json();
+          setGroceryList(list);
+        }
+      } catch (error) {
+        console.error('Error fetching grocery list:', error);
+      }
+    };
+    fetchGroceryList();
+  }, []);
+
+  const updateGroceryList = async (updatedList) => {
+    const token = sessionStorage.getItem('token');
+    try {
+      await fetch('http://localhost:8080/user/grocerylist', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ groceryList: updatedList }),
+      });
+      setGroceryList(updatedList);
+    } catch (error) {
+      console.error('Error updating grocery list:', error);
+    }
+  };
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -14,16 +51,19 @@ const GroceryList = () => {
       setGroceryList([...groceryList, { text: inputValue, checked: false }]);
       setInputValue('');
     }
+    const updatedList = [...groceryList, { text: inputValue, checked: false }];
+    updateGroceryList(updatedList);
   };
 
   const handleToggleItem = (index) => {
     const updatedList = [...groceryList];
     updatedList[index].checked = !updatedList[index].checked;
-    setGroceryList(updatedList);
+    updateGroceryList(updatedList);
+
   };
 
   const handleDiscardList = () => {
-    setGroceryList([]);
+    updateGroceryList([]);
   };
 
   const handleKeyDown = (event) => {
