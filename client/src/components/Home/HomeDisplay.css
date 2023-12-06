@@ -1,39 +1,49 @@
 /* HomeDisplay.css */
 
+
 .home-display {
   position: relative;
   margin: 30px 30px 80px 30px; /* manually add bottom margin since the button extends below the container */
-}
-
-.home-header {
+ }
+ 
+ 
+ .home-header {
   color: rgb(54, 97, 69);
-}
-
-button.create-recipe-button {
+ }
+ 
+ 
+ button.create-recipe-button {
   font-size: 18px;
   padding: 8px 10px;
   cursor: pointer;
   background-color: rgb(81, 119, 71);
   color: white;
-
+  width: 200px;
+ 
+ 
   /* Position the button at the bottom of its container */
   position: absolute;
-  bottom: -60px; /* shift down 50px for the last recipe item and 10px for a buffer between last item and buffer */
-}
-
-button.create-recipe-button:hover {
+  right: 0px; /* shift down 50px for the last recipe item and 10px for a buffer between last item and buffer */
+  top: 0px;
+ }
+ 
+ 
+ button.create-recipe-button:hover {
   background-color: rgb(79, 101, 64);
-}
-
-.footer-container {
+ }
+ 
+ 
+ .footer-container {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.png-iframe {
+ }
+ 
+ 
+ .png-iframe {
   width: 1500px;
   height: 80px;
   border: none;
-}
-/* Target the button within HomeDisplay specifically, if necessary use a class or id */
+ }
+ /* Target the button within HomeDisplay specifically, if necessary use a class or id */
+ 
