@@ -63,7 +63,7 @@ const recipeSchema = new mongoose.Schema({
     }
   ],
   instructions: String,
-  tags: String,
+  tags: [String],
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
@@ -222,17 +222,22 @@ app.get('/home', authenticate, async (req, res) => {
 
 //Search Route
 app.get('/search', async (req, res) => {
-  const { search, searchByUser } = req.query;
+  const { search, searchByUser,  searchByTags} = req.query;
 
   try {
     let query = {};
     if (searchByUser === 'true') {
-
+      console.log('user search');
       // Search by User
       const users = await User.find({ username: { $regex: search, $options: 'i' } });
       const userIds = users.map(user => user._id);
       query.createdBy = { $in: userIds };
-    } else {
+    } else if (searchByTags){
+      console.log('tag search');
+      query.tags = { $regex: search, $options: 'i' };
+    }
+    else {
+      console.log('name search');
       // Search by Recipe Name
       query.name = { $regex: search, $options: 'i' };
     }
@@ -327,7 +332,6 @@ app.get('/user/flavorites', authenticate, async (req, res) => {
   }
 });
 
-//Route to update user's grocery list
 // Route to update the user's grocery list
 app.post('/user/grocerylist', authenticate, async (req, res) => {
   try {

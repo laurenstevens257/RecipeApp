@@ -78,6 +78,10 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
                 ))}
               </ul>
               <p>{recipe.instructions}</p>
+              <p>Tags:</p>
+              {(recipe.tags || []).map((tag, idx) => (
+                  <li key={idx}>#{tag}</li>
+                ))}
             </div>
           )}
         </div>

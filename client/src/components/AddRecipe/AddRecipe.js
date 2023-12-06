@@ -15,8 +15,11 @@ function AddRecipe() {
   const [cookTime, setCookTime] = useState('');
   const [prepTime, setPrepTime] = useState('');
   const [instructions, setInstructions] = useState('');
-  const [tags, setTags] = useState('');
+
   const [formError, setFormError] = useState('');
+
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState('');
 
   const handleAddIngredient = () => {
     if (ingredientInput !== '' && ingredientUnit !== '' && ingredientQtyInput !== '') {
@@ -29,6 +32,15 @@ function AddRecipe() {
       setIngredientQtyInput('');
     }
   };
+
+  const handleAddTag = () => {
+    if(tagInput !== ''){
+      setTags(prevTags => [...prevTags, tagInput]);
+      console.log(tags);
+      setTagInput('');
+      console.log(tagInput);
+    }
+  }  
 
   // Front-end function to send recipe data to the server
   async function sendRecipe() {
@@ -194,12 +206,14 @@ function AddRecipe() {
           <div className='ingredient-input'>
             <input
               type="text"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
+              value={tagInput}
+              onChange={(e) => setTagInput(e.target.value)}
               placeholder="Enter tags to help people discover your recipe (eg. #glutenfree, #vegan, #italian)"
             />
           </div>
         </div>
+        <button type="button" onClick={handleAddTag} className="add-ingredient-button">+ Add Tag</button>
+
         <button type="submit" className="add-button">+ Add Recipe</button>
       </form>
       <div className='add-error'>

@@ -21,11 +21,10 @@ function SearchPage() {
     setExpandRecipe(Array(recipes.length).fill(false));
   }, [recipes]);
 
-  console.log('searchRender');
   
-    const fetchRecipes = async (searchTerm = '', searchByUser = false) => {
+    const fetchRecipes = async (searchTerm = '', searchByUser = false, searchByTags = false) => {
       try {
-        const response = await fetch(`http://localhost:8080/search?search=${searchTerm}&searchByUser=${searchByUser}`, {
+        const response = await fetch(`http://localhost:8080/search?search=${searchTerm}&searchByUser=${searchByUser}&searchByTags=${searchByTags}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -46,9 +45,9 @@ function SearchPage() {
     };
 
 
-  const handleSearch = (searchTerm, searchByUser) => {
+  const handleSearch = (searchTerm, searchByUser, searchByTags) => {
     setSearchPerformed(true); // Set that a search has been performed here
-    fetchRecipes(searchTerm, searchByUser);
+    fetchRecipes(searchTerm, searchByUser, searchByTags);
   };
 
   return (
