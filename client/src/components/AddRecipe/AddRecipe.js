@@ -82,8 +82,8 @@ function AddRecipe() {
 //somewhere in here there should also throw and error that says 'please fill out all the fields if any property is empty'
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!recipeName.trim() || !prepTime.trim() || !cookTime.trim() || !instructions.trim() || ingredientsList.length === 0) {
-      setFormError('Please fill out all of the fields');
+    if (!recipeName.trim() || !prepTime.trim() || !cookTime.trim() || !instructions.trim()) {
+      setFormError('Please fill out all required fields');
       return;
     }
     try {
@@ -193,7 +193,19 @@ function AddRecipe() {
           </select>
           <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+ Add Ingredient</button>
         </div>
-
+        <div className='label-container'>
+          <h2 className='label-text'>Instructions</h2>
+        </div>
+        <div className='add-container'>
+          <div className='ingredient-input'>
+            <input
+              type="text"
+              value={instructions}
+              onChange={(e) => setInstructions(e.target.value)}
+              placeholder="Enter cooking instructions"
+            />
+          </div>
+        </div>
         <div className='label-container'>
           <h2 className='label-text'>Tags</h2>
           <input
