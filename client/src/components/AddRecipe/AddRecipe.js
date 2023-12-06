@@ -202,9 +202,9 @@ function AddRecipe() {
         </div>
         <button type="submit" className="add-button">+ Add Recipe</button>
       </form>
-      <div className='add-container'>
-        {formError && <p style={{ color: 'red' }}>{formError}</p>}</div>
-      
+      <div className='add-error'>
+        {formError && <p>{formError}</p>}
+      </div>
     </div>
   );
   }  
