@@ -10,3 +10,8 @@
     cursor: pointer;
   }
   
+  img {
+    height: 300px; /* Example size */
+    margin-bottom: 20px; /* Example spacing */
+    /* Other styles */
+  }
