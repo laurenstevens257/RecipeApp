@@ -1,16 +1,24 @@
+/*
+*********************************************************
+ SETUP
+*********************************************************
+*/
+
+//Load necessary Node modules
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
-const app = express();
 const jwt = require('jsonwebtoken');
 const argon2 = require('argon2');
 
-app.use(cors());
+//Set up express and cors
+const app = express();
 app.use(express.json());
+app.use(cors());
 
+//Connect to MongoDB using mongoose
+const mongoose = require('mongoose');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://recipeapp33:recipe123@recipedb.3evocay.mongodb.net/?retryWrites=true&w=majority";
-
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -22,7 +30,13 @@ mongoose.connect(uri, {
   console.error('Error connecting to MongoDB:', error);
 });
 
-// Define User and Recipe Schemas
+/*
+*********************************************************
+ DEFINE SCHEMAS AND MODELS
+*********************************************************
+*/
+
+//Define User Schema
 const userSchema = new mongoose.Schema({
   username: String,
   password: String,
@@ -32,6 +46,7 @@ const userSchema = new mongoose.Schema({
   }]
 });
 
+//Define Recipe Schema
 const recipeSchema = new mongoose.Schema({
   name: String,
   cookTime: Number,
