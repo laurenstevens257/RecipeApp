@@ -96,88 +96,109 @@ function AddRecipe() {
       {formError && <p style={{ color: 'red' }}>{formError}</p>}
   
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={recipeName}
-          onChange={(e) => setRecipeName(e.target.value)}
-          placeholder="Enter recipe name"
-          className='title-input'
-        />
-  
-        <input
-          type="text"
-          value={prepTime}
-          onChange={(e) => setPrepTime(e.target.value)}
-          placeholder="Enter prep time in mins"
-          className='prep-input'
-        />
-  
-        <input
-          type="text"
-          value={ingredientInput}
-          onChange={(e) => setIngredientInput(e.target.value)}
-          placeholder="Enter an ingredient"
-          className='ingredient-input'
-        />
-  
-        <input
-          type="text"
-          value={ingredientQtyInput}
-          onChange={(e) => setIngredientQtyInput(e.target.value)}
-          placeholder="Enter the quantity"
-          className='ingredient-quantity'
-        />
-  
-        <select
-          value={ingredientUnit}
-          onChange={(e) => setIngredientUnit(e.target.value)}
-          className='unit-dropdown'
-        >
-          <option value="">Select Unit</option>
-          <option value="none"> </option>
-          <option value="cups">Cups</option>
-          <option value="tablespoons">Tablespoons</option>
-          <option value="teaspoons">Teaspoons</option>
-          <option value="ounces">Ounces</option>
-          <option value="quarts">Quarts</option>
-          <option value="liters">Liters</option>
-          <option value="grams">Grams</option>
-          <option value="pounds">Pounds</option>
-        </select>
-  
-        <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+</button>
-        <div className="added-ingredients">
-          {ingredientsList.map((ingredient, index) => (
-            <p key={index}>{ingredient.name} - {ingredient.quantity} {ingredient.units}</p>
-          ))}
+        <div className='label-container'>
+          <h2 className='label-text'>Recipe Name</h2>
         </div>
-  
-        <input
-          type="text"
-          value={cookTime}
-          onChange={(e) => setCookTime(e.target.value)}
-          placeholder="Enter cook time in mins"
-          className='cook-input'
-        />
-  
-        <input
-          type="text"
-          value={instructions}
-          onChange={(e) => setInstructions(e.target.value)}
-          placeholder="Enter cooking instructions..."
-          className='instructions-input'
-        />
-  
-        <input
-          type="text"
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-          placeholder="Enter tags (Gluten free, vegan, etc)"
-          className='tags-input'
-        />
-  
-        <button type="submit" className="add-button">Add Recipe</button>
-
+        <div className='add-container'>
+          <div className='ingredient-input'>
+            <input
+              type="text"
+              value={recipeName}
+              onChange={(e) => setRecipeName(e.target.value)}
+              placeholder="Enter recipe name"
+            />
+          </div>
+        </div>
+        <div className='label-container'>
+          <h2 className='label-text'>Prep Time</h2>
+        </div>
+        <div className='add-container'>
+          <div className='ingredient-input'>
+            <input
+              type="text"
+              value={prepTime}
+              onChange={(e) => setPrepTime(e.target.value)}
+              placeholder="Enter prep time in mins"
+            />
+          </div>
+        </div>
+        <div className='label-container'>
+          <h2 className='label-text'>Cook Time</h2>
+        </div>
+        <div className='add-container'>
+          <div className='ingredient-input'>
+            <input
+              type="text"
+              value={cookTime}
+              onChange={(e) => setCookTime(e.target.value)}
+              placeholder="Enter cook time in mins"
+            />
+          </div>
+        </div>
+        <div className='label-container'>
+          <h2 className='label-text'>Ingredients</h2>
+        </div>
+        <div className='add-container'>
+          <div className='ingredient-input'>
+            <input
+              type="text"
+              value={ingredientInput}
+              onChange={(e) => setIngredientInput(e.target.value)}
+              placeholder="Enter an ingredient"
+            />
+            <input
+              type="text"
+              value={ingredientQtyInput}
+              onChange={(e) => setIngredientQtyInput(e.target.value)}
+              placeholder="Enter its quantity"
+            />
+            {/* New dropdown/select for ingredient unit */}
+            <select
+              value={ingredientUnit}
+              onChange={(e) => setIngredientUnit(e.target.value)}
+              className='unit-dropdown'
+            >
+              <option value="">Select a unit</option>
+              <option value="none"> </option>
+              <option value="cups">Cups</option>
+              <option value="tablespoons">Tablespoons</option>
+              <option value="teaspoons">Teaspoons</option>
+              <option value="ounces">Ounces</option>
+              <option value="quarts">Quarts</option>
+              <option value="liters">Liters</option>
+              <option value="grams">Grams</option>
+              <option value="pounds">Pounds</option>
+            </select>
+            <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+ Add Ingredient</button>
+          </div>  
+        </div>
+        <div className='label-container'>
+          <h2 className='label-text'>Instructions</h2>
+        </div>
+        <div className='add-container'>
+          <div className='ingredient-input'>
+            <input
+              type="text"
+              value={instructions}
+              onChange={(e) => setInstructions(e.target.value)}
+              placeholder="Enter cooking instructions"
+            />
+          </div>
+        </div>
+        <div className='label-container'>
+          <h2 className='label-text'>Tags</h2>
+        </div>
+        <div className='add-container'>
+          <div className='ingredient-input'>
+            <input
+              type="text"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              placeholder="Enter tags to help people discover your recipe (eg. #glutenfree, #vegan, #italian)"
+            />
+          </div>
+        </div>
+        <button type="submit" className="add-button">+ Add Recipe</button>
       </form>
     </div>
   );
