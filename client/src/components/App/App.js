@@ -4,7 +4,7 @@ import '../Home/HomeDisplay.css';
 import Login from '../Login/Login';
 import useToken from './useToken';
 import AddRecipe from '../AddRecipe/AddRecipe'; // Adjust the import path as needed
-import Toolbar from './Toolbar';
+import Toolbar from '../Toolbar/Toolbar';
 import FlavoritesPage from '../Flavorites/FlavoritesPage'; // Your component for Favorites
 import SearchPage from '../Search/SearchPage';     // Your component for Search
 import HomeDisplay from '../Home/HomeDisplay';
