@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar'; // Make sure this path is correct
 
 function SearchPage() {
-  const [recipes, setRecipes] = useState([]);
   const [expandRecipe, setExpandRecipe] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [noResultsFound, setNoResultsFound] = useState(false);
@@ -33,7 +32,6 @@ function SearchPage() {
 
         if (response.ok) {
           const recipesData = await response.json();
-          setRecipes(recipesData);
           setFilteredRecipes(recipesData);
           setNoResultsFound(recipesData.length === 0);
         } else {
