@@ -16,22 +16,20 @@ function AddRecipe() {
   const [prepTime, setPrepTime] = useState('');
   const [instructions, setInstructions] = useState('');
   const [tags, setTags] = useState('');
+  const [formError, setFormError] = useState('');
 
   const handleAddIngredient = () => {
     if (ingredientInput !== '' && ingredientUnit !== '' && ingredientQtyInput !== '') {
-      const prevIngredients = ingredientsList.slice();
-      setIngredientsList((prevIngredients) => [
-        ...prevIngredients,
-        { name: ingredientInput, quantity: ingredientQtyInput, units: ingredientUnit },
-      ]);
+      const newIngredient = { name: ingredientInput, quantity: ingredientQtyInput, units: ingredientUnit };
+      setIngredientsList(prevIngredients => [...prevIngredients, newIngredient]);
 
-      console.log('ingredients: ', ingredientsList);
-
+        console.log('ingredients: ', ingredientsList);
       setIngredientInput('');
-      setIngredientUnit(''); // Clear input fields
+      setIngredientUnit('');
       setIngredientQtyInput('');
     }
   };
+
 
   // Front-end function to send recipe data to the server
   async function sendRecipe() {
@@ -66,12 +64,21 @@ function AddRecipe() {
 //somewhere in here there should also throw and error that says 'please fill out all the fields if any property is empty'
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!recipeName.trim() || !prepTime.trim() || !cookTime.trim() || !instructions.trim() || ingredientsList.length === 0) {
+      setFormError('Please fill out all of the fields');
+      return;
+    }
     try {
       const response = await sendRecipe();
 
       if (response.success) {
-        setRecipeName(''); // Reset input field after submission
-        navigate('/home');
+        setRecipeName('');
+        setPrepTime('');
+        setCookTime('');
+        setInstructions('');
+        setIngredientsList([]);
+        setTags('');
+        navigate('/');
         console.error('kinda worked??');
       } else {
         console.error('Failed to add recipe');
@@ -84,7 +91,10 @@ function AddRecipe() {
   return (
     <div>
       <h1 className='header-text'>New Recipe</h1>
-      <h2 className='title-text'>Recipe Name</h2>
+  
+      {/* Form error message */}
+      {formError && <p style={{ color: 'red' }}>{formError}</p>}
+  
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -93,7 +103,7 @@ function AddRecipe() {
           placeholder="Enter recipe name"
           className='title-input'
         />
-
+  
         <input
           type="text"
           value={prepTime}
@@ -101,6 +111,7 @@ function AddRecipe() {
           placeholder="Enter prep time in mins"
           className='prep-input'
         />
+  
         <input
           type="text"
           value={ingredientInput}
@@ -108,7 +119,7 @@ function AddRecipe() {
           placeholder="Enter an ingredient"
           className='ingredient-input'
         />
-
+  
         <input
           type="text"
           value={ingredientQtyInput}
@@ -116,8 +127,7 @@ function AddRecipe() {
           placeholder="Enter the quantity"
           className='ingredient-quantity'
         />
-
-        {/* New dropdown/select for ingredient unit */}
+  
         <select
           value={ingredientUnit}
           onChange={(e) => setIngredientUnit(e.target.value)}
@@ -134,9 +144,14 @@ function AddRecipe() {
           <option value="grams">Grams</option>
           <option value="pounds">Pounds</option>
         </select>
-
+  
         <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+</button>
-
+        <div className="added-ingredients">
+          {ingredientsList.map((ingredient, index) => (
+            <p key={index}>{ingredient.name} - {ingredient.quantity} {ingredient.units}</p>
+          ))}
+        </div>
+  
         <input
           type="text"
           value={cookTime}
@@ -144,6 +159,7 @@ function AddRecipe() {
           placeholder="Enter cook time in mins"
           className='cook-input'
         />
+  
         <input
           type="text"
           value={instructions}
@@ -151,7 +167,7 @@ function AddRecipe() {
           placeholder="Enter cooking instructions..."
           className='instructions-input'
         />
-
+  
         <input
           type="text"
           value={tags}
@@ -159,11 +175,12 @@ function AddRecipe() {
           placeholder="Enter tags (Gluten free, vegan, etc)"
           className='tags-input'
         />
-
+  
         <button type="submit" className="add-button">Add Recipe</button>
+
       </form>
     </div>
   );
-}
+  }  
 
 export default AddRecipe;

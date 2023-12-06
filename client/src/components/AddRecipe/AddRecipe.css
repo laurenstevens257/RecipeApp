@@ -82,3 +82,9 @@
     /* button gets slightly darker when hovering*/
     background-color: rgb(79, 101, 64); 
 }
+
+.added-ingredients p {
+    margin: 5px 0;
+    /* Add more styles as needed */
+  }
+  
