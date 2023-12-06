@@ -44,8 +44,6 @@ const FlavoritesPage = () => {
         console.log('recipes: ', flavoredRecipes)
     }, [update]);
 
-    // Define handlers for RecipeList component if needed
-
     return (
         <div className='flavorites-container'>
             <div className='flav-header'>

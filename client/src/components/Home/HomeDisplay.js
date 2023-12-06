@@ -11,6 +11,11 @@ const HomeDisplay = () => {
  const [recipesToShow, setRecipesToShow] = useState([]);
  const [expandRecipe, setExpandRecipe] = useState([]);
 
+ const [update, setUpdate] = useState(0);
+
+ const handleUpdate = () => {
+   setUpdate(prev => prev + 1);
+ };
 
 
 
@@ -70,7 +75,7 @@ const HomeDisplay = () => {
          <span>+ Create New Recipe</span>
          </button>
        </div>
-       <RecipeList recipes={recipesToShow} expandToggles={expandRecipe} showAuthor={false} />
+       <RecipeList recipes={recipesToShow} expandToggles={expandRecipe} showAuthor={false} reRender={handleUpdate} />
      </div>
      <div className="footer-container">
          <img className="png-iframe" src='Banner.png'></img>
