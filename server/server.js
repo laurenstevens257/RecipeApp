@@ -222,7 +222,7 @@ app.get('/home', authenticate, async (req, res) => {
 
 //Search Route
 app.get('/search', async (req, res) => {
-  const { search, searchByUser } = req.query;
+  const { search, searchByUser,  searchByTags} = req.query;
 
   try {
     let query = {};
@@ -232,7 +232,10 @@ app.get('/search', async (req, res) => {
       const users = await User.find({ username: { $regex: search, $options: 'i' } });
       const userIds = users.map(user => user._id);
       query.createdBy = { $in: userIds };
-    } else {
+    } else if (searchByTags){
+      query.tags = { $regex: search, $options: 'i' };
+    }
+    else {
       // Search by Recipe Name
       query.name = { $regex: search, $options: 'i' };
     }
