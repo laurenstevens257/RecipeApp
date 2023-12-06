@@ -172,15 +172,15 @@ function AddRecipe() {
               className='unit-dropdown'
             >
               <option value="">Select a unit</option>
-              <option value="none"> </option>
-              <option value="cups">Cups</option>
-              <option value="tablespoons">Tablespoons</option>
-              <option value="teaspoons">Teaspoons</option>
-              <option value="ounces">Ounces</option>
-              <option value="quarts">Quarts</option>
-              <option value="liters">Liters</option>
-              <option value="grams">Grams</option>
-              <option value="pounds">Pounds</option>
+              <option value=" "> </option>
+              <option value="cup(s)">Cups</option>
+              <option value="tablespoon(s)">Tablespoons</option>
+              <option value="teaspoon(s)">Teaspoons</option>
+              <option value="ounce(s)">Ounces</option>
+              <option value="quart(s)">Quarts</option>
+              <option value="liter(s)">Liters</option>
+              <option value="gram(s)">Grams</option>
+              <option value="pound(s)">Pounds</option>
             </select>
             <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+ Add Ingredient</button>
           </div>  
