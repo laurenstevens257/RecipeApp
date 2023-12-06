@@ -40,7 +40,7 @@ const GroceryList = () => {
           <div className="header-line2">Take this with you to the store so you don't forget anything!</div>
         </div>
       </div>
-      <div className="add-item-container">
+      <div className="grocerylist-container">
         <input
           type="text"
           value={inputValue}
@@ -64,9 +64,11 @@ const GroceryList = () => {
           </li>
         ))}
       </ul>
-      <button className="discard-button" onClick={handleDiscardList}>
-        Discard Shopping List
-      </button>
+      <div className='grocerylist-container'>
+        <button className="discard-button" onClick={handleDiscardList}>
+          Discard Shopping List
+        </button>
+      </div>
     </div>
   );
 };
