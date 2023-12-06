@@ -1,13 +1,19 @@
 import './SearchPage.css';
 import '../Home/HomeDisplay.css';
+import RecipeList from '../Home/RecipeList';
 import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar'; // Make sure this path is correct
 
 function SearchPage() {
   const [recipes, setRecipes] = useState([]);
+  const [expandRecipe, setExpandRecipe] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [noResultsFound, setNoResultsFound] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false); // State to track if a search has been performed
+
+  useEffect(() => {
+    setExpandRecipe(Array(recipes.length).fill(false));
+  }, [recipes]);
 
   const fetchRecipes = async (searchTerm = '', searchByUser = false) => {
     try {
@@ -38,24 +44,34 @@ function SearchPage() {
 
   return (
     <div>
-      <div>
-        <SearchBar onSearch={handleSearch} />
-      </div>
-      <div className='home-display'>
-        <div className="recipe-list">
-          {searchPerformed && filteredRecipes.length === 0 && (
-            <div className="no-results">No results found</div>
-          )}
-          {filteredRecipes.map((recipe, index) => (
-            <div key={index} className="recipe-item">
-              <h3>{recipe.name}</h3>
-              <p>Author: {recipe.createdBy ? recipe.createdBy.username : 'Unknown'}</p>
-            </div>
-          ))}
-        </div>
+      <SearchBar onSearch={handleSearch} />
+      <div className='search-display'>
+        {searchPerformed && recipes.length === 0 && (
+          <div className="no-results">No results found</div>
+        )}
+        <RecipeList recipes={filteredRecipes} 
+          expandToggles={expandRecipe} 
+          showAuthor={true} // Assuming you want to show authors on the Search page
+        />
       </div>
     </div>
   );
 }
+
+// return (
+//   <div>
+//     <div className="home-display">
+//       <h1>Your Recipes:</h1>
+//       <RecipeList recipes={recipesToShow} expandToggles={expandRecipe} showAuthor={false} />
+//       <button onClick={handleClick} className="create-recipe-button">
+//         <span>+ Create New Recipe</span>
+//       </button>
+//     </div>
+//     <div className="footer-container">
+//         <img className="png-iframe" src='Banner.png'></img>
+//     </div>
+//   </div>
+// );
+// };
 
 export default SearchPage;
