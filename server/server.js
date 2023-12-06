@@ -127,7 +127,8 @@ app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
     const user = await User.findOne({ username });
-    if (!user) {
+      if (!user) {
+        console.log('invalid username');
         return res.status(400).json({
             error: 'This username does not exist',
             success: false
@@ -135,7 +136,9 @@ app.post('/login', async (req, res) => {
     }
 
     // Verifying the provided password with the stored hash
-    if (!(await argon2.verify(user.password, password))) {
+      if (!(await argon2.verify(user.password, password))) {
+
+        console.log('wrong password');
         return res.status(400).json({
             error: 'Incorrect password',
             success: false
@@ -160,23 +163,15 @@ const authenticate = async (req, res, next) => {
   const parsedToken = JSON.parse(tokenString);
   const token = parsedToken.token;
 
-  console.log('parsed token: ', token);
   
   if (!token) {
     console.log('token messed up');
-
     return res.status(401).json({ error: 'Access denied. No token provided.' });
   }
 
   try {
     // console.log('checkpoint');
-
-    console.log('pre-decode');
-
     const decoded = jwt.verify(token, 'your_jwt_secret'); // Replace 'your_jwt_secret' with your secret key
-
-    console.log('decoded: ', decoded);
-
     req.user = decoded; // Assuming the JWT has user information encoded
 
     next();
@@ -222,16 +217,11 @@ app.post('/add-recipe', authenticate, async (req, res) => {
 // Fetch Recipes Route - Modified to support search functionality
 app.get('/home', authenticate, async (req, res) => {
   try {
-
-    console.log('chckpt1: ', req.user);
-
     const recipes = await Recipe.find({ createdBy: req.user.id }).populate({
       path: 'createdBy',
       select: 'username'
     });
 
-    console.log('checkpoint2: ', recipes);
-    
     res.status(200).json(recipes);
   } catch (error) {
     res.status(500).send('Error in fetching recipes');
@@ -250,20 +240,35 @@ app.get('/search', async (req, res) => {
       const users = await User.find({ username: { $regex: search, $options: 'i' } });
       const userIds = users.map(user => user._id);
       query.createdBy = { $in: userIds };
-    } else if (searchByTags){
+    } else if (searchByTags === 'true'){
       console.log('tag search');
       query.tags = { $regex: search, $options: 'i' };
-    }
-    else {
+    } else {
       console.log('name search');
       // Search by Recipe Name
       query.name = { $regex: search, $options: 'i' };
     }
 
+    // const recipes = await Recipe.find(query).populate('createdBy', 'username');
+    let recipes = await Recipe.find(query).lean();
 
-    const recipes = await Recipe.find(query).populate('createdBy', 'username');
+    recipes = await Recipe.aggregate([
+      { $match: { _id: { $in: recipes.map(r => r._id) } } },
+      { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+      { $sort: { flavedByCount: -1 } },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'createdBy',
+          foreignField: '_id',
+          as: 'createdBy'
+        }
+      },
+      { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+      { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
+    ]);
 
-    // console.log('recipes: ', recipes);
+    //console.log('recipes: ', recipes);
 
     res.status(200).json(recipes);
   } catch (error) {
@@ -290,19 +295,19 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
     console.log('initial: ', user);
 
     const recipeIndex = user.likedRecipes.indexOf(recipeToModify._id);
+    const userIndex = recipeToModify.flavedBy.indexOf(user._id);
 
     if (!(recipeIndex > -1)) {
       user.likedRecipes.push(recipeToModify._id); // Append only if not already liked
-      recipeToModify.flavedBy.push(user._id);
+
+      if(userIndex === -1){
+        recipeToModify.flavedBy.push(user._id);
+      }
 
       console.log('liked: ', user);
-
       console.log('recipe: ', recipeToModify);
 
       await recipeToModify.save();
-
-      console.log('recipe saved');
-
       await user.save(); // Save the user with the updated likedRecipes
 
       
@@ -312,12 +317,14 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
 
       user.likedRecipes.splice(recipeIndex, 1);
 
-      const userIndex = recipeToModify.flavedBy.indexOf(user._id);
-      if(userIndex === -1){
+      console.log('uIndex: ', userIndex);
+
+      if(userIndex !== -1){
         recipeToModify.flavedBy.splice(userIndex, 1);
 
       }
       console.log('unliked: ', user);
+      console.log('recipe: ', recipeToModify);
 
       await recipeToModify.save();
       await user.save(); // Save the user with the updated likedRecipes
