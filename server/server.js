@@ -217,6 +217,41 @@ app.get('/search', async (req, res) => {
   }
 });
 
+app.post('/flave-recipe', authenticate, async (req, res) => {
+  try {
+    const { recipe } = req.body;
+
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    console.log('initial: ', user);
+
+    const recipeIndex = user.likedRecipes.indexOf(recipe._id);
+
+    if (!(recipeIndex > -1)) {
+      user.likedRecipes.push(recipe._id); // Append only if not already liked
+
+      console.log('liked: ', user);
+
+      res.status(200).json({ message: 'Recipe flaved', likedRecipes: user.likedRecipes });
+      
+    } else {
+      user.likedRecipes.splice(recipeIndex, 1);
+
+      console.log('unliked: ', user);
+
+      res.status(200).json({ message: 'Recipe unflaved' });
+    }
+
+    await user.save(); // Save the user with the updated likedRecipes
+
+  } catch (error) {
+    res.status(500).send('Error in flaving recipes');
+  }
+});
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`API is running on http://localhost:${PORT}`);
