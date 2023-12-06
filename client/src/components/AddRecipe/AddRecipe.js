@@ -63,7 +63,7 @@ function AddRecipe() {
       throw new Error('Error sending recipe data: ' + error.message);
     }
   }
-
+//somewhere in here there should also throw and error that says 'please fill out all the fields if any property is empty'
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

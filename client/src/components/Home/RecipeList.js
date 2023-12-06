@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 function RecipeList() {
   const [recipes, setRecipes] = useState([]);
+  const [expandedRecipeId, setExpandedRecipeId] = useState(null); // State for expanded recipe
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -31,23 +32,28 @@ function RecipeList() {
     fetchRecipes();
   }, []);
 
-  //IMPORTANT - TO CHECK 
-  //check our div names
-  //do we even need this css stuff?
+  const handleRecipeClick = (id) => {
+    // Toggle expanded recipe view
+    setExpandedRecipeId(expandedRecipeId === id ? null : id);
+  };
+
   return (
     <div className="recipe-list">
       {recipes.map((recipe, index) => (
-        <div key={index} className="recipe-item">
+        <div key={index} className="recipe-item" onClick={() => handleRecipeClick(recipe.id)}>
           <h3>{recipe.name}</h3>
-          {/* Check if createdBy exists and has a username */}
-          {/*<p>Author: {recipe.createdBy ? recipe.createdBy.username : 'Unknown'}</p> */     /* commented out to not display authors for user's recipes*/}
-          {/* Uncomment and use if ingredients and instructions are part of your recipe model */}
-          {/* <ul>
-            {recipe.ingredients.map((ingredient, idx) => (
-              <li key={idx}>{ingredient}</li>
-            ))}
-          </ul>
-          <p>{recipe.instructions}</p> */}
+          {expandedRecipeId === recipe.id && (
+            <div className="recipe-details">
+              <p>Prep Time: {recipe.prepTime} minutes</p>
+              <p>Cook Time: {recipe.cookTime} minutes</p>
+              <ul>
+                {(recipe.ingredients || []).map((ingredient, idx) => (
+                  <li key={idx}>{ingredient.name} - {ingredient.quantity}</li>
+                ))}
+              </ul>
+              <p>{recipe.instructions}</p>
+            </div>
+          )}
         </div>
       ))}
     </div>
