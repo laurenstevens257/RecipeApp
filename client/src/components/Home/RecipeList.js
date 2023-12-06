@@ -43,7 +43,7 @@ function RecipeList({recipes, expandToggles, showAuthor}) {
           console.log('liked recipe: ', recipe);
       } else {
         // Handle errors
-        console.error('Failed to fetch recipes');
+        console.error('Failed to flave recipe');
       }
     } catch (error) {
       console.error('Error:', error);
