@@ -46,7 +46,7 @@ export default function Login( { setToken } ) {
     
             if (!response.success) {
                 // Handle server errors
-                setError('Login failed: ' + response.statusText);
+                setError(response.error);
                 return;
             } else{
                 setToken(response);

@@ -128,12 +128,18 @@ app.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).send('Invalid Credentials');
+        return res.status(400).json({
+            error: 'This username does not exist',
+            success: false
+        });
     }
 
     // Verifying the provided password with the stored hash
     if (!(await argon2.verify(user.password, password))) {
-      return res.status(400).send('Invalid Credentials');
+        return res.status(400).json({
+            error: 'Incorrect password',
+            success: false
+        });
     }
     // console.log(user);
     
