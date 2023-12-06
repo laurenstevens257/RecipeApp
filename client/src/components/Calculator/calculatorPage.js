@@ -29,8 +29,11 @@ const CalculatorPage = () => {
   };
 
   return (
-    <div className="calculator-wrapper">
+  <div>
+    <div className='header-container'>
       <h1>Measurement Converter</h1>
+    </div>
+    <div className="calculator-wrapper">
       <div>
         <label>
           Enter Value:
@@ -66,6 +69,7 @@ const CalculatorPage = () => {
       </div>
       {result && <p>{result}</p>}
     </div>
+  </div>
   );
 };
 

@@ -1,11 +1,16 @@
 .calculator-wrapper {
     max-width: 400px;
-    margin: 50px auto;
+    margin: auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+
+.header-container {
+  color: rgb(54, 97, 69);
+  font-size: 18px;
+}
   
   label {
     display: block;
@@ -28,7 +33,7 @@
   }
   
   button:hover {
-    background-color: #45a049;
+    background-color: rgb(79, 101, 64);
   }
   
   p {

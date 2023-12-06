@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+//import React from 'react';
+//import React from 'react';
 import './App.css';
 import '../Home/HomeDisplay.css';
 import Login from '../Login/Login';
 import useToken from './useToken';
-import AddRecipe from '../AddRecipe/AddRecipe'; // Adjust the import path as needed
+import AddRecipe from '../AddRecipe/AddRecipe'; 
 import Toolbar from '../Toolbar/Toolbar';
-import FlavoritesPage from '../Flavorites/FlavoritesPage'; // Your component for Favorites
-import SearchPage from '../Search/SearchPage';     // Your component for Search
+import FlavoritesPage from '../Flavorites/FlavoritesPage'; 
+import SearchPage from '../Search/SearchPage';     
 import HomeDisplay from '../Home/HomeDisplay';
-//import CalculatorPage from './calculatorPage';
 import CalculatorPage from '../Calculator/calculatorPage';
 import GroceryList from '../GroceryList/groceryList';
-// import RecipeList from './RecipeList'; // Adjust the import path as needed
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-//check to see if any of these are redundant, as i just added them 
-//import React from 'react';
-//import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+
 
 
 function App() {
   const { token, setToken } = useToken();
 
+  const handleLogout = () => {
+    sessionStorage.removeItem('token'); // Remove the token
+    setToken(null); // Reset the token state
+  };
+
   if (!token) {
     return <Login setToken={setToken} />;
   }
 
+  
   return (
-
-    
-    //is there a way to pipe directly from login user to /home
     <Router>
-      <Toolbar />
+      {/* Toolbar is rendered here only once */}
+      <Toolbar onLogout={handleLogout} />
+
       <Routes>
         <Route path="/flavorites" element={<FlavoritesPage />} />
         <Route path="/search" element={<SearchPage />} />
@@ -42,4 +46,5 @@ function App() {
     </Router>
   );
 }
+
 export default App;

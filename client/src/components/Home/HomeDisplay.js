@@ -9,11 +9,6 @@ const HomeDisplay = () => {
   const [recipesToShow, setRecipesToShow] = useState([]);
   const [expandRecipe, setExpandRecipe] = useState([]);
 
-  const [update, setUpdate] = useState(0);
-
-  const handleUpdate = () => {
-    setUpdate(prev => prev + 1);
-  };
 
   const navigate = useNavigate();
   const handleClick = () => {
@@ -47,7 +42,7 @@ const HomeDisplay = () => {
     };
 
     fetchRecipes();
-  }, [update]);
+  }, []);
 
 
   useEffect(() => {
@@ -58,9 +53,9 @@ const HomeDisplay = () => {
   
   return (
     <div>
-      <div className="home-header">
+      <div className="home-display">
         <h1>Your Recipes:</h1>
-        <RecipeList recipes={recipesToShow} expandToggles={expandRecipe} showAuthor={false} reRender={handleUpdate} />
+        <RecipeList recipes={recipesToShow} expandToggles={expandRecipe} showAuthor={false} />
         <button onClick={handleClick} className="create-recipe-button">
           <span>+ Create New Recipe</span>
         </button>

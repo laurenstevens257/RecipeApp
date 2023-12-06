@@ -43,6 +43,10 @@ const userSchema = new mongoose.Schema({
   likedRecipes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Recipe'
+  }],
+  groceryList: [{
+    text: String, 
+    checked: Boolean
   }]
 });
 
@@ -216,6 +220,7 @@ app.get('/home', authenticate, async (req, res) => {
   }
 });
 
+//Search Route
 app.get('/search', async (req, res) => {
   const { search, searchByUser } = req.query;
 
@@ -243,6 +248,7 @@ app.get('/search', async (req, res) => {
   }
 });
 
+//Flave Route
 app.post('/flave-recipe', authenticate, async (req, res) => {
   try {
     const { recipe } = req.body;
@@ -320,6 +326,35 @@ app.get('/user/flavorites', authenticate, async (req, res) => {
       res.status(500).json({ message: 'Error fetching favorite recipes' });
   }
 });
+
+// Route to update the user's grocery list
+app.post('/user/grocerylist', authenticate, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    user.groceryList = req.body.groceryList;
+    await user.save();
+    res.status(200).json({ message: 'Grocery list updated' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating grocery list' });
+  }
+});
+
+//Get grocery list route
+app.get('/user/grocerylist', authenticate, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user.groceryList);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching grocery list' });
+  }
+});
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
