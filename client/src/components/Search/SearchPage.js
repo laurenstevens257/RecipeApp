@@ -11,31 +11,40 @@ function SearchPage() {
   const [noResultsFound, setNoResultsFound] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false); // State to track if a search has been performed
 
+  const [update, setUpdate] = useState(0);
+
+  const handleUpdate = () => {
+    setUpdate(prev => prev + 1);
+  };
+
   useEffect(() => {
     setExpandRecipe(Array(recipes.length).fill(false));
   }, [recipes]);
 
-  const fetchRecipes = async (searchTerm = '', searchByUser = false) => {
-    try {
-      const response = await fetch(`http://localhost:8080/search?search=${searchTerm}&searchByUser=${searchByUser}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  console.log('searchRender');
+  
+    const fetchRecipes = async (searchTerm = '', searchByUser = false) => {
+      try {
+        const response = await fetch(`http://localhost:8080/search?search=${searchTerm}&searchByUser=${searchByUser}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-      if (response.ok) {
-        const recipesData = await response.json();
-        setRecipes(recipesData);
-        setFilteredRecipes(recipesData);
-        setNoResultsFound(recipesData.length === 0);
-      } else {
-        console.error('Failed to fetch recipes');
+        if (response.ok) {
+          const recipesData = await response.json();
+          setRecipes(recipesData);
+          setFilteredRecipes(recipesData);
+          setNoResultsFound(recipesData.length === 0);
+        } else {
+          console.error('Failed to fetch recipes');
+        }
+      } catch (error) {
+        console.error('Error:', error);
       }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+    };
+
 
   const handleSearch = (searchTerm, searchByUser) => {
     setSearchPerformed(true); // Set that a search has been performed here
@@ -52,6 +61,7 @@ function SearchPage() {
         <RecipeList recipes={filteredRecipes} 
           expandToggles={expandRecipe} 
           showAuthor={true} // Assuming you want to show authors on the Search page
+          reRender={handleUpdate}
         />
       </div>
     </div>

@@ -7,6 +7,14 @@ const FlavoritesPage = () => {
     const [flavoredRecipes, setFlavoredRecipes] = useState([]);
     const [expandToggles, setExpandToggles] = useState([]);
 
+    const [update, setUpdate] = useState(0);
+
+    const handleUpdate = () => {
+      setUpdate(prev => prev + 1);
+    };
+
+    console.log('flavorites');
+
     useEffect(() => {
         const fetchFlavoredRecipes = async () => {
             const token = sessionStorage.getItem('token'); // Fetch the authentication token
@@ -33,7 +41,8 @@ const FlavoritesPage = () => {
         };
 
         fetchFlavoredRecipes();
-    }, []);
+        console.log('recipes: ', flavoredRecipes)
+    }, [update]);
 
     // Define handlers for RecipeList component if needed
 
@@ -44,6 +53,7 @@ const FlavoritesPage = () => {
                 recipes={flavoredRecipes} 
                 expandToggles={expandToggles}
                 showAuthor={true} // Assuming you want to show authors on this page
+                reRender={handleUpdate}
             />
         </div>
     );

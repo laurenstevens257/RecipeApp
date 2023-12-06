@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 
-function RecipeList({recipes, expandToggles, showAuthor}) {
+function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
 
   const [expandRecipe, setExpandRecipe] = useState(expandToggles);
+
+  console.log('rendered!');
 
   const handleRecipeClick = (id, index) => {
     // Toggle expanded recipe view
@@ -40,6 +42,7 @@ function RecipeList({recipes, expandToggles, showAuthor}) {
 
       if (response.ok) {
           //make button turn red or something
+          reRender();
           console.log('liked recipe: ', recipe);
       } else {
         // Handle errors
