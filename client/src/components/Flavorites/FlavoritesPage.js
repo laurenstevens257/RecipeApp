@@ -7,7 +7,10 @@ const FlavoritesPage = () => {
     const [flavoredRecipes, setFlavoredRecipes] = useState([]);
     const [expandToggles, setExpandToggles] = useState([]);
 
-    console.log('flavorites');
+    const removeUnlikedRecipe = (recipeList) => {
+        const likedRecipes = recipeList.filter(recipe => recipe.likedByUser);
+        setFlavoredRecipes(likedRecipes);
+    };
 
     const fetchFlavoredRecipes = async () => {
         const token = sessionStorage.getItem('token'); // Fetch the authentication token
@@ -25,6 +28,9 @@ const FlavoritesPage = () => {
                 const recipesData = await response.json();
                 setFlavoredRecipes(recipesData);
                 setExpandToggles(Array(recipesData.length).fill(false)); // Initialize toggles for expanding recipe details
+
+                const likedRecipes = recipesData.filter(recipe => recipe.likedByUser);
+                setFlavoredRecipes(likedRecipes);
             } else {
                 console.error('Failed to fetch flavored recipes');
             }
@@ -33,10 +39,12 @@ const FlavoritesPage = () => {
         }
     };
 
-    fetchFlavoredRecipes();
-    console.log('recipes: ', flavoredRecipes)
+    useEffect(() => {
+        fetchFlavoredRecipes();
+      }, []);
+    
 
-    // }, []);
+
 
     return (
         <div className='flavorites-container'>
@@ -47,7 +55,7 @@ const FlavoritesPage = () => {
                 recipes={flavoredRecipes} 
                 expandToggles={expandToggles}
                 showAuthor={true} // Assuming you want to show authors on this page
-                reRender={setFlavoredRecipes}
+                reRender={removeUnlikedRecipe}
                 ownRecipe={false}
             />
         </div>
