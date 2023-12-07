@@ -49,8 +49,7 @@ const HomeDisplay = () => {
 
 
    fetchRecipes();
- }, []);
-
+ }, [recipesToShow]);
 
 
 
@@ -58,11 +57,13 @@ const HomeDisplay = () => {
    setExpandRecipe(Array(recipesToShow.length).fill(false));
  }, [recipesToShow]);
 
+ console.log('home');
 
- console.log('recipesToShow: ', recipesToShow);
+
   return (
    <div>
      <div className="home-display">
+	
        <div className='home-header'>
          <h1>Your Recipes:</h1>
          <button onClick={handleClick} className="create-recipe-button">
