@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './AddRecipe.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,15 +21,26 @@ function AddRecipe() {
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState('#');
 
+  //refs for input elements
+  const ingredientInputRef = useRef(null);
+  const ingredientQtyInputRef = useRef(null);
+  const ingredientUnitRef = useRef(null);
+
   const handleKeyPress = (e, field) => {
+    console.log('Key pressed', e.key);
     if (e.key === 'Enter') {
-      if (field === 'instructions') {
-        setInstructions((prev) => prev + '\n');
-      } else if (field === 'tags') {
-        handleAddTag();
-      } else if (field === 'ingredients') {
-        e.preventDefault(); // Prevent form submission
-        handleAddIngredient();
+      e.preventDefault(); // Prevent the form from submitting on Enter key
+      switch (field) {
+        case 'ingredients':
+          console.log('in ingredients case');
+          handleAddIngredient();
+          break;
+        case 'tags':
+          handleAddTag();
+          break;
+        default:
+          // Handle other cases or do nothing
+          break;
       }
     }
   };
@@ -45,7 +56,9 @@ function AddRecipe() {
 
 
   const handleAddIngredient = () => {
-    if (ingredientInput !== '' && ingredientUnit !== '' && ingredientQtyInput !== '') {
+    console.log('hey we made it');
+    if (ingredientInput != '' && ingredientUnit !== '' &&   ingredientQtyInput !== '') {
+      console.log('gm23');
       const newIngredient = {
         name: ingredientInput,
         quantity: ingredientQtyInput,
@@ -56,6 +69,15 @@ function AddRecipe() {
       setIngredientInput('');
       setIngredientUnit('');
       setIngredientQtyInput('');
+    }
+    else {
+      if (ingredientInput === '') {
+        ingredientInputRef.current.focus();
+      } else if (ingredientQtyInput === '') {
+        ingredientQtyInputRef.current.focus();
+      } else if (ingredientUnit === '') {
+        ingredientUnitRef.current.focus();
+      }
     }
   };
   const handleAddTag = () => {
@@ -179,6 +201,7 @@ function AddRecipe() {
             ))}
           </div>
           <input
+            ref={ingredientInputRef}
             type="text"
             value={ingredientInput}
             onChange={(e) => setIngredientInput(e.target.value)}
@@ -186,6 +209,7 @@ function AddRecipe() {
             placeholder="Enter an ingredient"
           />
           <input
+            ref={ingredientQtyInputRef}
             type="text"
             value={ingredientQtyInput}
             onChange={(e) => setIngredientQtyInput(e.target.value)}
@@ -193,8 +217,10 @@ function AddRecipe() {
             placeholder="Enter its quantity"
           />
           <select
+            ref={ingredientUnitRef}
             value={ingredientUnit}
             onChange={(e) => setIngredientUnit(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, 'ingredients')}
             className='unit-dropdown'
           >
            <option value="">Select a unit</option>
