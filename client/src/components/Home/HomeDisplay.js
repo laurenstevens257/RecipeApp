@@ -53,6 +53,7 @@ const HomeDisplay = () => {
 
 
 
+
  useEffect(() => {
    setExpandRecipe(Array(recipesToShow.length).fill(false));
  }, [recipesToShow]);
@@ -63,7 +64,6 @@ const HomeDisplay = () => {
   return (
    <div>
      <div className="home-display">
-	
        <div className='home-header'>
          <h1>Your Recipes:</h1>
          <button onClick={handleClick} className="create-recipe-button">
