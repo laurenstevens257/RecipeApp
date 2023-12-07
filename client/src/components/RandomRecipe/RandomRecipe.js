@@ -12,13 +12,12 @@ const RandomRecipe = () => {
     setUpdate(prev => prev + 1);
   };
  
-
   const fetchRandomRecipe = async () => {
     try {
       const response = await fetch('http://localhost:8080/random-recipe');
       if (response.ok) {
         const recipeData = await response.json();
-        setRandomRecipe([recipeData]); // Set an array with a single recipe
+        setRandomRecipe(recipeData);
       } else {
         console.error('Failed to fetch random recipe');
       }

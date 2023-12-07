@@ -406,10 +406,29 @@ app.get('/random-recipe', async (req, res) => {
   try {
     const count = await Recipe.countDocuments();
     const random = Math.floor(Math.random() * count);
-    const randomRecipe = await Recipe.findOne().skip(random).populate({
+
+    let randomRecipe = await Recipe.findOne().skip(random).populate({
       path: 'createdBy',
       select: 'username'
     });
+
+    randomRecipe = await Recipe.aggregate([
+      { $match: { _id: randomRecipe._id } },
+      { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'createdBy',
+          foreignField: '_id',
+          as: 'createdBy'
+        }
+      },
+      { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+      { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
+    ]);
+
+    console.log(randomRecipe);
+
     res.json(randomRecipe);
   } catch (error) {
     res.status(500).send('Error fetching random recipe');
