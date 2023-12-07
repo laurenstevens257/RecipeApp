@@ -80,9 +80,10 @@ function AddRecipe() {
     }
   };
   const handleAddTag = () => {
-    if (tagInput.trim() !== '') {
-      setTags(prevTags => [...prevTags, tagInput]);
-      setTagInput('#'); 
+    if (tagInput.trim() !== '#') {
+      const newTag = tagInput.slice(1);
+      setTags(prevTags => [...prevTags, newTag]);
+\      setTagInput('#'); 
     }
   };
 
