@@ -28,22 +28,25 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
 
  const handleDeleteRecipe = async (event, recipeId) => {
   event.stopPropagation();
-  const token = sessionStorage.getItem('token');
-  try {
-    const response = await fetch(`http://localhost:8080/delete-recipe/${recipeId}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });
+  const userConfirmed = window.confirm("Are you sure you want to delete this recipe? This action is irreversible.");
+  if (userConfirmed) {
+    const token = sessionStorage.getItem('token');
+    try {
+      const response = await fetch(`http://localhost:8080/delete-recipe/${recipeId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
 
-    if (response.ok) {
-      reRender(prevRecipes => prevRecipes.filter(recipe => recipe._id !== recipeId));
-    } else {
-      console.error('Failed to delete the recipe');
+      if (response.ok) {
+        reRender(prevRecipes => prevRecipes.filter(recipe => recipe._id !== recipeId));
+      } else {
+        console.error('Failed to delete the recipe');
+      }
+    } catch (error) {
+      console.error('Error:',error);
     }
-  } catch (error) {
-    console.error('Error:', error);
   }
 };
 
