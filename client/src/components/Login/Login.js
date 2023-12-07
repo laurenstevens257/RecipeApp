@@ -3,6 +3,8 @@ import './Login.css';
 import PropTypes from 'prop-types';
 
 export default function Login( { setToken } ) {
+
+  //'Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces',
     
     const [usernameLogin, setLoginUserName] = useState('');
     const [passwordLogin, setLoginPassword] = useState('');
