@@ -95,14 +95,15 @@ app.post('/signup', async (req, res) => {
         });//if username is blank or if password is blank do error 400 to HTTP that is bad respose due to clienr, display error and set the sucsess token
     }
 
-      //for password controll
-      const passwordPolicyRegex = /^(?=.*\d)[A-Za-z\d]{5,20}$/;
+      //for password control
+      const passwordPolicyRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?!.*\s).{8,20}$/;
       if (!passwordPolicyRegex.test(password)) {
           return res.status(401).json({
-              error: 'Your password should be 5-20 symbols and should include at least 1 number',
-              succsess: false
-          });
-      }
+              error: 'Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces',
+              success: false
+      });
+}
+
 
     let user = await User.findOne({ username });
     if (user) {
