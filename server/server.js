@@ -87,81 +87,63 @@ function generateToken(user) {
   return jwt.sign(tokenPayload, 'your_jwt_secret', { expiresIn: '1h' }); // Replace 'your_jwt_secret' with your actual secret key
 }
 
+// Signup Route
+// Signup Route
 app.post('/signup', async (req, res) => {
   const { username, password } = req.body;
   try {
-    if (username === '' || password === '') {
-      return res.status(401).json({
-        error: 'Please enter a username and password',
-        success: false
-      });
+    if (username === '' || password === ''){
+        return res.status(401).json({
+            error: 'please enter a username and password',
+            success: false
+        });//if username is blank or if password is blank do error 400 to HTTP that is bad respose due to clienr, display error and set the sucsess token
     }
 
-    // Check if user already exists
+      //for password control
+      const passwordPolicyRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?!.*\s).{8,20}$/;
+      if (!passwordPolicyRegex.test(password)) {
+          return res.status(401).json({
+              error: 'Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces',
+              success: false
+    if (username === '' || password === ''){
+        return res.status(401).json({
+            error: 'please enter a username and password',
+            success: false
+        });//if username is blank or if password is blank do error 400 to HTTP that is bad respose due to clienr, display error and set the sucsess token
+    }
+
+      //for password control
+      const passwordPolicyRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?!.*\s).{8,20}$/;
+      if (!passwordPolicyRegex.test(password)) {
+          return res.status(401).json({
+              error: 'Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces',
+              success: false
+      });
+}
+}
+
+
+
     let user = await User.findOne({ username });
     if (user) {
-      const randNum = Math.floor(100 + Math.random() * 900);
-      const suggestUsername = `${username}${randNum}`;
-      return res.status(400).json({
-        error: `Username taken. Maybe try ${suggestUsername}?`,
-        success: false
-      });
-    }
-
-    const passwordPolicyRegex = {
-      number: /(?=.*\d)/,
-      upperCase: /(?=.*[A-Z])/,
-      lowerCase: /(?=.*[a-z])/,
-      specialChar: /(?=.*[!@#$%^&*])/,
-      noSpaces: /^(?!.*\s).*$/
-    };
-
-    let errors = [];
-
-    if (password.length < 8) {
-      errors.push("Too short: need 8 characters");
-    }
-    if(password.length > 20) {
-      errors.push("Too long: max 20 characters");
-    }
-    
-    if (!passwordPolicyRegex.number.test(password)) {
-      errors.push("Include at least one number");
-    }
-    if (!passwordPolicyRegex.upperCase.test(password)) {
-      errors.push("Include at least one uppercase letter");
-    }
-    if (!passwordPolicyRegex.lowerCase.test(password)) {
-      errors.push("Include at least one lowercase letter");
-    }
-    if (!passwordPolicyRegex.specialChar.test(password)) {
-      errors.push("Include at least one special character (!@#$%^&*)");
-    }
-    if (!passwordPolicyRegex.noSpaces.test(password)) {
-      errors.push("No spaces allowed");
-    }
-
-    if (errors.length > 0) {
-      return res.status(401).json({
-        error: "Password errors: " + errors.join("; "),
-        success: false
-      });
+      return res.status(400).json({ error: 'Username already exists', success: false });
+      return res.status(400).json({ error: 'Username already exists', success: false });
     }
 
     // Hashing the password with Argon2id
     const hash = await argon2.hash(password, { type: argon2.argon2id });
 
-    // Create new user
     user = new User({ username, password: hash });
     await user.save();
-
-    // Generate token
+    
+    
     const token = generateToken(user);
     res.send({ token, success: true });
   } catch (error) {
     res.status(500).send('Error in saving');
   }
-}); 
+});
+});
 
 // Login Route
 app.post('/login', async (req, res) => {
@@ -185,6 +167,7 @@ app.post('/login', async (req, res) => {
             success: false
         });
     }
+    // console.log(user);
     
     const token = generateToken(user);
     res.send({ token, success: true });
@@ -270,7 +253,8 @@ app.delete('/delete-recipe/:id', authenticate, async (req, res) => {
     console.log('Recipe createdBy:', recipe.createdBy);
     console.log('User ID:', req.user.id);
 
-    //945532 - should not be necessary because delete doesn't render at all unless you own it,
+    //945532 - should not be necessary because delete doesn't render at all unless you own it.
+    //945532 - should not be necessary because delete doesn't render at all unless you own it.
     // Check if the logged-in user is the creator of the recipe
     if (recipe.createdBy.toString() !== req.user.id) {
       return res.status(403).send('Unauthorized to delete this recipe');
@@ -290,35 +274,57 @@ app.delete('/delete-recipe/:id', authenticate, async (req, res) => {
 // Fetch Recipes Route - Modified to support search functionality
 app.get('/home', authenticate, async (req, res) => {
   try {
-    let recipes = await Recipe.find({ createdBy: req.user.id }).populate({
+    const recipes = await Recipe.find({ createdBy: req.user.id }).populate({
+    const recipes = await Recipe.find({ createdBy: req.user.id }).populate({
       path: 'createdBy',
       select: 'username'
     });
 
-    recipes = await Recipe.aggregate([
+    const aggregatedRecipes = await Recipe.aggregate([
+    const aggregatedRecipes = await Recipe.aggregate([
       { $match: { _id: { $in: recipes.map(r => r._id) } } },
       { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
-      { $sort: { flavedByCount: -1 } },
       {
         $lookup: {
           from: 'users',
           localField: 'createdBy',
           foreignField: '_id',
-          as: 'createdBy'
+          as: 'creator'
+          as: 'creator'
         }
       },
-      { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
-      { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
+      { $unwind: "$creator" },
+      {
+        $addFields: {
+          likedByUser: {
+            $in: ["$_id", "$creator.likedRecipes"]
+          }
+        }
+      },
+      { $sort: { flavedByCount: -1 } },
+      { $project: { 'creator.password': 0, 'creator.likedRecipes': 0, 'creator.groceryList': 0 } }
+      { $unwind: "$creator" },
+      {
+        $addFields: {
+          likedByUser: {
+            $in: ["$_id", "$creator.likedRecipes"]
+          }
+        }
+      },
+      { $sort: { flavedByCount: -1 } },
+      { $project: { 'creator.password': 0, 'creator.likedRecipes': 0, 'creator.groceryList': 0 } }
     ]);
 
-    res.status(200).json(recipes);
+    res.status(200).json(aggregatedRecipes);
+    res.status(200).json(aggregatedRecipes);
   } catch (error) {
     res.status(500).send('Error in fetching recipes');
   }
 });
 
 //Search Route
-app.get('/search', async (req, res) => {
+app.get('/search', authenticate, async (req, res) => {
+app.get('/search', authenticate, async (req, res) => {
   const { search, searchByUser,  searchByTags} = req.query;
 
   try {
@@ -367,7 +373,9 @@ app.get('/search', async (req, res) => {
       return { ...recipe, likedByUser: isLikedArray[index] };
     });
 
-    res.status(200).json(recipes);
+    //console.log('recipes: ', recipes);
+
+    res.status(200).json(recipesWithLikeStatus);
   } catch (error) {
     res.status(500).send('Error in fetching recipes');
   }
@@ -378,34 +386,32 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
   try {
     const { recipe } = req.body;
 
-    console.log('recipe: ', recipe);
-
     let recipeToModify = await Recipe.findById(recipe._id);
-
-    console.log(recipeToModify);
 
     const user = await User.findById(req.user.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    console.log('initial: ', user);
-
     const recipeIndex = user.likedRecipes.indexOf(recipeToModify._id);
     const userIndex = recipeToModify.flavedBy.indexOf(user._id);
 
     if (recipeIndex === -1) {
-      user.likedRecipes.push(recipeToModify._id);
+      user.likedRecipes.push(recipeToModify._id); // Append only if not already liked
       if(userIndex === -1){
         recipeToModify.flavedBy.push(user._id);
       }
 
+      console.log('checkpoint');
+
       await recipeToModify.save();
       await user.save();
 
+      console.log('recipe: ', recipeToModify);
+
       recipeToModify = await Recipe.aggregate([
         { $match: { _id: recipeToModify._id } },
-        { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: true } },
         {
           $lookup: {
             from: 'users',
@@ -414,32 +420,34 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
             as: 'createdBy'
           }
         },
-        { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+        { $unwind: { path: "$createdBy", preserveNullAndEmptyArrays: true } },
+        { $unwind: { path: "$createdBy", preserveNullAndEmptyArrays: true } },
         { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
       ]);
       
-      console.log(recipeToModify);
+      console.log('final: ', recipeToModify);
+      console.log('final: ', recipeToModify);
 
       res.status(200).json(recipeToModify);
       
     } else {
 
       user.likedRecipes.splice(recipeIndex, 1);
+      console.log('uIndex: ', userIndex);
 
       if(userIndex !== -1){
         recipeToModify.flavedBy.splice(userIndex, 1);
-
       }
-      console.log('unliked: ', user);
-      console.log('recipe: ', recipeToModify);
 
       await recipeToModify.save();
       await user.save(); // Save the user with the updated likedRecipes
 
+      console.log('ch2');
 
       recipeToModify = await Recipe.aggregate([
         { $match: { _id: recipeToModify._id } },
-        { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: false } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: false } },
         {
           $lookup: {
             from: 'users',
@@ -448,13 +456,13 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
             as: 'createdBy'
           }
         },
-        { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+        { $unwind: { path: "$createdBy", preserveNullAndEmptyArrays: true } },
+        { $unwind: { path: "$createdBy", preserveNullAndEmptyArrays: true } },
         { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
       ]);
 
       console.log('final: ', recipeToModify);
 
-      res.status(200).json(recipeToModify);
     }
   } catch (error) {
     res.status(500).send('Error in flaving recipes');
@@ -476,7 +484,8 @@ app.get('/user/flavorites', authenticate, async (req, res) => {
 
       const likedRecipesWithFlaves = await Recipe.aggregate([
         { $match: { _id: { $in: user.likedRecipes.map(r => r._id) } } },
-        { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: true } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: true } },
         { $sort: { flavedByCount: -1 } },
         {
           $lookup: {
@@ -527,7 +536,8 @@ app.get('/user/grocerylist', authenticate, async (req, res) => {
 });
 
 //Get random recipe
-app.get('/random-recipe', async (req, res) => {
+app.get('/random-recipe', authenticate, async (req, res) => {
+app.get('/random-recipe', authenticate, async (req, res) => {
   try {
     const count = await Recipe.countDocuments();
     const random = Math.floor(Math.random() * count);
@@ -537,9 +547,30 @@ app.get('/random-recipe', async (req, res) => {
       select: 'username'
     });
 
+    console.log(randomRecipe);
+
+    const user = await User.findById(req.user.id);
+
+    console.log(user);
+
+    const isLiked = user.likedRecipes.includes(randomRecipe._id);
+
+    console.log('isliked? ', isLiked);
+
+    console.log(randomRecipe);
+
+    const user = await User.findById(req.user.id);
+
+    console.log(user);
+
+    const isLiked = user.likedRecipes.includes(randomRecipe._id);
+
+    console.log('isliked? ', isLiked);
+
     randomRecipe = await Recipe.aggregate([
       { $match: { _id: randomRecipe._id } },
-      { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+      { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: isLiked } },
+      { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: isLiked } },
       {
         $lookup: {
           from: 'users',
@@ -548,13 +579,17 @@ app.get('/random-recipe', async (req, res) => {
           as: 'createdBy'
         }
       },
-      { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+      { $unwind: "$createdBy" },
+      { $unwind: "$createdBy" },
       { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
     ]);
 
-    console.log(randomRecipe);
+    console.log('randomRecipe');
+    console.log('randomRecipe');
 
     res.json(randomRecipe);
+    
+    
   } catch (error) {
     res.status(500).send('Error fetching random recipe');
   }
