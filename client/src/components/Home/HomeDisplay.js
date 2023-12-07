@@ -49,7 +49,7 @@ const HomeDisplay = () => {
 
 
    fetchRecipes();
- }, []);
+ }, [recipesToShow]);
 
 
 
