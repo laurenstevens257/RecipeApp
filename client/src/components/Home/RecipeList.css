@@ -2,6 +2,7 @@
 .recipe-item {
   transition: background-color 0.3s ease;
   background-color:rgb(214, 197, 175);
+  border: none;
 }
 
 .closedrecipe-container {
