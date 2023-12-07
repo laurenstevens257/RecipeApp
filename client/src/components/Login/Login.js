@@ -103,13 +103,15 @@ export default function Login( { setToken } ) {
                     <label>
                         <p>Password</p>
                         <input type="text" onChange={e => setLoginPassword(e.target.value)}  style={{ borderColor: 'black' }}/>
-                        <small className="password-requirement">
-                Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces
-              </small>
+              
                     </label>
+                    
                     <div>
                         <button type="submit">Submit</button>
                     </div>
+                    {/* <small className="password-requirement">
+                Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces
+              </small> */}
               </div>
           </form>
         ) : (
