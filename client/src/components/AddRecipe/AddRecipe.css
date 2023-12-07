@@ -67,3 +67,10 @@
   background-color: rgb(242, 239, 233); 
   
 }
+
+.error-message {
+  color: red; /* This will make the text red */
+  text-align: center;
+  margin-top: 10px; /* Adjust the margin as needed */
+  font-weight: bold; /* Optional: makes the text bold */
+}

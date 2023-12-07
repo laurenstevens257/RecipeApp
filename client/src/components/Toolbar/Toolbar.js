@@ -10,7 +10,7 @@ const Toolbar = ({ onLogout }) => (
       <Link to="/" className="toolbar-link">Home</Link>
       <Link to="/flavorites" className="toolbar-link">Flavorites</Link>
       <Link to="/search" className="toolbar-link">Search</Link>
-      <div onClick={onLogout} className="toolbar-link" style={{ cursor: 'pointer' }}>Logout</div>
+      <Link to="/random-recipe" className="toolbar-link">Random</Link> 
     </div>
     
     {/* Second Toolbar */}
@@ -18,8 +18,8 @@ const Toolbar = ({ onLogout }) => (
     <Link to="/groceryList" className="toolbar-link">Grocery List</Link>
 
     <Link to="/calculatorPage" className="toolbar-link">Measurement Converter</Link>
-    <Link to="/random-recipe" className="toolbar-link">Random</Link> 
 
+    <div onClick={onLogout} className="toolbar-link" style={{ cursor: 'pointer' }}>Logout</div>
     </div>
     <div className="header-container">
       <img className="png-iframe" src='Banner.png' alt='Banner'></img>

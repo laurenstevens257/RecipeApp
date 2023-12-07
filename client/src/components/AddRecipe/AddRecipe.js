@@ -17,6 +17,9 @@ function AddRecipe() {
   const [instructions, setInstructions] = useState('');
 
   const [formError, setFormError] = useState('');
+  const [cookTimeError, setCookTimeError] = useState('');
+  const [prepTimeError, setPrepTimeError] = useState('');
+
 
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState('#');
@@ -55,9 +58,21 @@ function AddRecipe() {
 
 
   const handleAddIngredient = () => {
-    console.log('hey we made it');
+
+    if (isNaN(cookTime) || cookTime <= 0) {
+      setCookTimeError('Cook time must be a positive number');
+    } else {
+      setCookTimeError(''); // Clear error if the input is valid
+    }
+    
+    if (isNaN(prepTime) || prepTime <= 0) {
+      setPrepTimeError('Prep time must be a positive number');
+    } else {
+      setPrepTimeError(''); // Clear error if the input is valid
+    }
+
     if (ingredientInput != '' && ingredientUnit !== '' &&   ingredientQtyInput !== '') {
-      console.log('gm23');
+   
       const newIngredient = {
         name: ingredientInput,
         quantity: ingredientQtyInput,
@@ -170,6 +185,7 @@ function AddRecipe() {
               onChange={(e) => setPrepTime(e.target.value)}
               placeholder="Enter prep time in mins"
             />
+            {prepTimeError && <p className="error-message">{prepTimeError}</p>}
           </div>
         </div>
         <div className='label-container'>
@@ -183,6 +199,7 @@ function AddRecipe() {
               onChange={(e) => setCookTime(e.target.value)}
               placeholder="Enter cook time in mins"
             />
+             {cookTimeError && <p className="error-message">{cookTimeError}</p>}
           </div>
         </div>
 
