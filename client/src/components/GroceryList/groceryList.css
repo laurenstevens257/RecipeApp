@@ -1,7 +1,7 @@
 .grocerylist-container {
   display: flex;
   align-items: center;
-  margin: 0px 40px 0px 40px;
+  margin: 0px 40px 0px 30px;
 }
 
 .ingredient-input {
@@ -56,19 +56,26 @@
   text-decoration: line-through;
 }
 
-.header {
+.grocery-header{
+  color: rgb(54, 97, 69);
+  font-size: 24;
+  position: relative;
+  margin: 30px 30px 30px 30px;
+}
+
+.message {
   color: #0f699e;
   padding: 16px;
   text-align: center;
 }
 
-.header-line1 {
+.message-line1 {
   font-weight: bold;
   color: rgb(107, 66, 99);
   font-size: 24px;
 }
 
-.header-line2 {
+.message-line2 {
   color: rgb(107, 66, 99);
   font-size: 18px;
 }

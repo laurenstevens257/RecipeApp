@@ -2,23 +2,21 @@ import './SearchPage.css';
 import '../Home/HomeDisplay.css';
 import RecipeList from '../Home/RecipeList';
 import React, { useState, useEffect } from 'react';
-import SearchBar from './SearchBar'; 
+import SearchBar from './SearchBar';
 
 function SearchPage() {
   const [expandRecipe, setExpandRecipe] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [noResultsFound, setNoResultsFound] = useState(false);
-  const [searchPerformed, setSearchPerformed] = useState(false); 
+  const [searchPerformed, setSearchPerformed] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-
 
   useEffect(() => {
     setExpandRecipe(Array(filteredRecipes.length).fill(false));
   }, [filteredRecipes]);
 
-  
   const fetchRecipes = async (searchTerm = '', searchByUser = false, searchByTags = false) => {
-    setIsFetching(true); // Set isFetching to true when fetch starts
+    setIsFetching(true);
     try {
       const response = await fetch(`http://localhost:8080/search?search=${searchTerm}&searchByUser=${searchByUser}&searchByTags=${searchByTags}`, {
         method: 'GET',
@@ -26,7 +24,7 @@ function SearchPage() {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (response.ok) {
         const recipesData = await response.json();
         setFilteredRecipes(recipesData);
@@ -37,13 +35,11 @@ function SearchPage() {
     } catch (error) {
       console.error('Error:', error);
     }
-    setIsFetching(false); // Set isFetching to false when fetch completes
+    setIsFetching(false);
   };
-  
-
 
   const handleSearch = (searchTerm, searchByUser, searchByTags) => {
-    setSearchPerformed(true); // Set that a search has been performed here
+    setSearchPerformed(true);
     fetchRecipes(searchTerm, searchByUser, searchByTags);
   };
 
@@ -51,12 +47,18 @@ function SearchPage() {
     <div>
       <SearchBar onSearch={handleSearch} />
       <div className='search-display'>
-        {!isFetching && searchPerformed && noResultsFound && (
-          <div className="no-results">No results found</div>
+        {!isFetching && searchPerformed && (
+          <>
+            {noResultsFound ? (
+              <div className="no-results">No results found</div>
+            ) : (
+              <div className="search-results">Found {filteredRecipes.length} results</div>
+            )}
+          </>
         )}
         <RecipeList recipes={filteredRecipes} 
           expandToggles={expandRecipe} 
-          showAuthor={true} // Assuming you want to show authors on the Search page
+          showAuthor={true}
           reRender={setFilteredRecipes}
         />
       </div>

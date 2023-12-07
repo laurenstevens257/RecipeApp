@@ -74,10 +74,13 @@ const GroceryList = () => {
 
   return (
     <div className="container">
-      <div className="header">
-        <div className="header-text">
-          <div className="header-line1">Found a recipe you want to try, but now you need to make a grocery store trip?</div>
-          <div className="header-line2">Take this with you to the store so you don't forget anything!</div>
+      <h1 className='grocery-header'>
+        Your Grocery List:
+      </h1>
+      <div className="message">
+        <div>
+          <div className="message-line1">Found a recipe you want to try, but now you need to make a grocery store trip?</div>
+          <div className="message-line2">Take this with you to the store so you don't forget anything!</div>
         </div>
       </div>
       <div className="grocerylist-container">
