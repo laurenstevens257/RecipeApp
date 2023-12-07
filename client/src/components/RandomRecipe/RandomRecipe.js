@@ -1,4 +1,5 @@
 // RandomRecipeDisplay.js
+import './RandomRecipe.css'
 import React, { useState } from 'react';
 import RecipeList from '../Home/RecipeList'; // Update the import path as needed
 
@@ -22,10 +23,15 @@ const RandomRecipe = () => {
 
   return (
     <div>
-      <button onClick={fetchRandomRecipe}>Show Random Recipe</button>
-      {randomRecipe && (
-        <RecipeList recipes={randomRecipe} expandToggles={expandRecipe} showAuthor={true} reRender={setRandomRecipe} ownRecipe={false} />
-      )}
+      <div className='surprise-header'>
+        <h1>Out of ideas? Use the random recipe generator for a tasty surprise!</h1>
+      </div>
+      <div className='random-container'>
+        <button className='surprise-button' onClick={fetchRandomRecipe}>Surprise Me!</button>
+        {randomRecipe && (
+          <RecipeList recipes={randomRecipe} expandToggles={expandRecipe} showAuthor={true} reRender={setRandomRecipe} ownRecipe={false} />
+        )}
+      </div>
     </div>
   );
 };
