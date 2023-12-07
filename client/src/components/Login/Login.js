@@ -92,20 +92,29 @@ export default function Login( { setToken } ) {
       </div>
       <div className="login-wrapper">
         <h1>{isLoginFormVisible ? 'Please Log In' : 'Create an Account'}</h1>
+      </div>
+      <div className='login-wrapper'>
         {isLoginFormVisible ? (
           <form onSubmit={handleSubmitLogin}>
-             <label>
+            <div className='cred-boxes'>
+                    <label>
                         <p>Username</p>
-                        <input type="text" onChange={e => setLoginUserName(e.target.value)}/>
+                        <input type="text" onChange={e => setLoginUserName(e.target.value)} style={{ borderColor: 'black' }}/>
+                         
                     </label>
                     <label>
                         <p>Password</p>
-                        <input type="password" onChange={e => setLoginPassword(e.target.value)}/>
+                        <input type="text" onChange={e => setLoginPassword(e.target.value)}  style={{ borderColor: 'black' }}/>
+              
                     </label>
+                    
                     <div>
                         <button type="submit">Submit</button>
                     </div>
-
+                    {/* <small className="password-requirement">
+                Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces
+              </small> */}
+              </div>
           </form>
         ) : (
           <form onSubmit={handleSubmitSignup}>
@@ -122,7 +131,11 @@ export default function Login( { setToken } ) {
                 </div> 
           </form>
         )}
+        </div>
+        <div className='error-wrapper'>
         {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
+        </div>
+        <div className='link-wrapper'>
         {isLoginFormVisible ? (
           <p className="signup-link" onClick={handleToggleForm}>
             Don't have an Account? Sign Up
@@ -132,7 +145,7 @@ export default function Login( { setToken } ) {
             Back to Login
           </p>
         )}
-      </div>
+        </div>
     </div>
   );
 }
