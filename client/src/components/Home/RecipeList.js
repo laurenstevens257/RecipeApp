@@ -91,63 +91,56 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
 
 
  return (
-  <div className="recipe-list">
-    {recipes.map((recipe, index) => (
-      <div
-        key={index}
-        className={`recipe-item ${expandRecipe[index] ? 'expanded' : ''}`}
-        onClick={() => handleRecipeClick(recipe._id, index)}
-      >
-      <div className='closedrecipe-container'>
-        <h3>{recipe.name}</h3>
-        {showAuthor && (
-          <p>Author: {recipe.createdBy ? recipe.createdBy.username : 'Unknown'}</p>
-        )}
-        <div className="button-container">
-          <div className="expand-icon" onClick={(event) => handleVClick(event, index)}>
-            <img src="./UpArrow.png" className={expandRecipe[index] ? 'flipped' : ''} />
-          </div>
-          <div className="like-button">
+   <div className="recipe-list">
+     {recipes.map((recipe, index) => (
+       <div
+         key={index}
+         className={`recipe-item ${expandRecipe[index] ? 'expanded' : ''}`}
+         onClick={() => handleRecipeClick(recipe._id, index)}
+       >
+       <div className='closedrecipe-container'>
+         <h3>{recipe.name}</h3>
+         {showAuthor && (
+           <p>Author: {recipe.createdBy ? recipe.createdBy.username : 'Unknown'}</p>
+         )}
+         <div className="button-container">
+           <div className="expand-icon" onClick={(event) => handleVClick(event, index)}>
+             <img src="./UpArrow.png" className={expandRecipe[index] ? 'flipped' : ''} />
+           </div>
+           <div className="like-button">
             <div className='flav-icon' onClick={(event) => flaveRecipe(event, recipe, index)}>
-              <img src='./WhiteHeart.png'/>
+              <img src={recipe.likedByUser ? './PurpleHeart.png' : './WhiteHeart.png'} />
             </div>
-          </div>
-          {ownRecipe && (
-            <div className="delete-button">
-              <div className='trash-icon' onClick={(event) => handleDeleteRecipe(event, recipe._id)}>
-                <img src='./trash-icon.png'/>
-              </div>
-            </div>
-          )}
-        </div>
-        <div className='flave-count'>
-          <p>{recipe.flavedByCount} Flavorites</p>
-        </div>
-        </div>
-        {expandRecipe[index] && (
-          <div className="recipe-details">
-            <p>Prep Time: {recipe.prepTime} minutes</p>
-            <p>Cook Time: {recipe.cookTime} minutes</p>
-            <p>Ingredients:</p>
-            <ul>
-              {(recipe.ingredients || []).map((ingredient, idx) => (
-                <li key={idx}>
-                  {ingredient.name} - {ingredient.quantity} {ingredient.units}
-                </li>
-              ))}
-            </ul>
-            <p>{recipe.instructions}</p>
-            <div className="recipe-tags">
-              {recipe.tags.map((tag, idx) => (
-                <span key={idx} className="tag-item">{tag}</span> // Use `span` with `className` "tag-item"
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    ))}
-  </div>
-);
+           </div>
+         </div>
+         <div className='flave-count'>
+           <p>{recipe.flavedByCount} Flavorites</p>
+         </div>
+         </div>
+         {expandRecipe[index] && (
+           <div className="recipe-details">
+             <p>Prep Time: {recipe.prepTime} minutes</p>
+             <p>Cook Time: {recipe.cookTime} minutes</p>
+             <p>Ingredients:</p>
+             <ul>
+               {(recipe.ingredients || []).map((ingredient, idx) => (
+                 <li key={idx}>
+                   {ingredient.name} - {ingredient.quantity} {ingredient.units}
+                 </li>
+               ))}
+             </ul>
+             <p>{recipe.instructions}</p>
+             <div className="recipe-tags">
+               {recipe.tags.map((tag, idx) => (
+                 <span key={idx} className="tag-item">#{tag}</span> // Use `span` with `className` "tag-item"
+               ))}
+             </div>
+           </div>
+         )}
+       </div>
+     ))}
+   </div>
+ );
 }
 
 export default RecipeList;
