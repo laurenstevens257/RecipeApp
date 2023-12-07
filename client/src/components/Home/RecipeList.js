@@ -103,7 +103,7 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
               <p>{recipe.instructions}</p>
               <div className="recipe-tags">
                 {recipe.tags.map((tag, idx) => (
-                  <span key={idx} className="tag-item">#{tag}</span> // Use `span` with `className` "tag-item"
+                  <span key={idx} className="tag-item">{tag}</span> // Use `span` with `className` "tag-item"
                 ))}
               </div>
             </div>

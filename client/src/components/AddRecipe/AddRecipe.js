@@ -19,7 +19,7 @@ function AddRecipe() {
   const [formError, setFormError] = useState('');
 
   const [tags, setTags] = useState([]);
-  const [tagInput, setTagInput] = useState('');
+  const [tagInput, setTagInput] = useState('#');
 
   //for removing 
   const handleRemoveIngredient = index => {
@@ -45,7 +45,7 @@ function AddRecipe() {
   const handleAddTag = () => {
     if (tagInput.trim() !== '') {
       setTags(prevTags => [...prevTags, tagInput]);
-      setTagInput(''); // Clear the tag input field
+      setTagInput('#'); // Clear the tag input field
     }
   };
 
