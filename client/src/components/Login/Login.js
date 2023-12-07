@@ -95,13 +95,14 @@ export default function Login( { setToken } ) {
         {isLoginFormVisible ? (
           <form onSubmit={handleSubmitLogin}>
             <div className='cred-boxes'>
-             <label>
+                    <label>
                         <p>Username</p>
-                        <input type="text" onChange={e => setLoginUserName(e.target.value)}/>
+                        <input type="text" onChange={e => setLoginUserName(e.target.value)} style={{ borderColor: 'black' }}/>
+                         
                     </label>
                     <label>
                         <p>Password</p>
-                        <input type="password" onChange={e => setLoginPassword(e.target.value)}/>
+                        <input type="text" onChange={e => setLoginPassword(e.target.value)}  style={{ borderColor: 'black' }}/>
                     </label>
                     <div>
                         <button type="submit">Submit</button>

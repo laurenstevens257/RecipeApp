@@ -21,8 +21,10 @@ button {
 
 input {
   font-family: 'Kalam';
+  background-color:rgb(242, 239, 233);
 }
 
 select {
   font-family: 'Kalam';
 }
+
