@@ -78,6 +78,9 @@ const recipeSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 const Recipe = mongoose.model('Recipe', recipeSchema);
 
+//exports for scripting
+module.exports = { User, Recipe };
+
 //Token generator
 function generateToken(user) {
   const tokenPayload = { id: user._id, username: user.username };
