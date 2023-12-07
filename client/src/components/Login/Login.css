@@ -14,14 +14,16 @@
   } 
   
   .signup-link {
+    margin-top:-15px;
     color: blue;
     text-decoration: underline;
     cursor: pointer;
   }
   
   img {
+    margin-top:-20px;
     height: 300px; /* Example size */
-    margin-bottom: 20px; /* Example spacing */
+    margin-bottom: -50px; /* Example spacing */
     /* Other styles */
   }
 
@@ -29,4 +31,8 @@
     text-align: center;
     width: 100%;
     margin-top: 20px; /* Or any other value for spacing */
+  }
+
+  .cred-boxes {
+    margin-top:-60px;
   }

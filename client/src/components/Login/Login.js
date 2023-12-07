@@ -94,6 +94,7 @@ export default function Login( { setToken } ) {
         <h1>{isLoginFormVisible ? 'Please Log In' : 'Create an Account'}</h1>
         {isLoginFormVisible ? (
           <form onSubmit={handleSubmitLogin}>
+            <div className='cred-boxes'>
              <label>
                         <p>Username</p>
                         <input type="text" onChange={e => setLoginUserName(e.target.value)}/>
@@ -105,7 +106,7 @@ export default function Login( { setToken } ) {
                     <div>
                         <button type="submit">Submit</button>
                     </div>
-
+              </div>
           </form>
         ) : (
           <form onSubmit={handleSubmitSignup}>
