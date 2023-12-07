@@ -365,8 +365,24 @@ app.get('/user/flavorites', authenticate, async (req, res) => {
           return res.status(404).json({ message: 'User not found' });
       }
 
+      const likedRecipesWithFlaves = await Recipe.aggregate([
+        { $match: { _id: { $in: user.likedRecipes.map(r => r._id) } } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+        { $sort: { flavedByCount: -1 } },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'createdBy'
+          }
+        },
+        { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+        { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
+      ]);
+
       // Respond with the populated list of liked recipes
-      res.json(user.likedRecipes);
+      res.json(likedRecipesWithFlaves);
   } catch (error) {
       console.error('Error fetching favorite recipes:', error);
       res.status(500).json({ message: 'Error fetching favorite recipes' });
