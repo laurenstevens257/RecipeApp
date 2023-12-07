@@ -1,44 +1,41 @@
 
-
 .recipe-item {
   transition: background-color 0.3s ease;
 }
 
-
 .closedrecipe-container {
 justify-content: center;
 }
+
  .expand-icon img {
   width: 30px;
   height: auto;
   transition: transform 0.3s ease;
 }
+
  .flipped {
   transform: rotate(180deg);
 }
-
 
 .button-container {
   display: flex;
   align-items: center;
 }
+
  .expand-icon {
   margin-right: 8px;
 }
-
 
 .flav-icon img {
   width: 30px;
   height: 30px;
 }
 
-
 .flav-count {
   font-size: 18px;
   margin-top: -12px;
   margin-left: 5px;
 }
-
 
 .tag-item {
   list-style-type: none;
