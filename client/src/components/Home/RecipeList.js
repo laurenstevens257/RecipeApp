@@ -95,7 +95,7 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
            </div>
            <div className="like-button">
              <div className='flav-icon' onClick={(event) => flaveRecipe(event, recipe, index)}>
-               <img src='./WhiteHeart.png' className={expandRecipe[index] ? '' : ''}/>
+               <img src='./WhiteHeart.png'/>
              </div>
            </div>
          </div>
