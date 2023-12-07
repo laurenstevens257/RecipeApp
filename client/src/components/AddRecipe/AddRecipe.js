@@ -140,22 +140,37 @@ function AddRecipe() {
       setFormError('Please fill out all required fields');
       return;
     }
-    try {
-      const response = await sendRecipe();
+    
+    if (isNaN(cookTime) || cookTime <= 0) {
+      setCookTimeError('Cook time must be a positive number');
+    } else {
+      setCookTimeError(''); // Clear error if the input is valid
+    }
 
-      if (response.success) {
-        setRecipeName('');
-        setPrepTime('');
-        setCookTime('');
-        setInstructions('');
-        setIngredientsList([]);
-        setTags('');
-        navigate('/');
-      } else {
-        console.error('Failed to add recipe');
+    if (isNaN(prepTime) || prepTime <= 0) {
+      setPrepTimeError('Prep time must be a positive number');
+    } else {
+      setPrepTimeError(''); // Clear error if the input is valid
+    }
+
+    if(!cookTimeError.trim() || !prepTimeError.trim()){
+      try {
+        const response = await sendRecipe();
+  
+        if (response.success) {
+          setRecipeName('');
+          setPrepTime('');
+          setCookTime('');
+          setInstructions('');
+          setIngredientsList([]);
+          setTags('');
+          navigate('/');
+        } else {
+          console.error('Failed to add recipe');
+        }
+      } catch (error) {
+        console.error('Error:', error.message);
       }
-    } catch (error) {
-      console.error('Error:', error.message);
     }
   };
 
