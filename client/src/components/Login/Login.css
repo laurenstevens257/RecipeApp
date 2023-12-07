@@ -1,7 +1,15 @@
   .login-wrapper {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    margin-top: -40px;
+  }
+
+  .error-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    margin-top: -50px;
   }
 
   .logo-container {
@@ -30,7 +38,7 @@
   .error-message {
     text-align: center;
     width: 100%;
-    margin-top: 20px; /* Or any other value for spacing */
+    margin-top: 20px;
   }
 
   .cred-boxes {
@@ -40,5 +48,5 @@
   .error-message {
     text-align: center;
     width: 100%;
-    margin-top: 20px; /* Or any other value for spacing */
+    margin-top: 20px; 
   }
