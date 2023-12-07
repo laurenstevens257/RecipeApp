@@ -423,6 +423,7 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
       ]);
 
       console.log('final: ', recipeToModify);
+      res.status(200).json(recipeToModify);
 
     }
   } catch (error) {
