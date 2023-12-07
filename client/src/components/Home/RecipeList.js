@@ -112,6 +112,13 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
               <img src={recipe.likedByUser ? './PurpleHeart.png' : './WhiteHeart.png'} />
             </div>
            </div>
+           {ownRecipe && (
+            <div className="delete-button">
+              <div className='trash-icon' onClick={(event) => handleDeleteRecipe(event, recipe._id)}>
+                <img src='./trash-icon.png'/>
+              </div>
+            </div>
+          )}
          </div>
          <div className='flave-count'>
            <p>{recipe.flavedByCount} Flavorites</p>
