@@ -221,28 +221,37 @@ app.post('/add-recipe', authenticate, async (req, res) => {
 // Fetch Recipes Route - Modified to support search functionality
 app.get('/home', authenticate, async (req, res) => {
   try {
-    let recipes = await Recipe.find({ createdBy: req.user.id }).populate({
+    const recipes = await Recipe.find({ createdBy: req.user.id }).populate({
       path: 'createdBy',
       select: 'username'
     });
 
-    recipes = await Recipe.aggregate([
+    const aggregatedRecipes = await Recipe.aggregate([
       { $match: { _id: { $in: recipes.map(r => r._id) } } },
       { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
-      { $sort: { flavedByCount: -1 } },
       {
         $lookup: {
           from: 'users',
           localField: 'createdBy',
           foreignField: '_id',
-          as: 'createdBy'
+          as: 'creator'
         }
       },
-      { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
-      { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
+      { $unwind: "$creator" },
+      {
+        $addFields: {
+          likedByUser: {
+            $in: ["$_id", "$creator.likedRecipes"]
+          }
+        }
+      },
+      { $sort: { flavedByCount: -1 } },
+      { $project: { 'creator.password': 0, 'creator.likedRecipes': 0, 'creator.groceryList': 0 } }
     ]);
 
-    res.status(200).json(recipes);
+    console.log('final: ', aggregatedRecipes);
+
+    res.status(200).json(aggregatedRecipes);
   } catch (error) {
     res.status(500).send('Error in fetching recipes');
   }

@@ -23,6 +23,7 @@ const HomeDisplay = () => {
     
      const token = sessionStorage.getItem('token'); // Fetch the authentication token
 
+    console.log('fetched');
 
      try {
        const response = await fetch('http://localhost:8080/home', {
@@ -48,7 +49,7 @@ const HomeDisplay = () => {
 
 
    fetchRecipes();
- }, []);
+ }, [recipesToShow]);
 
 
 
@@ -57,8 +58,9 @@ const HomeDisplay = () => {
    setExpandRecipe(Array(recipesToShow.length).fill(false));
  }, [recipesToShow]);
 
+ console.log('home');
 
- console.log('recipesToShow: ', recipesToShow);
+
   return (
    <div>
      <div className="home-display">
