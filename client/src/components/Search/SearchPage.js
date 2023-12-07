@@ -60,6 +60,7 @@ function SearchPage() {
           expandToggles={expandRecipe} 
           showAuthor={true}
           reRender={setFilteredRecipes}
+          ownRecipe={false}
         />
       </div>
     </div>

@@ -68,7 +68,7 @@ const HomeDisplay = () => {
          <span>+ Create New Recipe</span>
          </button>
        </div>
-       <RecipeList recipes={recipesToShow} expandToggles={expandRecipe} showAuthor={false} reRender={setRecipesToShow} />
+       <RecipeList recipes={recipesToShow} expandToggles={expandRecipe} showAuthor={false} reRender={setRecipesToShow} ownRecipe={true} />
      </div>
      <div className="footer-container">
          <img className="png-iframe" src='Banner.png'></img>

@@ -31,6 +31,11 @@ justify-content: center;
   height: 30px;
 }
 
+.trash-icon img {
+  width: 30px;
+  height: 30px;
+}
+
 .flav-count {
   font-size: 18px;
   margin-top: -12px;
