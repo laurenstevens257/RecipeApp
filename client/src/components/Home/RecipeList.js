@@ -82,8 +82,11 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
               </button>
               <div className="expand-icon" onClick={(event) => handleVClick(event, index)}>
               {expandRecipe[index] ? '^' : 'v'}
+              </div>
             </div>
-            </div>
+          </div>
+          <div className='flave-count'>
+            <p>flaves: {recipe.flavedByCount}</p>
           </div>
           {expandRecipe[index] && (
             <div className="recipe-details">
