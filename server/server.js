@@ -148,7 +148,6 @@ app.post('/login', async (req, res) => {
             success: false
         });
     }
-    // console.log(user);
     
     const token = generateToken(user);
     res.send({ token, success: true });
@@ -338,8 +337,6 @@ app.get('/search', authenticate, async (req, res) => {
       return { ...recipe, likedByUser: isLikedArray[index] };
     });
 
-    //console.log('recipes: ', recipes);
-
     res.status(200).json(recipesWithLikeStatus);
   } catch (error) {
     res.status(500).send('Error in fetching recipes');
@@ -362,17 +359,13 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
     const userIndex = recipeToModify.flavedBy.indexOf(user._id);
 
     if (recipeIndex === -1) {
-      user.likedRecipes.push(recipeToModify._id); // Append only if not already liked
+      user.likedRecipes.push(recipeToModify._id);
       if(userIndex === -1){
         recipeToModify.flavedBy.push(user._id);
       }
 
-      console.log('checkpoint');
-
       await recipeToModify.save();
       await user.save();
-
-      console.log('recipe: ', recipeToModify);
 
       recipeToModify = await Recipe.aggregate([
         { $match: { _id: recipeToModify._id } },
@@ -396,7 +389,6 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
     } else {
 
       user.likedRecipes.splice(recipeIndex, 1);
-      console.log('uIndex: ', userIndex);
 
       if(userIndex !== -1){
         recipeToModify.flavedBy.splice(userIndex, 1);
@@ -405,7 +397,6 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
       await recipeToModify.save();
       await user.save(); // Save the user with the updated likedRecipes
 
-      console.log('ch2');
 
       recipeToModify = await Recipe.aggregate([
         { $match: { _id: recipeToModify._id } },
@@ -423,6 +414,7 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
       ]);
 
       console.log('final: ', recipeToModify);
+      res.status(200).json(recipeToModify);
 
     }
   } catch (error) {
