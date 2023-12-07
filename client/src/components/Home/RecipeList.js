@@ -81,7 +81,8 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
                 Flave
               </button>
               <div className="expand-icon" onClick={(event) => handleVClick(event, index)}>
-              {expandRecipe[index] ? '^' : 'v'}
+              <img src="./GoodEatsLogo.png" className={expandRecipe[index] ? 'flipped' : ''} />
+    
             </div>
             </div>
           </div>
