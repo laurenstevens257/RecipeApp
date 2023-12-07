@@ -80,8 +80,10 @@ export default function Login( { setToken } ) {
           <img src="/GoodEatsLogo2.png"/>
         </div>
       </div>
-      <div className="login-wrapper">
-        <h1>{isLoginFormVisible ? 'Please Log In' : 'Create an Account'}</h1>
+        <div className='login-wrapper'>
+          <h1>{isLoginFormVisible ? 'Please Log In' : 'Create an Account'}</h1>
+        </div>
+        <div className="login-wrapper">
         {isLoginFormVisible ? (
           <form onSubmit={handleSubmitLogin}>
             <div className='cred-boxes'>
