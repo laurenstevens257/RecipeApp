@@ -6,8 +6,25 @@
     transition: background-color 0.3s ease; /* Add a transition effect for a smoother color change */
   }
   
+  .expand-icon img {
+    width: 30px; /* Adjust the width as needed */
+    height: auto; /* This will maintain the aspect ratio of the image */
+    transition: transform 0.3s ease; /* Smooth transformation on click */
+  }
+/* for sara */
+  /* use this css if you want to ahve a specific size regardless of the image natural properties but it might distroty the image */
+/* .expand-icon img {
+    width: 30px; 
+    height: 30px; 
+    transition: transform 0.3s ease; 
+*/
+  
+  .flipped {
+    transform: rotate(180deg); /* This will flip the image when the 'flipped' class is added */
+  }
 
   
+
   .button-container {
     display: flex;
     align-items: center; /* Vertical alignment */
