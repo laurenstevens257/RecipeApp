@@ -24,7 +24,7 @@ const RandomRecipe = () => {
     <div>
       <button onClick={fetchRandomRecipe}>Show Random Recipe</button>
       {randomRecipe && (
-        <RecipeList recipes={randomRecipe} expandToggles={expandRecipe} showAuthor={true} reRender={setRandomRecipe} />
+        <RecipeList recipes={randomRecipe} expandToggles={expandRecipe} showAuthor={true} reRender={setRandomRecipe} ownRecipe={false} />
       )}
     </div>
   );

@@ -2,15 +2,10 @@ import { useState, useEffect } from 'react';
 import './RecipeList.css';
 
 
-function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
+function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
 
 
  const [expandRecipe, setExpandRecipe] = useState(expandToggles);
-
-
-
-
-
 
  const handleRecipeClick = (id, index) => {
    // Toggle expanded recipe view
@@ -31,8 +26,29 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
  };
 
 
+ const handleDeleteRecipe = async (event, recipeId) => {
+  event.stopPropagation();
+  const userConfirmed = window.confirm("Are you sure you want to delete this recipe? This action is irreversible.");
+  if (userConfirmed) {
+    const token = sessionStorage.getItem('token');
+    try {
+      const response = await fetch(`http://localhost:8080/delete-recipe/${recipeId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
 
-
+      if (response.ok) {
+        reRender(prevRecipes => prevRecipes.filter(recipe => recipe._id !== recipeId));
+      } else {
+        console.error('Failed to delete the recipe');
+      }
+    } catch (error) {
+      console.error('Error:',error);
+    }
+  }
+};
 
 
  const flaveRecipe = async (event, recipe, index) => {
@@ -72,8 +88,6 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
      console.error('Error:', error);
    }
  };
-
-
 
 
  return (
@@ -128,6 +142,5 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
    </div>
  );
 }
-
 
 export default RecipeList;

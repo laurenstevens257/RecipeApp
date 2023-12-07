@@ -54,6 +54,7 @@ const FlavoritesPage = () => {
                 expandToggles={expandToggles}
                 showAuthor={true} // Assuming you want to show authors on this page
                 reRender={handleUpdate}
+                ownRecipe={false}
             />
         </div>
     );

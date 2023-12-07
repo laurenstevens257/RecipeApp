@@ -217,6 +217,39 @@ app.post('/add-recipe', authenticate, async (req, res) => {
   }
 });
 
+//Delete Recipe Route
+app.delete('/delete-recipe/:id', authenticate, async (req, res) => {
+  try {
+    const recipeId = req.params.id;
+    console.log('Recipe ID to delete:', recipeId);
+
+    const recipe = await Recipe.findById(recipeId);
+    console.log('Recipe found:', recipe);
+
+    // Check if the recipe exists
+    if (!recipe) {
+      return res.status(404).send('Recipe not found');
+    }
+
+    console.log('Recipe createdBy:', recipe.createdBy);
+    console.log('User ID:', req.user.id);
+
+    //945532 - should not be necessary because delete doesn't render at all unless you own it.
+    // Check if the logged-in user is the creator of the recipe
+    if (recipe.createdBy.toString() !== req.user.id) {
+      return res.status(403).send('Unauthorized to delete this recipe');
+    }
+
+    // Delete the recipe
+    await Recipe.findByIdAndDelete(recipeId); //Note that .remove() does not work! Deprecated in newer versions of Mongo.
+    console.log('Recipe removed successfully');
+    res.status(200).send({ message: 'Recipe deleted successfully' });
+  } catch (error) {
+    console.error('Error in delete route:', error);
+    res.status(500).send('Server error');
+  }
+});
+
 
 // Fetch Recipes Route - Modified to support search functionality
 app.get('/home', authenticate, async (req, res) => {
