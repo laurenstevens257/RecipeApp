@@ -12,6 +12,17 @@ function SearchPage() {
  const [searchPerformed, setSearchPerformed] = useState(false);
  const [isFetching, setIsFetching] = useState(false);
 
+ const [lastSearchParams, setLastSearchParams] = useState({
+  searchTerm: '',
+  searchByUser: false,
+  searchByTags: false,
+});
+
+  useEffect(() => {
+    if (searchPerformed) {
+      fetchRecipes(lastSearchParams.searchTerm, lastSearchParams.searchByUser, lastSearchParams.searchByTags);
+    }
+  }, [filteredRecipes]);
 
  useEffect(() => {
    setExpandRecipe(Array(filteredRecipes.length).fill(false));
@@ -48,6 +59,7 @@ function SearchPage() {
 
  const handleSearch = (searchTerm, searchByUser, searchByTags) => {
    setSearchPerformed(true);
+    setLastSearchParams({ searchTerm, searchByUser, searchByTags });
    fetchRecipes(searchTerm, searchByUser, searchByTags);
  };
 
@@ -56,7 +68,7 @@ function SearchPage() {
    <div>
      <SearchBar onSearch={handleSearch} />
      <div className='search-display'>
-       {!isFetching && searchPerformed && (
+       {/* {!isFetching && searchPerformed && (
          <>
            {noResultsFound ? (
              <div className="no-results">No results found</div>
@@ -64,7 +76,7 @@ function SearchPage() {
              <div className="search-results">Found {filteredRecipes.length} results</div>
            )}
          </>
-       )}
+       )} */}
        <div className='search-recipes-container'>
          <RecipeList recipes={filteredRecipes}
            expandToggles={expandRecipe}

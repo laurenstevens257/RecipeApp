@@ -5,7 +5,7 @@ import './SearchPage.css';
 function SearchBar({ onSearch }) {
  const [searchTerm, setSearchTerm] = useState('');
  const [searchByUser, setSearchByUser] = useState(false);
- const [searchByTags, setSearchByTags] = useState(false); // State for searching by tags
+ const [searchByTags, setSearchByTags] = useState(false); 
 
 
  const handleSearch = () => {

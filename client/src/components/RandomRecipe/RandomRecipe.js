@@ -9,7 +9,15 @@ const RandomRecipe = () => {
  const [expandRecipe, setExpandRecipe] = useState([true]); // Always expanded for the random recipe
  const fetchRandomRecipe = async () => {
    try {
-     const response = await fetch('http://localhost:8080/random-recipe');
+     const token = sessionStorage.getItem('token'); // Fetch the authentication token
+
+      const response = await fetch('http://localhost:8080/random-recipe', {
+       method: 'GET',
+       headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+       },
+    });
      if (response.ok) {
        const recipeData = await response.json();
        setRandomRecipe(recipeData);
