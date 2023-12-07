@@ -5,12 +5,6 @@ import RecipeList from '../Home/RecipeList'; // Update the import path as needed
 const RandomRecipe = () => {
   const [randomRecipe, setRandomRecipe] = useState(null);
   const [expandRecipe, setExpandRecipe] = useState([true]); // Always expanded for the random recipe
-
-  const [update, setUpdate] = useState(0);
-
-  const handleUpdate = () => {
-    setUpdate(prev => prev + 1);
-  };
  
   const fetchRandomRecipe = async () => {
     try {
@@ -30,7 +24,7 @@ const RandomRecipe = () => {
     <div>
       <button onClick={fetchRandomRecipe}>Show Random Recipe</button>
       {randomRecipe && (
-        <RecipeList recipes={randomRecipe} expandToggles={expandRecipe} showAuthor={true} reRender={handleUpdate} />
+        <RecipeList recipes={randomRecipe} expandToggles={expandRecipe} showAuthor={true} reRender={setRandomRecipe} />
       )}
     </div>
   );

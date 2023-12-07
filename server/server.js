@@ -299,7 +299,7 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
 
     console.log('recipe: ', recipe);
 
-    const recipeToModify = await Recipe.findById(recipe._id);
+    let recipeToModify = await Recipe.findById(recipe._id);
 
     console.log(recipeToModify);
 
@@ -326,8 +326,24 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
       await recipeToModify.save();
       await user.save(); // Save the user with the updated likedRecipes
 
+      recipeToModify = await Recipe.aggregate([
+        { $match: { _id: recipeToModify._id } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'createdBy'
+          }
+        },
+        { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+        { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
+      ]);
       
-      res.status(200).json({ message: 'Recipe flaved', likedRecipes: user.likedRecipes });
+      console.log(recipeToModify);
+
+      res.status(200).json(recipeToModify);
       
     } else {
 
@@ -345,7 +361,25 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
       await recipeToModify.save();
       await user.save(); // Save the user with the updated likedRecipes
 
-      res.status(200).json({ message: 'Recipe unflaved' });
+
+      recipeToModify = await Recipe.aggregate([
+        { $match: { _id: recipeToModify._id } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'createdBy'
+          }
+        },
+        { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+        { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
+      ]);
+      
+      console.log(recipeToModify);
+
+      res.status(200).json(recipeToModify);
     }
   } catch (error) {
     res.status(500).send('Error in flaving recipes');

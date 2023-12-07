@@ -10,11 +10,6 @@ function SearchPage() {
   const [noResultsFound, setNoResultsFound] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false); // State to track if a search has been performed
 
-  const [update, setUpdate] = useState(0);
-
-  const handleUpdate = () => {
-    setUpdate(prev => prev + 1);
-  };
 
   useEffect(() => {
     setExpandRecipe(Array(filteredRecipes.length).fill(false));
@@ -58,7 +53,7 @@ function SearchPage() {
         <RecipeList recipes={filteredRecipes} 
           expandToggles={expandRecipe} 
           showAuthor={true} // Assuming you want to show authors on the Search page
-          reRender={handleUpdate}
+          reRender={setFilteredRecipes}
         />
       </div>
     </div>

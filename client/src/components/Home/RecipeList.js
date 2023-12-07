@@ -18,14 +18,6 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
     setExpandRecipe(expandRecipeCopy);
   };
 
-  const handleButtonAction = (event, recipe) => {
-    event.stopPropagation(); // Prevent click event from reaching the recipe item handler
-    // Perform the button-specific action here
-    flaveRecipe(recipe);
-    // Add any other logic for the button action here
-
-  };
-
   const handleVClick = (event, index) => {
     event.stopPropagation(); // Prevent click event from reaching the recipe item handler
     toggleExpandRecipe(index);
@@ -34,7 +26,9 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
 
  
 
-  const flaveRecipe = async (recipe) => {
+  const flaveRecipe = async (event, recipe, index) => {
+    event.stopPropagation();
+
     const token = sessionStorage.getItem('token'); // Fetch the authentication token
 
     try {
@@ -51,8 +45,12 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
 
       if (response.ok) {
           //make button turn red or something
-          reRender();
-          console.log('liked recipe: ', recipe);
+          const recipesData = await response.json();
+          const flavedRecipe = recipesData[0];
+          const updatedRecipes = [...recipes];
+          updatedRecipes[index] = flavedRecipe;
+
+          reRender(updatedRecipes);
       } else {
         // Handle errors
         console.error('Failed to flave recipe');
@@ -77,7 +75,7 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
           )}
           <div className="button-container">
             <div className="like-button">
-              <button onClick={(event) => handleButtonAction(event, recipe)}>
+              <button onClick={(event) => flaveRecipe(event, recipe, index)}>
                 Flave
               </button>
               <div className="expand-icon" onClick={(event) => handleVClick(event, index)}>
