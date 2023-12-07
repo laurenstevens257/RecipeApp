@@ -289,7 +289,7 @@ app.get('/home', authenticate, async (req, res) => {
 });
 
 //Search Route
-app.get('/search', async (req, res) => {
+app.get('/search', authenticate, async (req, res) => {
   const { search, searchByUser,  searchByTags} = req.query;
 
   try {
@@ -328,9 +328,19 @@ app.get('/search', async (req, res) => {
       { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
     ]);
 
+    const user = await User.findById(req.user.id);
+    const likedRecipes = user.likedRecipes.map(id => id.toString());
+
+    const isLikedArray = recipes.map(recipe => likedRecipes.includes(recipe._id.toString()));
+
+    // Pair each recipe with its 'liked' status
+    const recipesWithLikeStatus = recipes.map((recipe, index) => {
+      return { ...recipe, likedByUser: isLikedArray[index] };
+    });
+
     //console.log('recipes: ', recipes);
 
-    res.status(200).json(recipes);
+    res.status(200).json(recipesWithLikeStatus);
   } catch (error) {
     res.status(500).send('Error in fetching recipes');
   }
@@ -360,11 +370,13 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
       console.log('checkpoint');
 
       await recipeToModify.save();
-      await user.save(); // Save the user with the updated likedRecipes
+      await user.save();
+
+      console.log('recipe: ', recipeToModify);
 
       recipeToModify = await Recipe.aggregate([
         { $match: { _id: recipeToModify._id } },
-        { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: true } },
         {
           $lookup: {
             from: 'users',
@@ -373,17 +385,10 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
             as: 'createdBy'
           }
         },
-        { $unwind: "$createdBy" },
-        {
-          $addFields: {
-            likedByUser: {
-              $in: ["$_id", "$createdBy.likedRecipes"]
-            }
-          }
-        },
+        { $unwind: { path: "$createdBy", preserveNullAndEmptyArrays: true } },
         { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
       ]);
-
+      
       console.log('final: ', recipeToModify);
 
       res.status(200).json(recipeToModify);
@@ -400,10 +405,11 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
       await recipeToModify.save();
       await user.save(); // Save the user with the updated likedRecipes
 
+      console.log('ch2');
 
       recipeToModify = await Recipe.aggregate([
         { $match: { _id: recipeToModify._id } },
-        { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: false } },
         {
           $lookup: {
             from: 'users',
@@ -412,20 +418,12 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
             as: 'createdBy'
           }
         },
-        { $unwind: "$createdBy" },
-        {
-          $addFields: {
-            likedByUser: {
-              $in: ["$_id", "$createdBy.likedRecipes"]
-            }
-          }
-        },
+        { $unwind: { path: "$createdBy", preserveNullAndEmptyArrays: true } },
         { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
       ]);
-      
-      console.log('final:', recipeToModify);
 
-      res.status(200).json(recipeToModify);
+      console.log('final: ', recipeToModify);
+
     }
   } catch (error) {
     res.status(500).send('Error in flaving recipes');
@@ -447,7 +445,7 @@ app.get('/user/flavorites', authenticate, async (req, res) => {
 
       const likedRecipesWithFlaves = await Recipe.aggregate([
         { $match: { _id: { $in: user.likedRecipes.map(r => r._id) } } },
-        { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: true } },
         { $sort: { flavedByCount: -1 } },
         {
           $lookup: {
@@ -457,14 +455,7 @@ app.get('/user/flavorites', authenticate, async (req, res) => {
             as: 'createdBy'
           }
         },
-        { $unwind: "$createdBy" },
-        {
-          $addFields: {
-            likedByUser: {
-              $in: ["$_id", "$createdBy.likedRecipes"]
-            }
-          }
-        },
+        { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
         { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
       ]);
 
@@ -505,7 +496,7 @@ app.get('/user/grocerylist', authenticate, async (req, res) => {
 });
 
 //Get random recipe
-app.get('/random-recipe', async (req, res) => {
+app.get('/random-recipe', authenticate, async (req, res) => {
   try {
     const count = await Recipe.countDocuments();
     const random = Math.floor(Math.random() * count);
@@ -515,9 +506,19 @@ app.get('/random-recipe', async (req, res) => {
       select: 'username'
     });
 
+    console.log(randomRecipe);
+
+    const user = await User.findById(req.user.id);
+
+    console.log(user);
+
+    const isLiked = user.likedRecipes.includes(randomRecipe._id);
+
+    console.log('isliked? ', isLiked);
+
     randomRecipe = await Recipe.aggregate([
       { $match: { _id: randomRecipe._id } },
-      { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+      { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: isLiked } },
       {
         $lookup: {
           from: 'users',
@@ -526,13 +527,14 @@ app.get('/random-recipe', async (req, res) => {
           as: 'createdBy'
         }
       },
-      { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+      { $unwind: "$createdBy" },
       { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
     ]);
 
-    console.log(randomRecipe);
+    console.log('randomRecipe');
 
     res.json(randomRecipe);
+    
   } catch (error) {
     res.status(500).send('Error fetching random recipe');
   }

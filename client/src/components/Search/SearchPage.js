@@ -21,12 +21,15 @@ function SearchPage() {
  const fetchRecipes = async (searchTerm = '', searchByUser = false, searchByTags = false) => {
    setIsFetching(true);
    try {
-     const response = await fetch(`http://localhost:8080/search?search=${searchTerm}&searchByUser=${searchByUser}&searchByTags=${searchByTags}`, {
+    const token = sessionStorage.getItem('token'); // Fetch the authentication token
+
+    const response = await fetch(`http://localhost:8080/search?search=${searchTerm}&searchByUser=${searchByUser}&searchByTags=${searchByTags}`, {
        method: 'GET',
        headers: {
-         'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
        },
-     });
+    });
 
 
      if (response.ok) {
