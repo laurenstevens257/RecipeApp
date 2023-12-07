@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './AddRecipe.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,9 +21,34 @@ function AddRecipe() {
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState('#');
 
-  //for removing 
-  const handleRemoveIngredient = index => {
-    setIngredientsList(prevIngredients => prevIngredients.filter((_, i) => i !== index));
+  //refs for input elements
+  const ingredientInputRef = useRef(null);
+  const ingredientQtyInputRef = useRef(null);
+  const ingredientUnitRef = useRef(null);
+
+  const handleKeyPress = (e, field) => {
+    console.log('Key pressed', e.key);
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Prevent the form from submitting on Enter key
+      switch (field) {
+        case 'ingredients':
+          console.log('in ingredients case');
+          handleAddIngredient();
+          break;
+        case 'tags':
+          handleAddTag();
+          break;
+        default:
+          // Handle other cases or do nothing
+          break;
+      }
+    }
+  };
+
+  const handleRemoveIngredient = (index) => {
+    setIngredientsList((prevIngredients) =>
+      prevIngredients.filter((_, i) => i !== index)
+    );
   };
   const handleRemoveTag = index => {
     setTags(prevTags => prevTags.filter((_, i) => i !== index));
@@ -31,25 +56,38 @@ function AddRecipe() {
 
 
   const handleAddIngredient = () => {
-    if (ingredientInput !== '' && ingredientUnit !== '' && ingredientQtyInput !== '') {
-      const newIngredient = { name: ingredientInput, quantity: ingredientQtyInput, units: ingredientUnit };
-      setIngredientsList(prevIngredients => [...prevIngredients, newIngredient]);
+    console.log('hey we made it');
+    if (ingredientInput != '' && ingredientUnit !== '' &&   ingredientQtyInput !== '') {
+      console.log('gm23');
+      const newIngredient = {
+        name: ingredientInput,
+        quantity: ingredientQtyInput,
+        units: ingredientUnit,
+      };
+      setIngredientsList((prevIngredients) => [...prevIngredients, newIngredient]);
 
-      // Clear input fields after adding an ingredient
       setIngredientInput('');
       setIngredientUnit('');
       setIngredientQtyInput('');
     }
+    else {
+      if (ingredientInput === '') {
+        ingredientInputRef.current.focus();
+      } else if (ingredientQtyInput === '') {
+        ingredientQtyInputRef.current.focus();
+      } else if (ingredientUnit === '') {
+        ingredientUnitRef.current.focus();
+      }
+    }
   };
-
   const handleAddTag = () => {
     if (tagInput.trim() !== '') {
       setTags(prevTags => [...prevTags, tagInput]);
-      setTagInput('#'); // Clear the tag input field
+      setTagInput('#'); 
     }
   };
 
-  // Front-end function to send recipe data to the server
+
   async function sendRecipe() {
     try {
       const token = sessionStorage.getItem('token'); // Fetch the authentication token
@@ -71,7 +109,7 @@ function AddRecipe() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to add recipe'); // Throw an error for non-200 status codes
+        throw new Error('Failed to add recipe');
       }
 
       return await response.json();
@@ -79,7 +117,7 @@ function AddRecipe() {
       throw new Error('Error sending recipe data: ' + error.message);
     }
   }
-//somewhere in here there should also throw and error that says 'please fill out all the fields if any property is empty'
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!recipeName.trim() || !prepTime.trim() || !cookTime.trim() || !instructions.trim()) {
@@ -97,7 +135,6 @@ function AddRecipe() {
         setIngredientsList([]);
         setTags('');
         navigate('/');
-        console.error('kinda worked??');
       } else {
         console.error('Failed to add recipe');
       }
@@ -156,7 +193,6 @@ function AddRecipe() {
         </div>
         <div className='add-container'>
           <div className='ingredient-input'>
-          {/* Display added ingredients */}
           <div>
             {ingredientsList.map((ingredient, index) => (
               <p key={index} onClick={() => handleRemoveIngredient(index)} className="removable-item">
@@ -165,20 +201,26 @@ function AddRecipe() {
             ))}
           </div>
           <input
+            ref={ingredientInputRef}
             type="text"
             value={ingredientInput}
             onChange={(e) => setIngredientInput(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, 'ingredients')}
             placeholder="Enter an ingredient"
           />
           <input
+            ref={ingredientQtyInputRef}
             type="text"
             value={ingredientQtyInput}
             onChange={(e) => setIngredientQtyInput(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, 'ingredients')}
             placeholder="Enter its quantity"
           />
           <select
+            ref={ingredientUnitRef}
             value={ingredientUnit}
             onChange={(e) => setIngredientUnit(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, 'ingredients')}
             className='unit-dropdown'
           >
            <option value="">Select a unit</option>
@@ -205,6 +247,7 @@ function AddRecipe() {
               type="text"
               value={instructions}
               onChange={(e) => setInstructions(e.target.value)}
+              onKeyDown={(e) => handleKeyPress(e, 'instructions')}
               placeholder="Enter cooking instructions"
             />
           </div>
@@ -214,7 +257,7 @@ function AddRecipe() {
         </div>
         <div className='add-container'>
           <div className='ingredient-input'>
-          {/* Display added tags */}
+          
           <div>
             {tags.map((tag, index) => (
               <p key={index} onClick={() => handleRemoveTag(index)} className="removable-item">
@@ -226,6 +269,7 @@ function AddRecipe() {
             type="text"
             value={tagInput}
             onChange={(e) => setTagInput(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, 'tags')}
             placeholder="Enter tags to help people discover your recipe (eg. #glutenfree, #vegan, #italian)"
           />
           <button type="button" onClick={handleAddTag} className="add-ingredient-button">+ Add Tag</button>
