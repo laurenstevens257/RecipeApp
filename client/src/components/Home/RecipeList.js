@@ -85,6 +85,9 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
             </div>
             </div>
           </div>
+          <div className='flave-count'>
+            <p>flaves: {recipe.flavedByCount}</p>
+          </div>
           {expandRecipe[index] && (
             <div className="recipe-details">
               <p>Prep Time: {recipe.prepTime} minutes</p>
