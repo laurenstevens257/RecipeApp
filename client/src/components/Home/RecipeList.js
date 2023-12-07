@@ -136,6 +136,7 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
                  </li>
                ))}
              </ul>
+             <p>Instructions: </p>
              <p>{recipe.instructions}</p>
              <div className="recipe-tags">
                {recipe.tags.map((tag, idx) => (
