@@ -33,3 +33,10 @@
   .expand-icon {
     margin-right: 8px; /* Add some spacing between the icon and the button */
   }
+
+  .tag-item {
+    list-style-type: none; /* Remove bullet points */
+    color: rgb(85, 57, 80); /* Set text color to purple */
+    display: inline; /* Display tags inline */
+    margin-right: 5px; /* Add some space between tags */
+  }

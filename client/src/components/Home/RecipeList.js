@@ -82,7 +82,6 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
               </button>
               <div className="expand-icon" onClick={(event) => handleVClick(event, index)}>
               <img src="./GoodEatsLogo.png" className={expandRecipe[index] ? 'flipped' : ''} />
-    
             </div>
             </div>
           </div>
@@ -99,7 +98,6 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
                 ))}
               </ul>
               <p>{recipe.instructions}</p>
-              <p>Tags:</p>
               {(recipe.tags || []).map((tag, idx) => (
                 <li key={idx}>#{tag}</li>
               ))}
