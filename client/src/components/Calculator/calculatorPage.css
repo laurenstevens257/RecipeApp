@@ -1,43 +1,43 @@
 .calculator-wrapper {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+  max-width: 400px; /* Set a maximum width to maintain readability */
+  margin: auto; /* Center the calculator on the page and add some space around it */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
 .header-container {
   color: rgb(54, 97, 69);
-  font-size: 18px;
+  font-size: 20px;
+  margin-bottom: 5px;
 }
-  
-  label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  input,
-  select,
-  button {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-  }
-  
-  button {
-    background-color: rgb(81, 119, 71);
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: rgb(79, 101, 64);
-  }
-  
-  p {
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: rgb(81, 119, 71);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(79, 101, 64);
+}
+
+p {
+  margin-top: 10px;
+  font-weight: bold;
+}
