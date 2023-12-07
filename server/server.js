@@ -91,40 +91,78 @@ function generateToken(user) {
 app.post('/signup', async (req, res) => {
   const { username, password } = req.body;
   try {
-    if (username === '' || password === ''){
-        return res.status(401).json({
-            error: 'please enter a username and password',
-            success: false
-        });//if username is blank or if password is blank do error 400 to HTTP that is bad respose due to clienr, display error and set the sucsess token
+    if (username === '' || password === '') {
+      return res.status(401).json({
+        error: 'Please enter a username and password',
+        success: false
+      });
     }
 
-      //for password control
-      const passwordPolicyRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?!.*\s).{8,20}$/;
-      if (!passwordPolicyRegex.test(password)) {
-          return res.status(401).json({
-              error: 'Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces',
-              success: false
-      });
-}
-
-
+    // Check if user already exists
     let user = await User.findOne({ username });
     if (user) {
-      return res.status(400).json({ error: 'Username already exists', success: false });
+      const randNum = Math.floor(100 + Math.random() * 900);
+      const suggestUsername = `${username}${randNum}`;
+      return res.status(400).json({
+        error: `Username taken. Maybe try ${suggestUsername}?`,
+        success: false
+      });
+    }
+
+    const passwordPolicyRegex = {
+      number: /(?=.*\d)/,
+      upperCase: /(?=.*[A-Z])/,
+      lowerCase: /(?=.*[a-z])/,
+      specialChar: /(?=.*[!@#$%^&*])/,
+      noSpaces: /^(?!.*\s).*$/
+    };
+
+    let errors = [];
+
+    if (password.length < 8) {
+      errors.push("Too short: need 8 characters");
+    }
+    if(password.length > 20) {
+      errors.push("Too long: max 20 characters");
+    }
+
+    if (!passwordPolicyRegex.number.test(password)) {
+      errors.push("Include at least one number");
+    }
+    if (!passwordPolicyRegex.upperCase.test(password)) {
+      errors.push("Include at least one uppercase letter");
+    }
+    if (!passwordPolicyRegex.lowerCase.test(password)) {
+      errors.push("Include at least one lowercase letter");
+    }
+    if (!passwordPolicyRegex.specialChar.test(password)) {
+      errors.push("Include at least one special character (!@#$%^&*)");
+    }
+    if (!passwordPolicyRegex.noSpaces.test(password)) {
+      errors.push("No spaces allowed");
+    }
+
+    if (errors.length > 0) {
+      return res.status(401).json({
+        error: "Password errors: " + errors.join("; "),
+        success: false
+      });
     }
 
     // Hashing the password with Argon2id
     const hash = await argon2.hash(password, { type: argon2.argon2id });
 
+    // Create new user
     user = new User({ username, password: hash });
     await user.save();
-    
+
+    // Generate token
     const token = generateToken(user);
     res.send({ token, success: true });
   } catch (error) {
     res.status(500).send('Error in saving');
   }
-});
+}); 
 
 // Login Route
 app.post('/login', async (req, res) => {

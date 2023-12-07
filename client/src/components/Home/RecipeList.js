@@ -125,7 +125,7 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
          </div>
          </div>
          {expandRecipe[index] && (
-           <div className="recipe-details">
+           <div className="closedrecipe-container">
              <p>Prep Time: {recipe.prepTime} minutes</p>
              <p>Cook Time: {recipe.cookTime} minutes</p>
              <p>Ingredients:</p>
