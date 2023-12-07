@@ -101,9 +101,11 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender}) {
                 ))}
               </ul>
               <p>{recipe.instructions}</p>
-              {(recipe.tags || []).map((tag, idx) => (
-                <li key={idx}>#{tag}</li>
-              ))}
+              <div className="recipe-tags">
+                {recipe.tags.map((tag, idx) => (
+                  <span key={idx} className="tag-item">#{tag}</span> // Use `span` with `className` "tag-item"
+                ))}
+              </div>
             </div>
           )}
         </div>
