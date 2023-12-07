@@ -1,15 +1,13 @@
 
 
 .recipe-item {
-    /* Your existing styles for recipe items */
-  
-    transition: background-color 0.3s ease; /* Add a transition effect for a smoother color change */
+    transition: background-color 0.3s ease;
   }
   
   .expand-icon img {
-    width: 30px; /* Adjust the width as needed */
-    height: auto; /* This will maintain the aspect ratio of the image */
-    transition: transform 0.3s ease; /* Smooth transformation on click */
+    width: 30px; 
+    height: auto; 
+    transition: transform 0.3s ease; 
   }
 /* for sara */
   /* use this css if you want to ahve a specific size regardless of the image natural properties but it might distroty the image */
@@ -20,16 +18,24 @@
 */
   
   .flipped {
-    transform: rotate(180deg); /* This will flip the image when the 'flipped' class is added */
+    transform: rotate(180deg); 
   }
 
   
 
   .button-container {
     display: flex;
-    align-items: center; /* Vertical alignment */
+    align-items: center; 
   }
   
   .expand-icon {
-    margin-right: 8px; /* Add some spacing between the icon and the button */
+    margin-right: 8px; 
+}
+
+  .tag-item {
+    list-style-type: none; 
+    color: rgb(221, 105, 32); 
+    display: inline; 
+    margin-right: 5px; 
+    font-weight: bold; 
   }
