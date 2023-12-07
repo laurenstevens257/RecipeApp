@@ -78,6 +78,9 @@ const recipeSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 const Recipe = mongoose.model('Recipe', recipeSchema);
 
+//exports for scripting
+module.exports = { User, Recipe };
+
 //Token generator
 function generateToken(user) {
   const tokenPayload = { id: user._id, username: user.username };
@@ -95,14 +98,15 @@ app.post('/signup', async (req, res) => {
         });//if username is blank or if password is blank do error 400 to HTTP that is bad respose due to clienr, display error and set the sucsess token
     }
 
-      //for password controll
-      const passwordPolicyRegex = /^(?=.*\d)[A-Za-z\d]{5,20}$/;
+      //for password control
+      const passwordPolicyRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?!.*\s).{8,20}$/;
       if (!passwordPolicyRegex.test(password)) {
           return res.status(401).json({
-              error: 'Your password should be 5-20 symbols and should include at least 1 number',
-              succsess: false
-          });
-      }
+              error: 'Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces',
+              success: false
+      });
+}
+
 
     let user = await User.findOne({ username });
     if (user) {
@@ -299,7 +303,7 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
 
     console.log('recipe: ', recipe);
 
-    const recipeToModify = await Recipe.findById(recipe._id);
+    let recipeToModify = await Recipe.findById(recipe._id);
 
     console.log(recipeToModify);
 
@@ -326,8 +330,24 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
       await recipeToModify.save();
       await user.save(); // Save the user with the updated likedRecipes
 
+      recipeToModify = await Recipe.aggregate([
+        { $match: { _id: recipeToModify._id } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'createdBy'
+          }
+        },
+        { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+        { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
+      ]);
       
-      res.status(200).json({ message: 'Recipe flaved', likedRecipes: user.likedRecipes });
+      console.log(recipeToModify);
+
+      res.status(200).json(recipeToModify);
       
     } else {
 
@@ -345,7 +365,25 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
       await recipeToModify.save();
       await user.save(); // Save the user with the updated likedRecipes
 
-      res.status(200).json({ message: 'Recipe unflaved' });
+
+      recipeToModify = await Recipe.aggregate([
+        { $match: { _id: recipeToModify._id } },
+        { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'createdBy'
+          }
+        },
+        { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+        { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
+      ]);
+      
+      console.log(recipeToModify);
+
+      res.status(200).json(recipeToModify);
     }
   } catch (error) {
     res.status(500).send('Error in flaving recipes');

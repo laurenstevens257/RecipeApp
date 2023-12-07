@@ -11,11 +11,6 @@ function SearchPage() {
   const [searchPerformed, setSearchPerformed] = useState(false); 
   const [isFetching, setIsFetching] = useState(false);
 
-  const [update, setUpdate] = useState(0);
-
-  const handleUpdate = () => {
-    setUpdate(prev => prev + 1);
-  };
 
   useEffect(() => {
     setExpandRecipe(Array(filteredRecipes.length).fill(false));
@@ -61,8 +56,8 @@ function SearchPage() {
         )}
         <RecipeList recipes={filteredRecipes} 
           expandToggles={expandRecipe} 
-          showAuthor={true}
-          reRender={handleUpdate}
+          showAuthor={true} // Assuming you want to show authors on the Search page
+          reRender={setFilteredRecipes}
         />
       </div>
     </div>
