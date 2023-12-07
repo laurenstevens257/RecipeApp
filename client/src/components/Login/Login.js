@@ -118,7 +118,7 @@ export default function Login( { setToken } ) {
                 </div> 
           </form>
         )}
-    
+        {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
         {isLoginFormVisible ? (
           <p className="signup-link" onClick={handleToggleForm}>
             Don't have an Account? Sign Up
@@ -129,7 +129,6 @@ export default function Login( { setToken } ) {
           </p>
         )}
       </div>
-          {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 }
