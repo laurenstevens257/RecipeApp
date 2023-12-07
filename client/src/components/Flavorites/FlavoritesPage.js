@@ -7,42 +7,36 @@ const FlavoritesPage = () => {
     const [flavoredRecipes, setFlavoredRecipes] = useState([]);
     const [expandToggles, setExpandToggles] = useState([]);
 
-    const [update, setUpdate] = useState(0);
-
-    const handleUpdate = () => {
-      setUpdate(prev => prev + 1);
-    };
-
     console.log('flavorites');
 
-    useEffect(() => {
-        const fetchFlavoredRecipes = async () => {
-            const token = sessionStorage.getItem('token'); // Fetch the authentication token
+    const fetchFlavoredRecipes = async () => {
+        const token = sessionStorage.getItem('token'); // Fetch the authentication token
 
-            try {
-                const response = await fetch('http://localhost:8080/user/flavorites', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
+        try {
+            const response = await fetch('http://localhost:8080/user/flavorites', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
 
-                if (response.ok) {
-                    const recipesData = await response.json();
-                    setFlavoredRecipes(recipesData);
-                    setExpandToggles(Array(recipesData.length).fill(false)); // Initialize toggles for expanding recipe details
-                } else {
-                    console.error('Failed to fetch flavored recipes');
-                }
-            } catch (error) {
-                console.error('Error:', error);
+            if (response.ok) {
+                const recipesData = await response.json();
+                setFlavoredRecipes(recipesData);
+                setExpandToggles(Array(recipesData.length).fill(false)); // Initialize toggles for expanding recipe details
+            } else {
+                console.error('Failed to fetch flavored recipes');
             }
-        };
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
-        fetchFlavoredRecipes();
-        console.log('recipes: ', flavoredRecipes)
-    }, [update]);
+    fetchFlavoredRecipes();
+    console.log('recipes: ', flavoredRecipes)
+
+    // }, []);
 
     return (
         <div className='flavorites-container'>
@@ -53,7 +47,7 @@ const FlavoritesPage = () => {
                 recipes={flavoredRecipes} 
                 expandToggles={expandToggles}
                 showAuthor={true} // Assuming you want to show authors on this page
-                reRender={handleUpdate}
+                reRender={setFlavoredRecipes}
                 ownRecipe={false}
             />
         </div>

@@ -282,8 +282,6 @@ app.get('/home', authenticate, async (req, res) => {
       { $project: { 'creator.password': 0, 'creator.likedRecipes': 0, 'creator.groceryList': 0 } }
     ]);
 
-    console.log('final: ', aggregatedRecipes);
-
     res.status(200).json(aggregatedRecipes);
   } catch (error) {
     res.status(500).send('Error in fetching recipes');
@@ -343,31 +341,23 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
   try {
     const { recipe } = req.body;
 
-    console.log('recipe: ', recipe);
-
     let recipeToModify = await Recipe.findById(recipe._id);
-
-    console.log(recipeToModify);
 
     const user = await User.findById(req.user.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    console.log('initial: ', user);
-
     const recipeIndex = user.likedRecipes.indexOf(recipeToModify._id);
     const userIndex = recipeToModify.flavedBy.indexOf(user._id);
 
-    if (!(recipeIndex > -1)) {
+    if (recipeIndex === -1) {
       user.likedRecipes.push(recipeToModify._id); // Append only if not already liked
-
       if(userIndex === -1){
         recipeToModify.flavedBy.push(user._id);
       }
 
-      console.log('liked: ', user);
-      console.log('recipe: ', recipeToModify);
+      console.log('checkpoint');
 
       await recipeToModify.save();
       await user.save(); // Save the user with the updated likedRecipes
@@ -383,26 +373,29 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
             as: 'createdBy'
           }
         },
-        { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+        { $unwind: "$createdBy" },
+        {
+          $addFields: {
+            likedByUser: {
+              $in: ["$_id", "$createdBy.likedRecipes"]
+            }
+          }
+        },
         { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
       ]);
-      
-      console.log(recipeToModify);
+
+      console.log('final: ', recipeToModify);
 
       res.status(200).json(recipeToModify);
       
     } else {
 
       user.likedRecipes.splice(recipeIndex, 1);
-
       console.log('uIndex: ', userIndex);
 
       if(userIndex !== -1){
         recipeToModify.flavedBy.splice(userIndex, 1);
-
       }
-      console.log('unliked: ', user);
-      console.log('recipe: ', recipeToModify);
 
       await recipeToModify.save();
       await user.save(); // Save the user with the updated likedRecipes
@@ -419,11 +412,18 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
             as: 'createdBy'
           }
         },
-        { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+        { $unwind: "$createdBy" },
+        {
+          $addFields: {
+            likedByUser: {
+              $in: ["$_id", "$createdBy.likedRecipes"]
+            }
+          }
+        },
         { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
       ]);
       
-      console.log(recipeToModify);
+      console.log('final:', recipeToModify);
 
       res.status(200).json(recipeToModify);
     }
@@ -457,7 +457,14 @@ app.get('/user/flavorites', authenticate, async (req, res) => {
             as: 'createdBy'
           }
         },
-        { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
+        { $unwind: "$createdBy" },
+        {
+          $addFields: {
+            likedByUser: {
+              $in: ["$_id", "$createdBy.likedRecipes"]
+            }
+          }
+        },
         { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
       ]);
 
