@@ -36,3 +36,10 @@
   .cred-boxes {
     margin-top:-60px;
   }
+
+  
+  .error-message {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px; /* Or any other value for spacing */
+  }
