@@ -12,6 +12,11 @@
     margin-top: -50px;
   }
 
+  .link-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
   .logo-container {
     display: flex;
     justify-content: center;

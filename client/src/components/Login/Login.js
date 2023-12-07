@@ -135,7 +135,7 @@ export default function Login( { setToken } ) {
         <div className='error-wrapper'>
         {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
         </div>
-        <div className='login-wrapper'>
+        <div className='link-wrapper'>
         {isLoginFormVisible ? (
           <p className="signup-link" onClick={handleToggleForm}>
             Don't have an Account? Sign Up
