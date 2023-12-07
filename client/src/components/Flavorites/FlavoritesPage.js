@@ -47,7 +47,7 @@ const FlavoritesPage = () => {
     return (
         <div className='flavorites-container'>
             <div className='flav-header'>
-                <h1>Your FLAVorite Recipes:</h1>
+                <h1>Your FLAVORite Recipes:</h1>
             </div>
             <RecipeList 
                 recipes={flavoredRecipes} 
