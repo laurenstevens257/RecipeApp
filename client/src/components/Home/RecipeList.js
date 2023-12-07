@@ -54,11 +54,12 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
  const flaveRecipe = async (event, recipe, index) => {
    event.stopPropagation();
 
-
    const token = sessionStorage.getItem('token'); // Fetch the authentication token
 
 
    try {
+     console.log('check1');
+
      const response = await fetch('http://localhost:8080/flave-recipe', {
        method: 'POST', // Setting the request method to GET
        headers: {
@@ -70,6 +71,7 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
        }),
      });
 
+    console.log('fetched');
 
      if (response.ok) {
          //make button turn red or something
@@ -78,10 +80,11 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
          const updatedRecipes = [...recipes];
          updatedRecipes[index] = flavedRecipe;
 
-
+         console.log('updated: ', updatedRecipes);
          reRender(updatedRecipes);
      } else {
        // Handle errors
+       console.log('no error?');
        console.error('Failed to flave recipe');
      }
    } catch (error) {
@@ -140,7 +143,7 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
              <p>{recipe.instructions}</p>
              <div className="recipe-tags">
                {recipe.tags.map((tag, idx) => (
-                 <span key={idx} className="tag-item">#{tag}</span> // Use `span` with `className` "tag-item"
+                 <span key={idx} className="tag-item">{tag}</span> // Use `span` with `className` "tag-item"
                ))}
              </div>
            </div>

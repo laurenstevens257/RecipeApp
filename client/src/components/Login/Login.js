@@ -82,6 +82,8 @@ export default function Login( { setToken } ) {
       </div>
       <div className="login-wrapper">
         <h1>{isLoginFormVisible ? 'Please Log In' : 'Create an Account'}</h1>
+      </div>
+      <div className='login-wrapper'>
         {isLoginFormVisible ? (
           <form onSubmit={handleSubmitLogin}>
             <div className='cred-boxes'>
@@ -119,7 +121,11 @@ export default function Login( { setToken } ) {
                 </div> 
           </form>
         )}
+        </div>
+        <div className='error-wrapper'>
         {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
+        </div>
+        <div className='link-wrapper'>
         {isLoginFormVisible ? (
           <p className="signup-link" onClick={handleToggleForm}>
             Don't have an Account? Sign Up
@@ -129,7 +135,7 @@ export default function Login( { setToken } ) {
             Already Have An Account?
           </p>
         )}
-      </div>
+        </div>
     </div>
   );
 }

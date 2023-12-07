@@ -21,7 +21,6 @@ function AddRecipe() {
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState('#');
 
-  //refs for input elements
   const ingredientInputRef = useRef(null);
   const ingredientQtyInputRef = useRef(null);
   const ingredientUnitRef = useRef(null);
@@ -29,7 +28,7 @@ function AddRecipe() {
   const handleKeyPress = (e, field) => {
     console.log('Key pressed', e.key);
     if (e.key === 'Enter') {
-      e.preventDefault(); // Prevent the form from submitting on Enter key
+      e.preventDefault(); 
       switch (field) {
         case 'ingredients':
           console.log('in ingredients case');
@@ -224,7 +223,7 @@ function AddRecipe() {
             className='unit-dropdown'
           >
            <option value="">Select a unit</option>
-              <option value=" "> </option>
+              <option value=" ">N/A</option>
               <option value="cup(s)">Cups</option>
               <option value="tablespoon(s)">Tablespoons</option>
               <option value="teaspoon(s)">Teaspoons</option>

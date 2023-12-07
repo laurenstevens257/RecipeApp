@@ -185,7 +185,6 @@ app.post('/login', async (req, res) => {
             success: false
         });
     }
-    // console.log(user);
     
     const token = generateToken(user);
     res.send({ token, success: true });
@@ -358,7 +357,15 @@ app.get('/search', async (req, res) => {
       { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
     ]);
 
-    //console.log('recipes: ', recipes);
+    const user = await User.findById(req.user.id);
+    const likedRecipes = user.likedRecipes.map(id => id.toString());
+
+    const isLikedArray = recipes.map(recipe => likedRecipes.includes(recipe._id.toString()));
+
+    // Pair each recipe with its 'liked' status
+    const recipesWithLikeStatus = recipes.map((recipe, index) => {
+      return { ...recipe, likedByUser: isLikedArray[index] };
+    });
 
     res.status(200).json(recipes);
   } catch (error) {
@@ -387,18 +394,14 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
     const recipeIndex = user.likedRecipes.indexOf(recipeToModify._id);
     const userIndex = recipeToModify.flavedBy.indexOf(user._id);
 
-    if (!(recipeIndex > -1)) {
-      user.likedRecipes.push(recipeToModify._id); // Append only if not already liked
-
+    if (recipeIndex === -1) {
+      user.likedRecipes.push(recipeToModify._id);
       if(userIndex === -1){
         recipeToModify.flavedBy.push(user._id);
       }
 
-      console.log('liked: ', user);
-      console.log('recipe: ', recipeToModify);
-
       await recipeToModify.save();
-      await user.save(); // Save the user with the updated likedRecipes
+      await user.save();
 
       recipeToModify = await Recipe.aggregate([
         { $match: { _id: recipeToModify._id } },
@@ -422,8 +425,6 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
     } else {
 
       user.likedRecipes.splice(recipeIndex, 1);
-
-      console.log('uIndex: ', userIndex);
 
       if(userIndex !== -1){
         recipeToModify.flavedBy.splice(userIndex, 1);
@@ -450,8 +451,9 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
         { $unwind: "$createdBy" }, // if createdBy is always one user, we can unwind it
         { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
       ]);
-      
-      console.log(recipeToModify);
+
+      console.log('final: ', recipeToModify);
+      res.status(200).json(recipeToModify);
 
       res.status(200).json(recipeToModify);
     }
