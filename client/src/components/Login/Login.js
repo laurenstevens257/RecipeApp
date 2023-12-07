@@ -81,6 +81,7 @@ export default function Login( { setToken } ) {
     
   const handleToggleForm = () => {
     setIsLoginFormVisible(!isLoginFormVisible);
+    setError('');
   };
 
   return (
