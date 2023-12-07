@@ -88,7 +88,6 @@ function generateToken(user) {
 }
 
 // Signup Route
-// Signup Route
 app.post('/signup', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -105,28 +104,12 @@ app.post('/signup', async (req, res) => {
           return res.status(401).json({
               error: 'Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces',
               success: false
-    if (username === '' || password === ''){
-        return res.status(401).json({
-            error: 'please enter a username and password',
-            success: false
-        });//if username is blank or if password is blank do error 400 to HTTP that is bad respose due to clienr, display error and set the sucsess token
-    }
-
-      //for password control
-      const passwordPolicyRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?!.*\s).{8,20}$/;
-      if (!passwordPolicyRegex.test(password)) {
-          return res.status(401).json({
-              error: 'Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces',
-              success: false
       });
 }
-}
-
 
 
     let user = await User.findOne({ username });
     if (user) {
-      return res.status(400).json({ error: 'Username already exists', success: false });
       return res.status(400).json({ error: 'Username already exists', success: false });
     }
 
@@ -136,13 +119,11 @@ app.post('/signup', async (req, res) => {
     user = new User({ username, password: hash });
     await user.save();
     
-    
     const token = generateToken(user);
     res.send({ token, success: true });
   } catch (error) {
     res.status(500).send('Error in saving');
   }
-});
 });
 
 // Login Route
@@ -254,7 +235,6 @@ app.delete('/delete-recipe/:id', authenticate, async (req, res) => {
     console.log('User ID:', req.user.id);
 
     //945532 - should not be necessary because delete doesn't render at all unless you own it.
-    //945532 - should not be necessary because delete doesn't render at all unless you own it.
     // Check if the logged-in user is the creator of the recipe
     if (recipe.createdBy.toString() !== req.user.id) {
       return res.status(403).send('Unauthorized to delete this recipe');
@@ -275,12 +255,10 @@ app.delete('/delete-recipe/:id', authenticate, async (req, res) => {
 app.get('/home', authenticate, async (req, res) => {
   try {
     const recipes = await Recipe.find({ createdBy: req.user.id }).populate({
-    const recipes = await Recipe.find({ createdBy: req.user.id }).populate({
       path: 'createdBy',
       select: 'username'
     });
 
-    const aggregatedRecipes = await Recipe.aggregate([
     const aggregatedRecipes = await Recipe.aggregate([
       { $match: { _id: { $in: recipes.map(r => r._id) } } },
       { $addFields: { flavedByCount: { $size: "$flavedBy" } } },
@@ -290,19 +268,8 @@ app.get('/home', authenticate, async (req, res) => {
           localField: 'createdBy',
           foreignField: '_id',
           as: 'creator'
-          as: 'creator'
         }
       },
-      { $unwind: "$creator" },
-      {
-        $addFields: {
-          likedByUser: {
-            $in: ["$_id", "$creator.likedRecipes"]
-          }
-        }
-      },
-      { $sort: { flavedByCount: -1 } },
-      { $project: { 'creator.password': 0, 'creator.likedRecipes': 0, 'creator.groceryList': 0 } }
       { $unwind: "$creator" },
       {
         $addFields: {
@@ -316,14 +283,12 @@ app.get('/home', authenticate, async (req, res) => {
     ]);
 
     res.status(200).json(aggregatedRecipes);
-    res.status(200).json(aggregatedRecipes);
   } catch (error) {
     res.status(500).send('Error in fetching recipes');
   }
 });
 
 //Search Route
-app.get('/search', authenticate, async (req, res) => {
 app.get('/search', authenticate, async (req, res) => {
   const { search, searchByUser,  searchByTags} = req.query;
 
@@ -421,11 +386,9 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
           }
         },
         { $unwind: { path: "$createdBy", preserveNullAndEmptyArrays: true } },
-        { $unwind: { path: "$createdBy", preserveNullAndEmptyArrays: true } },
         { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
       ]);
       
-      console.log('final: ', recipeToModify);
       console.log('final: ', recipeToModify);
 
       res.status(200).json(recipeToModify);
@@ -447,7 +410,6 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
       recipeToModify = await Recipe.aggregate([
         { $match: { _id: recipeToModify._id } },
         { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: false } },
-        { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: false } },
         {
           $lookup: {
             from: 'users',
@@ -456,7 +418,6 @@ app.post('/flave-recipe', authenticate, async (req, res) => {
             as: 'createdBy'
           }
         },
-        { $unwind: { path: "$createdBy", preserveNullAndEmptyArrays: true } },
         { $unwind: { path: "$createdBy", preserveNullAndEmptyArrays: true } },
         { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
       ]);
@@ -484,7 +445,6 @@ app.get('/user/flavorites', authenticate, async (req, res) => {
 
       const likedRecipesWithFlaves = await Recipe.aggregate([
         { $match: { _id: { $in: user.likedRecipes.map(r => r._id) } } },
-        { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: true } },
         { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: true } },
         { $sort: { flavedByCount: -1 } },
         {
@@ -537,7 +497,6 @@ app.get('/user/grocerylist', authenticate, async (req, res) => {
 
 //Get random recipe
 app.get('/random-recipe', authenticate, async (req, res) => {
-app.get('/random-recipe', authenticate, async (req, res) => {
   try {
     const count = await Recipe.countDocuments();
     const random = Math.floor(Math.random() * count);
@@ -557,19 +516,8 @@ app.get('/random-recipe', authenticate, async (req, res) => {
 
     console.log('isliked? ', isLiked);
 
-    console.log(randomRecipe);
-
-    const user = await User.findById(req.user.id);
-
-    console.log(user);
-
-    const isLiked = user.likedRecipes.includes(randomRecipe._id);
-
-    console.log('isliked? ', isLiked);
-
     randomRecipe = await Recipe.aggregate([
       { $match: { _id: randomRecipe._id } },
-      { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: isLiked } },
       { $addFields: { flavedByCount: { $size: "$flavedBy" }, likedByUser: isLiked } },
       {
         $lookup: {
@@ -580,15 +528,12 @@ app.get('/random-recipe', authenticate, async (req, res) => {
         }
       },
       { $unwind: "$createdBy" },
-      { $unwind: "$createdBy" },
       { $project: { 'createdBy.password': 0, 'createdBy.groceryList': 0 } }
     ]);
 
     console.log('randomRecipe');
-    console.log('randomRecipe');
 
     res.json(randomRecipe);
-    
     
   } catch (error) {
     res.status(500).send('Error fetching random recipe');
