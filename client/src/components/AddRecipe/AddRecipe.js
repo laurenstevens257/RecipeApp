@@ -109,7 +109,6 @@ function AddRecipe() {
   return (
     <div>
       <h1 className='header-text'>New Recipe</h1>
-
       <form onSubmit={handleSubmit}>
       <div className='label-container'>
           <h2 className='label-text'>Recipe Name</h2>
@@ -154,8 +153,11 @@ function AddRecipe() {
 
         <div className='label-container'>
           <h2 className='label-text'>Ingredients</h2>
+        </div>
+        <div className='add-container'>
+          <div className='ingredient-input'>
           {/* Display added ingredients */}
-          <div className="added-ingredients">
+          <div>
             {ingredientsList.map((ingredient, index) => (
               <p key={index} onClick={() => handleRemoveIngredient(index)} className="removable-item">
                 {ingredient.name} - {ingredient.quantity} {ingredient.units}
@@ -193,6 +195,7 @@ function AddRecipe() {
           </select>
           <button type="button" onClick={handleAddIngredient} className="add-ingredient-button">+ Add Ingredient</button>
         </div>
+        </div>
         <div className='label-container'>
           <h2 className='label-text'>Instructions</h2>
         </div>
@@ -208,6 +211,17 @@ function AddRecipe() {
         </div>
         <div className='label-container'>
           <h2 className='label-text'>Tags</h2>
+        </div>
+        <div className='add-container'>
+          <div className='ingredient-input'>
+          {/* Display added tags */}
+          <div>
+            {tags.map((tag, index) => (
+              <p key={index} onClick={() => handleRemoveTag(index)} className="removable-item">
+                {tag}
+              </p>
+            ))}
+          </div>
           <input
             type="text"
             value={tagInput}
@@ -215,13 +229,6 @@ function AddRecipe() {
             placeholder="Enter tags to help people discover your recipe (eg. #glutenfree, #vegan, #italian)"
           />
           <button type="button" onClick={handleAddTag} className="add-ingredient-button">+ Add Tag</button>
-          {/* Display added tags */}
-          <div className="added-tags">
-            {tags.map((tag, index) => (
-              <p key={index} onClick={() => handleRemoveTag(index)} className="removable-item">
-                {tag}
-              </p>
-            ))}
           </div>
         </div>
 

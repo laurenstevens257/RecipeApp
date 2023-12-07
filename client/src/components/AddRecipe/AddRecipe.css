@@ -13,7 +13,7 @@
 }
 
 .header-text {
-    font-size: 40px;
+    font-size: 35px;
     color:rgb(54, 97, 69);
     margin: 10px 0px 10px 40px;
 }
@@ -45,10 +45,6 @@
     background-color: rgb(62, 43, 58); /* Darker shade of purple for hover */
     
   }
-
-.added-ingredients p {
-    margin: 5px 0;
-  }
   
 .add-error {
     display: flex;
@@ -56,7 +52,6 @@
     margin-top: -45px;
     color: rgb(193, 66, 54);
 }
-
 
 .removable-item {
   cursor: pointer;
