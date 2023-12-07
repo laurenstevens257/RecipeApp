@@ -223,7 +223,7 @@ function AddRecipe() {
             className='unit-dropdown'
           >
            <option value="">Select a unit</option>
-              <option value=" "> </option>
+              <option value=" ">N/A</option>
               <option value="cup(s)">Cups</option>
               <option value="tablespoon(s)">Tablespoons</option>
               <option value="teaspoon(s)">Teaspoons</option>
