@@ -13,88 +13,78 @@ export default function Login( { setToken } ) {
     const [error, setError] = useState('');
     const [isLoginFormVisible, setIsLoginFormVisible] = useState(true);
 
-    async function loginUser() {
-        return fetch('http://localhost:8080/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              username: usernameLogin,
-              password: passwordLogin
-          })
-        })
-          .then(data => data.json())
-       }
+    async function loginUser(credentials) {
+      const response = await fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to log in');
+      }
+      return response.json();
+    }
 
-    async function SignupUser() {
-        return fetch('http://localhost:8080/signup', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: usernameSignup,
-                password: passwordSignup
-            })
-        })
-            .then(data => data.json())
+    async function signupUser(credentials) {
+      const response = await fetch('http://localhost:8080/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to sign up');
+      }
+      return response.json();
     }
 
     const handleSubmitLogin = async e => {
-        e.preventDefault();
-        try {
-            const response = await loginUser();
-    
-            if (!response.success) {
-                // Handle server errors
-                setError(response.error);
-                return;
-            } else{
-                setToken(response);
-            }
-            
-        } catch (error) {
-            // Handle network errors
-            setError('other error occurred during login');
+      e.preventDefault();
+      try {
+        const response = await loginUser({
+          username: usernameLogin,
+          password: passwordLogin
+        });
+        setToken(response);
+      } catch (error) {
+        setError(error.message);
         }
       }
 
-    const handleSubmitSignup = async e => {
+      const handleSubmitSignup = async e => {
         e.preventDefault();
         try {
-            const response = await SignupUser();
-    
-            if (!response.success) {
-                // Handle server errors
-                setError(response.error);
-                return;
-            } else{
-                setToken(response);
-            }    
-
+          const response = await signupUser({
+            username: usernameSignup,
+            password: passwordSignup
+          });
+          setToken(response);
         } catch (error) {
-            // Handle network errors
-            setError('other error occurred during signup');
+          setError(error.message);
         }
-    }
+      }
     
   const handleToggleForm = () => {
     setIsLoginFormVisible(!isLoginFormVisible);
     setError('');
   };
 
-  return (
+   return (
     <div>
       <div className='logo-container'>
         <div className='logo'>
           <img src="/GoodEatsLogo2.png"/>
         </div>
       </div>
-      <div className="login-wrapper">
-        <h1>{isLoginFormVisible ? 'Please Log In' : 'Create an Account'}</h1>
-      </div>
-      <div className='login-wrapper'>
+        <div className='login-wrapper'>
+          <h1>{isLoginFormVisible ? 'Please Log In' : 'Create an Account'}</h1>
+        </div>
+        <div className="login-wrapper">
         {isLoginFormVisible ? (
           <form onSubmit={handleSubmitLogin}>
             <div className='cred-boxes'>
@@ -105,28 +95,28 @@ export default function Login( { setToken } ) {
                     </label>
                     <label>
                         <p>Password</p>
-                        <input type="text" onChange={e => setLoginPassword(e.target.value)}  style={{ borderColor: 'black' }}/>
-              
+                        <input type="password" onChange={e => setLoginPassword(e.target.value)}  style={{ borderColor: 'black' }}/>
+
                     </label>
-                    
+
                     <div>
                         <button type="submit">Submit</button>
                     </div>
-                    {/* <small className="password-requirement">
-                Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces
-              </small> */}
               </div>
           </form>
         ) : (
           <form onSubmit={handleSubmitSignup}>
                                 <label>
                         <p>Username</p>
-                        <input type="text" onChange={e => setSignupUserName(e.target.value)}/>
+                        <input type="text" onChange={e => setSignupUserName(e.target.value)} style={{ borderColor: 'black' }}/>
                     </label>
                     <label>
                         <p>Password</p>
-                        <input type="password" onChange={e => setSignupPassword(e.target.value)}/>
+                        <input type="password" onChange={e => setSignupPassword(e.target.value)} style={{ borderColor: 'black' }}/>
                     </label>
+                    <small className="password-requirement">
+                Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces
+              </small>
                     <div>
                 <button type="submit">Submit</button>
                 </div> 
@@ -143,10 +133,10 @@ export default function Login( { setToken } ) {
           </p>
         ) : (
           <p className="signup-link" onClick={handleToggleForm}>
-            Back to Login
+            Already Have An Account?
           </p>
         )}
-        </div>
+      </div>
     </div>
   );
 }
