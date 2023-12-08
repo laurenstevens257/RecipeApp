@@ -534,6 +534,47 @@ app.get('/user/get-grocerylist', authenticate, async (req, res) => {
   }
 });
 
+//add to grocery list from recipe
+app.post('/user/add-to-grocerylist', authenticate, async (req, res) => {
+
+  try{
+    const { recipeID } = req.body;
+    const recipe = await Recipe.findById(recipeID);
+
+    console.log('recipe: ', recipe);
+
+    const user = await User.findById(req.user.id);
+
+    console.log('user: ', user);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+  
+    const ingredients = recipe.ingredients;
+  
+    recipe.ingredients.forEach(ingredient => {  //add any ingredients not in groceryList already
+      const ingredientText = `${ingredient.name} - ${ingredient.quantity} ${ingredient.units}`;
+    //   const found = user.groceryList.some(item => item.text === ingredientText);
+  
+    //   if (!found) {
+      user.groceryList.push({ text: ingredientText, checked: false });
+    //   }
+      });
+
+    // 945532
+    // concious choice to alow duplication, multiple recipe ingredients added to cart => need more of that ingredient
+
+    console.log('finalUser: ', user);
+  
+    await user.save();
+    res.status(200).json({ message: 'Grocery list updated' });  
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching grocery list' });
+  }
+
+});
+
 //Get random recipe
 app.get('/random-recipe', authenticate, async (req, res) => {
   try {

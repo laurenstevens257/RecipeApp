@@ -53,23 +53,50 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe, re
   }
 };
 
+  const handleAddToGroceryList = async (event, recipeID) => {
+    event.stopPropagation();
 
- const flaveRecipe = async (event, recipe, index) => {
+    const token = sessionStorage.getItem('token'); 
+
+    try {
+      const response = await fetch('http://localhost:8080/user/add-to-grocerylist', {
+        method: 'POST', 
+        headers: {
+          'Authorization': `Bearer ${token}`, 
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          recipeID
+        }),
+      });
+      if (!response.ok) {
+        console.error('Failed to add to grocery list');
+
+        if(response.status === 400){  //log user out
+          removeToken();
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+  }
+
+
+ const flaveRecipe = async (event, recipeID, index) => {
    event.stopPropagation();
-
 
    const token = sessionStorage.getItem('token'); // Fetch the authentication token
 
-
    try {
      const response = await fetch('http://localhost:8080/flave-recipe', {
-       method: 'POST', // Setting the request method to GET
+       method: 'POST', 
        headers: {
          'Authorization': `Bearer ${token}`, // Send the token in the Authorization header
          'Content-Type': 'application/json',
        },
        body: JSON.stringify({
-         recipe
+         recipeID
        }),
      });
 
@@ -119,12 +146,17 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe, re
             </div>
            </div>
            {ownRecipe && (
-            <div className="delete-button">
-              <div className='trash-icon' onClick={(event) => handleDeleteRecipe(event, recipe._id)}>
-                <img src='./trash-icon.png'/>
+              <div className="delete-button">
+                <div className='trash-icon' onClick={(event) => handleDeleteRecipe(event, recipe._id)}>
+                  <img src='./trash-icon.png'/>
+                </div>
               </div>
-            </div>
           )}
+          <div className="add-to-list-button">
+              <div className='trash-icon' onClick={(event) => handleAddToGroceryList(event, recipe._id)}>
+                  <img src='./cart-icon.png'/>
+                </div>
+          </div>
          </div>
          <div className='flave-count'>
            <p>{recipe.flavedByCount} Flavorites</p>
