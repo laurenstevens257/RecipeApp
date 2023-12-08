@@ -507,7 +507,7 @@ app.get('/user/flavorites', authenticate, async (req, res) => {
 });
 
 // Route to update the user's grocery list
-app.post('/user/grocerylist', authenticate, async (req, res) => {
+app.post('/user/update-grocerylist', authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) {
@@ -522,7 +522,7 @@ app.post('/user/grocerylist', authenticate, async (req, res) => {
 });
 
 //Get grocery list route
-app.get('/user/grocerylist', authenticate, async (req, res) => {
+app.get('/user/get-grocerylist', authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) {

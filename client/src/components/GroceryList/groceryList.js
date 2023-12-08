@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './groceryList.css';
 
-const GroceryList = () => {
+const GroceryList = ({removeToken}) => {
   const [inputValue, setInputValue] = useState('');
   const [groceryList, setGroceryList] = useState([]);
 
@@ -9,7 +9,8 @@ const GroceryList = () => {
     const fetchGroceryList = async () => {
       const token = sessionStorage.getItem('token');
       try {
-        const response = await fetch('http://localhost:8080/user/grocerylist', {
+        const response = await fetch('http://localhost:8080/user/get-grocerylist', {
+          method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -17,6 +18,11 @@ const GroceryList = () => {
         if (response.ok) {
           const list = await response.json();
           setGroceryList(list);
+        } else{
+          console.error('Failed to fetch grocery list');
+          if(response.status === 400){
+           removeToken();
+          }
         }
       } catch (error) {
         console.error('Error fetching grocery list:', error);
@@ -28,7 +34,7 @@ const GroceryList = () => {
   const updateGroceryList = async (updatedList) => {
     const token = sessionStorage.getItem('token');
     try {
-      await fetch('http://localhost:8080/user/grocerylist', {
+      const response = await fetch('http://localhost:8080/user/update-grocerylist', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -36,7 +42,11 @@ const GroceryList = () => {
         },
         body: JSON.stringify({ groceryList: updatedList }),
       });
-      setGroceryList(updatedList);
+      if (response.status === 400){
+        removeToken();
+      } else if (response.ok){
+        setGroceryList(updatedList);
+      }
     } catch (error) {
       console.error('Error updating grocery list:', error);
     }
@@ -50,9 +60,11 @@ const GroceryList = () => {
     if (inputValue.trim() !== '') {
       setGroceryList([...groceryList, { text: inputValue, checked: false }]);
       setInputValue('');
+      const updatedList = [...groceryList, { text: inputValue, checked: false }];
+      updateGroceryList(updatedList);
+    } else {
+      setInputValue('');
     }
-    const updatedList = [...groceryList, { text: inputValue, checked: false }];
-    updateGroceryList(updatedList);
   };
 
   const handleToggleItem = (index) => {
