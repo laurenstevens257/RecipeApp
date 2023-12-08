@@ -2,6 +2,15 @@ import React, { useState } from 'react'
 import './Login.css';
 import PropTypes from 'prop-types';
 
+const InputField = ({ label, type, onChange, style }) => {
+  return (
+    <label>
+      <p>{label}</p>
+      <input type={type} onChange={onChange} style={style} />
+    </label>
+  );
+};
+
 export default function Login( { setToken } ) {
 
   //'Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces',
@@ -74,6 +83,8 @@ export default function Login( { setToken } ) {
     setError('');
   };
 
+
+
    return (
     <div>
       <div className='logo-container'>
@@ -90,12 +101,12 @@ export default function Login( { setToken } ) {
             <div className='cred-boxes'>
                     <label>
                         <p>Username</p>
-                        <input type="text" onChange={e => setLoginUserName(e.target.value)} style={{ borderColor: 'black' }}/>
+                        <input type="username" onChange={e => setLoginUserName(e.target.value)}/>
                          
                     </label>
                     <label>
                         <p>Password</p>
-                        <input type="password" onChange={e => setLoginPassword(e.target.value)}  style={{ borderColor: 'black' }}/>
+                        <input type="password" onChange={e => setLoginPassword(e.target.value)}/>
 
                     </label>
 
@@ -108,11 +119,11 @@ export default function Login( { setToken } ) {
           <form onSubmit={handleSubmitSignup}>
                                 <label>
                         <p>Username</p>
-                        <input type="text" onChange={e => setSignupUserName(e.target.value)} style={{ borderColor: 'black' }}/>
+                        <input type="username" onChange={e => setSignupUserName(e.target.value)}/>
                     </label>
                     <label>
                         <p>Password</p>
-                        <input type="password" onChange={e => setSignupPassword(e.target.value)} style={{ borderColor: 'black' }}/>
+                        <input type="password" onChange={e => setSignupPassword(e.target.value)}/>
                     </label>
                     <small className="password-requirement">
                 Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces
