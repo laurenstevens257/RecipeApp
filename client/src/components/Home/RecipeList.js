@@ -82,7 +82,7 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe, re
   }
 };
 
- const flaveRecipe = async (event, recipeID, index) => {
+ const flaveRecipe = async (event, recipe, index) => {
    event.stopPropagation();
 
    const token = sessionStorage.getItem('token'); // Fetch the authentication token
@@ -95,7 +95,7 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe, re
          'Content-Type': 'application/json',
        },
        body: JSON.stringify({
-         recipeID
+         recipe
        }),
      });
 
