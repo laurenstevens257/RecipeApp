@@ -146,17 +146,17 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe, re
             </div>
            </div>
            {ownRecipe && (
-              <div className="delete-button">
-                <div className='trash-icon' onClick={(event) => handleDeleteRecipe(event, recipe._id)}>
-                  <img src='./trash-icon.png'/>
-                </div>
-              </div>
+           <div className="delete-button">
+             <div className='trash-icon' onClick={(event) => handleDeleteRecipe(event, recipe._id)}>
+               <img src='./trash-icon.png'/>
+             </div>
+           </div>
           )}
-          <div className="add-to-list-button">
-              <div className='trash-icon' onClick={(event) => handleAddToGroceryList(event, recipe._id)}>
+           <div className="add-to-list-button">
+              <div className='cart-icon' onClick={(event) => handleAddToGroceryList(event, recipe._id)}>
                   <img src='./cart-icon.png'/>
-                </div>
-          </div>
+              </div>
+           </div>
          </div>
          <div className='flave-count'>
            <p>{recipe.flavedByCount} Flavorites</p>
