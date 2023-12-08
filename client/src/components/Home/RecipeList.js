@@ -158,7 +158,7 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe, re
            </div>
          </div>
          <div className='flave-count'>
-           <p>{recipe.flavedByCount} Flavorites</p>
+         <p>{recipe.flavedByCount} {recipe.flavedByCount === 1 ? 'Flavorite' : 'Flavorites'}</p>
          </div>
          </div>
          {expandRecipe[index] && (
