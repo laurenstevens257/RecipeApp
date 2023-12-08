@@ -2,18 +2,7 @@ import React, { useState } from 'react'
 import './Login.css';
 import PropTypes from 'prop-types';
 
-const InputField = ({ label, type, onChange, style }) => {
-  return (
-    <label>
-      <p>{label}</p>
-      <input type={type} onChange={onChange} style={style} />
-    </label>
-  );
-};
-
 export default function Login( { setToken } ) {
-
-  //'Password must be 8-20 characters with at least 1 number, 1 uppercase letter, 1 lowercase letter, 1 special character (!@#$%^&*), and no spaces',
     
     const [usernameLogin, setLoginUserName] = useState('');
     const [passwordLogin, setLoginPassword] = useState('');
@@ -22,6 +11,7 @@ export default function Login( { setToken } ) {
     const [error, setError] = useState('');
     const [isLoginFormVisible, setIsLoginFormVisible] = useState(true);
 
+    
     async function loginUser(credentials) {
       const response = await fetch('http://localhost:8080/login', {
         method: 'POST',
@@ -83,13 +73,11 @@ export default function Login( { setToken } ) {
     setError('');
   };
 
-
-
    return (
     <div>
       <div className='logo-container'>
         <div className='logo'>
-          <img src="/GoodEatsLogo2.png"/>
+          <img src="/GoodEatsLogo2.png" alt="It was either this or GrEats."/>
         </div>
       </div>
         <div className='login-wrapper'>

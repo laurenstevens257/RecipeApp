@@ -27,16 +27,14 @@
   } 
   
   .signup-link {
-    /* margin-top:-15px; */
     color: blue;
     text-decoration: underline;
     cursor: pointer;
   }
   
   img {
-    /* margin-top:-20px; */
-    height: 300px; /* Example size */
-    margin-bottom: 20px   /*-50px; /* Example spacing */
+    height: 300px;
+    margin-bottom: 20px;
     /* Other styles */
   }
 
@@ -45,12 +43,8 @@
     width: 100%;
     margin-top: 20px;
   }
-
-  .cred-boxes {
-    /* margin-top:-60px; */
-  }
   
-  .error-message {
+  .error-message { 
     text-align: center;
     width: 100%;
     margin-top: 20px; 
