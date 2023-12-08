@@ -36,13 +36,13 @@ function App() {
       <Toolbar onLogout={handleLogout} />
 
       <Routes>
-        <Route path="/flavorites" element={<FlavoritesPage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/add-recipe" element={<AddRecipe />} />
-        <Route path="/" element={<HomeDisplay />} /> 
+        <Route path="/flavorites" element={<FlavoritesPage removeToken={handleLogout}/>} />
+        <Route path="/search" element={<SearchPage removeToken={handleLogout}/>} />
+        <Route path="/add-recipe" element={<AddRecipe removeToken={handleLogout}/>} />
+        <Route path="/" element={<HomeDisplay removeToken={handleLogout}/>} /> 
         <Route path="/calculatorPage" element={<CalculatorPage />} />
-        <Route path="/groceryList" element={<GroceryList />} />
-        <Route path="/random-recipe" element={<RandomRecipe />} />
+        <Route path="/groceryList" element={<GroceryList removeToken={handleLogout}/>} />
+        <Route path="/random-recipe" element={<RandomRecipe removeToken={handleLogout}/>} />
       </Routes>
     </Router>
   );

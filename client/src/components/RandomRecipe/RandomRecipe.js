@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import RecipeList from '../Home/RecipeList'; // Update the import path as needed
 
 
-const RandomRecipe = () => {
+const RandomRecipe = ({removeToken}) => {
  const [randomRecipe, setRandomRecipe] = useState(null);
  const [expandRecipe, setExpandRecipe] = useState([true]); // Always expanded for the random recipe
  const fetchRandomRecipe = async () => {
@@ -23,6 +23,9 @@ const RandomRecipe = () => {
        setRandomRecipe(recipeData);
      } else {
        console.error('Failed to fetch random recipe');
+       if(response.status === 400){ 
+        removeToken();
+      }
      }
    } catch (error) {
      console.error('Error:', error);
@@ -41,7 +44,7 @@ const RandomRecipe = () => {
        </div>
        {randomRecipe && (
          <div className='random-container'>
-         <RecipeList recipes={randomRecipe} expandToggles={expandRecipe} showAuthor={true} reRender={setRandomRecipe} ownRecipe={false} />
+         <RecipeList recipes={randomRecipe} expandToggles={expandRecipe} showAuthor={true} reRender={setRandomRecipe} ownRecipe={false} removeToken={removeToken}/>
          </div>
        )}
      </div>

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-const HomeDisplay = () => {
+const HomeDisplay = ({removeToken}) => {
 
 
  const [recipesToShow, setRecipesToShow] = useState([]);
@@ -41,6 +41,10 @@ const HomeDisplay = () => {
        } else {
          // Handle errors
          console.error('Failed to fetch recipes');
+         if(response.status === 400){
+           console.log('should log out');
+           removeToken();
+         }
        }
      } catch (error) {
        console.error('Error:', error);
@@ -70,7 +74,7 @@ const HomeDisplay = () => {
          <span>+ Create New Recipe</span>
          </button>
        </div>
-       <RecipeList recipes={recipesToShow} expandToggles={expandRecipe} showAuthor={false} reRender={setRecipesToShow} ownRecipe={true} />
+       <RecipeList recipes={recipesToShow} expandToggles={expandRecipe} showAuthor={false} reRender={setRecipesToShow} ownRecipe={true} removeToken={removeToken} />
      </div>
      <div className="footer-container">
          <img className="png-iframe" src='Banner.png'></img>

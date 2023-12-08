@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
 
 
-function SearchPage() {
+function SearchPage({removeToken}) {
  const [expandRecipe, setExpandRecipe] = useState([]);
  const [filteredRecipes, setFilteredRecipes] = useState([]);
  const [noResultsFound, setNoResultsFound] = useState(false);
@@ -51,6 +51,9 @@ function SearchPage() {
        setNoResultsFound(recipesData.length === 0);
      } else {
        console.error('Failed to fetch recipes');
+       if(response.status === 400){
+        removeToken();
+      }
      }
    } catch (error) {
      console.error('Error:', error);
@@ -84,6 +87,8 @@ function SearchPage() {
            expandToggles={expandRecipe}
            showAuthor={true}
            reRender={setFilteredRecipes}
+           ownRecipe={false}
+           removeToken={removeToken}
          />
        </div>
      </div>

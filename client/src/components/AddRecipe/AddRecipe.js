@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import './AddRecipe.css';
 import { useNavigate } from 'react-router-dom';
 
-function AddRecipe() {
+function AddRecipe({removeToken}) {
   const navigate = useNavigate();
 
   const [ingredientInput, setIngredientInput] = useState('');
@@ -125,6 +125,9 @@ function AddRecipe() {
       });
 
       if (!response.ok) {
+        if(response.status === 400){  //log user out
+          removeToken();
+        }
         throw new Error('Failed to add recipe');
       }
 

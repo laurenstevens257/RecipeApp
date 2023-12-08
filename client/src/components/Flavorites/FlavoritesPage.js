@@ -3,7 +3,7 @@ import './FlavoritesPage.css';
 import React, { useState, useEffect } from 'react';
 import RecipeList from '../Home/RecipeList'; // Adjust the path as needed
 
-const FlavoritesPage = () => {
+const FlavoritesPage = ({removeToken}) => {
     const [flavoredRecipes, setFlavoredRecipes] = useState([]);
     const [expandToggles, setExpandToggles] = useState([]);
 
@@ -35,6 +35,10 @@ const FlavoritesPage = () => {
                 setFlavoredRecipes(likedRecipes);
             } else {
                 console.error('Failed to fetch flavored recipes');
+                if(response.status === 400){
+                    console.log('should log out');
+                    removeToken();
+                  }
             }
         } catch (error) {
             console.error('Error:', error);
@@ -57,6 +61,7 @@ const FlavoritesPage = () => {
                 showAuthor={true} // Assuming you want to show authors on this page
                 reRender={removeUnlikedRecipe}
                 ownRecipe={false}
+                removeToken={removeToken}
             />
         </div>
     );

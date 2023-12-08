@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './RecipeList.css';
 
 
-function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
+function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe, removeToken}) {
 
 
  const [expandRecipe, setExpandRecipe] = useState(expandToggles);
@@ -43,6 +43,9 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
         reRender(prevRecipes => prevRecipes.filter(recipe => recipe._id !== recipeId));
       } else {
         console.error('Failed to delete the recipe');
+        if(response.status === 400){  //log user out
+          removeToken();
+        }
       }
     } catch (error) {
       console.error('Error:',error);
@@ -83,6 +86,9 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe}) {
      } else {
        // Handle errors
        console.error('Failed to flave recipe');
+       if(response.status === 400){  
+        removeToken();
+      }
      }
    } catch (error) {
      console.error('Error:', error);
