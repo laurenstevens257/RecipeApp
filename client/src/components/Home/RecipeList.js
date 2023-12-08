@@ -53,11 +53,11 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe, re
   }
 };
 
-  const handleAddToGroceryList = async (event, recipeID) => {
-    event.stopPropagation();
-
-    const token = sessionStorage.getItem('token'); 
-
+ const handleAddToGroceryList = async (event, recipeID) => {
+  event.stopPropagation();
+  const userConfirmed = window.confirm("Add recipe ingredients to grocery list?");
+  if (userConfirmed) {
+    const token = sessionStorage.getItem('token');
     try {
       const response = await fetch('http://localhost:8080/user/add-to-grocerylist', {
         method: 'POST', 
@@ -79,9 +79,8 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe, re
     } catch (error) {
       console.error('Error:', error);
     }
-
   }
-
+};
 
  const flaveRecipe = async (event, recipeID, index) => {
    event.stopPropagation();
