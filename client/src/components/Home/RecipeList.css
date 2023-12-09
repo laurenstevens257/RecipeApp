@@ -70,3 +70,35 @@
   margin-right: 5px;
   font-weight: bold;
  } 
+
+ .title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .title-buttons h3 {
+    margin-right: 10px;
+  }
+  
+  .button-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .like-button,
+  .add-to-list-button,
+  .delete-button {
+    margin-right: 10px; /* Adjust as needed for spacing between buttons */
+  }
+  
+  .flav-arrow-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
