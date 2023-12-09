@@ -1,7 +1,6 @@
-// FlavoritesPage.js
 import './FlavoritesPage.css';
 import React, { useState, useEffect } from 'react';
-import RecipeList from '../Home/RecipeList'; // Adjust the path as needed
+import RecipeList from '../Home/RecipeList';
 
 const FlavoritesPage = ({removeToken}) => {
     const [flavoredRecipes, setFlavoredRecipes] = useState([]);

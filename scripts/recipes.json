@@ -1,0 +1,421 @@
+[
+  {
+    "name": "Maple-Glazed Salmon",
+    "cookTime": 20,
+    "prepTime": 10,
+    "ingredients": [
+      {
+        "name": "Salmon fillets",
+        "quantity": 4,
+        "units": "pieces"
+      },
+      {
+        "name": "Maple syrup",
+        "quantity": 1,
+        "units": "cup"
+      },
+      {
+        "name": "Soy sauce",
+        "quantity": 2,
+        "units": "tablespoons"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 2,
+        "units": "cloves, minced"
+      },
+      {
+        "name": "Ginger",
+        "quantity": 1,
+        "units": "inch, grated"
+      },
+      {
+        "name": "Olive oil",
+        "quantity": 2,
+        "units": "tablespoons"
+      }
+    ],
+    "instructions": "Mix maple syrup, soy sauce, garlic, and ginger. Marinate salmon. Sauté in oil. Glaze with marinade.",
+    "tags": [
+      "Seafood",
+      "Healthy",
+      "Sweet"
+    ],
+    "createdBy": "6573cf093c0311ebc13fc3a8",
+    "flavedBy": [],
+    "__v": 0
+  },
+  {
+    "name": "Rosemary Garlic Lamb Chops",
+    "cookTime": 15,
+    "prepTime": 20,
+    "ingredients": [
+      {
+        "name": "Lamb chops",
+        "quantity": 8,
+        "units": "pieces"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 3,
+        "units": "cloves, minced"
+      },
+      {
+        "name": "Rosemary",
+        "quantity": 2,
+        "units": "tablespoons, fresh"
+      },
+      {
+        "name": "Olive oil",
+        "quantity": 3,
+        "units": "tablespoons"
+      },
+      {
+        "name": "Lemon juice",
+        "quantity": 2,
+        "units": "tablespoons"
+      },
+      {
+        "name": "Salt",
+        "quantity": 1,
+        "units": "teaspoon"
+      }
+    ],
+    "instructions": "Marinate chops with garlic, rosemary, oil, lemon, and salt. Grill to desired doneness.",
+    "tags": [
+      "Meat",
+      "Herbed",
+      "Grilled"
+    ],
+    "createdBy": "6573cf093c0311ebc13fc3a8",
+    "flavedBy": [],
+    "__v": 0
+  },
+  {
+    "name": "Creamy Tomato Basil Soup",
+    "cookTime": 30,
+    "prepTime": 10,
+    "ingredients": [
+      {
+        "name": "Crushed tomatoes",
+        "quantity": 28,
+        "units": "ounces"
+      },
+      {
+        "name": "Heavy cream",
+        "quantity": 1,
+        "units": "cup"
+      },
+      {
+        "name": "Basil leaves",
+        "quantity": 1,
+        "units": "cup, fresh"
+      },
+      {
+        "name": "Onion",
+        "quantity": 1,
+        "units": "medium, diced"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 2,
+        "units": "cloves, minced"
+      }
+    ],
+    "instructions": "Cook onion and garlic. Add tomatoes and simmer. Blend with basil. Stir in cream.",
+    "tags": [
+      "Soup",
+      "Vegetarian",
+      "Comfort"
+    ],
+    "createdBy": "6573cf093c0311ebc13fc3a8",
+    "flavedBy": [],
+    "__v": 0
+  },
+  {
+    "name": "Stuffed Bell Peppers",
+    "cookTime": 45,
+    "prepTime": 20,
+    "ingredients": [
+      {
+        "name": "Bell peppers",
+        "quantity": 4,
+        "units": "large, hollowed"
+      },
+      {
+        "name": "Ground beef",
+        "quantity": 1,
+        "units": "pound"
+      },
+      {
+        "name": "Cooked rice",
+        "quantity": 1,
+        "units": "cup"
+      },
+      {
+        "name": "Tomato sauce",
+        "quantity": 1,
+        "units": "cup"
+      },
+      {
+        "name": "Onion",
+        "quantity": 1,
+        "units": "medium, diced"
+      },
+      {
+        "name": "Garlic",
+        "quantity": 2,
+        "units": "cloves, minced"
+      },
+      {
+        "name": "Cheese",
+        "quantity": 1,
+        "units": "cup, shredded"
+      }
+    ],
+    "instructions": "Fill peppers with beef, rice, onion, and garlic mix. Top with sauce and cheese. Bake.",
+    "tags": [
+      "Comfort",
+      "Meat",
+      "Healthy"
+    ],
+    "createdBy": "6573cf093c0311ebc13fc3a8",
+    "flavedBy": [],
+    "__v": 0
+  },
+  {
+    "name": "Crispy Fish Tacos",
+    "cookTime": 20,
+    "prepTime": 15,
+    "ingredients": [
+      {
+        "name": "White fish fillets",
+        "quantity": 1,
+        "units": "pound"
+      },
+      {
+        "name": "Cabbage",
+        "quantity": 2,
+        "units": "cups, shredded"
+      },
+      {
+        "name": "Flour tortillas",
+        "quantity": 8,
+        "units": "pieces"
+      },
+      {
+        "name": "Lime juice",
+        "quantity": 2,
+        "units": "tablespoons"
+      },
+      {
+        "name": "Mayonnaise",
+        "quantity": 1,
+        "units": "cup"
+      },
+      {
+        "name": "Chili powder",
+        "quantity": 1,
+        "units": "teaspoon"
+      },
+      {
+        "name": "Cilantro",
+        "quantity": 1,
+        "units": "cup, chopped"
+      }
+    ],
+    "instructions": "Fry fish. Mix mayo, lime, and chili. Assemble tacos with fish, cabbage, and sauce.",
+    "tags": [
+      "Mexican",
+      "Seafood",
+      "Spicy"
+    ],
+    "createdBy": "6573cf093c0311ebc13fc3a8",
+    "flavedBy": [],
+    "__v": 0
+  },
+  {
+    "name": "Avocado Chicken Salad",
+    "cookTime": 15,
+    "prepTime": 10,
+    "ingredients": [
+      {
+        "name": "Chicken breast",
+        "quantity": 1,
+        "units": "pound, cooked"
+      },
+      {
+        "name": "Avocado",
+        "quantity": 2,
+        "units": "mashed"
+      },
+      {
+        "name": "Red onion",
+        "quantity": 1,
+        "units": "diced"
+      },
+      {
+        "name": "Cilantro",
+        "quantity": 1,
+        "units": "cup, chopped"
+      },
+      {
+        "name": "Lime juice",
+        "quantity": 2,
+        "units": "tablespoons"
+      },
+      {
+        "name": "Salt",
+        "quantity": 1,
+        "units": "teaspoon"
+      }
+    ],
+    "instructions": "Mix chicken with avocado, onion, cilantro, lime, and salt. Serve chilled.",
+    "tags": [
+      "Salad",
+      "Healthy",
+      "Quick"
+    ],
+    "createdBy": "6573cf093c0311ebc13fc3a8",
+    "flavedBy": [],
+    "__v": 0
+  },
+  {
+    "name": "Spicy Tofu Stir-Fry",
+    "cookTime": 20,
+    "prepTime": 15,
+    "ingredients": [
+      {
+        "name": "Firm tofu",
+        "quantity": 14,
+        "units": "ounces, cubed"
+      },
+      {
+        "name": "Bell pepper",
+        "quantity": 1,
+        "units": "sliced"
+      },
+      {
+        "name": "Broccoli",
+        "quantity": 1,
+        "units": "cup, chopped"
+      },
+      {
+        "name": "Carrots",
+        "quantity": 1,
+        "units": "cup, sliced"
+      },
+      {
+        "name": "Soy sauce",
+        "quantity": 3,
+        "units": "tablespoons"
+      },
+      {
+        "name": "Sesame oil",
+        "quantity": 2,
+        "units": "tablespoons"
+      },
+      {
+        "name": "Chili flakes",
+        "quantity": 1,
+        "units": "teaspoon"
+      }
+    ],
+    "instructions": "Stir-fry tofu and vegetables in oil. Add soy sauce and chili. Serve with rice.",
+    "tags": [
+      "Vegan",
+      "Spicy",
+      "Healthy"
+    ],
+    "createdBy": "6573cf093c0311ebc13fc3a8",
+    "flavedBy": [],
+    "__v": 0
+  },
+  {
+    "name": "Pesto Pasta Primavera",
+    "cookTime": 20,
+    "prepTime": 15,
+    "ingredients": [
+      {
+        "name": "Fettuccine",
+        "quantity": 8,
+        "units": "ounces"
+      },
+      {
+        "name": "Cherry tomatoes",
+        "quantity": 1,
+        "units": "cup, halved"
+      },
+      {
+        "name": "Zucchini",
+        "quantity": 1,
+        "units": "sliced"
+      },
+      {
+        "name": "Yellow squash",
+        "quantity": 1,
+        "units": "sliced"
+      },
+      {
+        "name": "Pesto sauce",
+        "quantity": 1,
+        "units": "cup"
+      },
+      {
+        "name": "Parmesan cheese",
+        "quantity": 1,
+        "units": "cup, grated"
+      }
+    ],
+    "instructions": "Cook pasta. Sauté vegetables. Toss pasta with pesto and vegetables. Top with cheese.",
+    "tags": [
+      "Vegetarian",
+      "Pasta",
+      "Fresh"
+    ],
+    "createdBy": "6573cf093c0311ebc13fc3a8",
+    "flavedBy": [],
+    "__v": 0
+  },
+  {
+    "name": "Buffalo Chicken Wings",
+    "cookTime": 45,
+    "prepTime": 30,
+    "ingredients": [
+      {
+        "name": "Chicken wings",
+        "quantity": 2,
+        "units": "pounds"
+      },
+      {
+        "name": "Hot sauce",
+        "quantity": 1,
+        "units": "cup"
+      },
+      {
+        "name": "Butter",
+        "quantity": 4,
+        "units": "tablespoons"
+      },
+      {
+        "name": "Garlic powder",
+        "quantity": 1,
+        "units": "teaspoon"
+      },
+      {
+        "name": "Blue cheese dressing",
+        "quantity": 1,
+        "units": "cup"
+      }
+    ],
+    "instructions": "Marinate wings in hot sauce and garlic. Bake. Toss with melted butter. Serve with dressing.",
+    "tags": [
+      "Meat",
+      "Spicy",
+      "Appetizer"
+    ],
+    "createdBy": "6573cf093c0311ebc13fc3a8",
+    "flavedBy": [],
+    "__v": 0
+  }
+]

@@ -39,7 +39,7 @@ const recipeTextToJSON = (filePath) => {
       ingredients,
       instructions,
       tags,
-      createdBy: "65712c19f330834148897717", //Eggs-ertBenedict
+      createdBy: "6573cf093c0311ebc13fc3a8", //Chef-Khovsgun
       flavedBy: [],
       __v: 0,
     };
