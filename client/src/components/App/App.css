@@ -2,13 +2,10 @@
   text-align: center;
 }
 
-/* Existing styles... */
-
 .wrapper {
   padding: 20px;
 }
 
-/* Styles for AddRecipe form */
 form {
   margin: 40px 20px;
 }
@@ -21,26 +18,19 @@ input[type="text"] {
 }
 
 button {
-  background-color: #007bff; /* Bootstrap primary color */
+  background-color: #007bff;
   color: white;
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  
-  /*
-  position: fixed;
-  bottom: 540px;
-  left: 100px; 
-  */
 }
 
 button:hover {
   background-color: #0056b3;
 }
 
-/* Styles for RecipeList */
 .home {
   text-align: left;
   max-width: 550px;

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-//import React from 'react';
-//import React from 'react';
 import './App.css';
 import '../Home/HomeDisplay.css';
 import Login from '../Login/Login';
@@ -14,8 +12,6 @@ import HomeDisplay from '../Home/HomeDisplay';
 import CalculatorPage from '../Calculator/calculatorPage';
 import GroceryList from '../GroceryList/groceryList';
 import RandomRecipe from '../RandomRecipe/RandomRecipe';
-
-
 
 function App() {
   const { token, setToken } = useToken();
