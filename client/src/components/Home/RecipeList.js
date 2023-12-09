@@ -163,6 +163,8 @@ function RecipeList({recipes, expandToggles, showAuthor, reRender, ownRecipe, re
               <img src="./UpArrow.png" className={expandRecipe[index] ? 'flipped' : ''} />
             </div>
           </div>
+          {showAuthor && 
+          <p>Author: {recipe.createdBy ? recipe.createdBy.username : "Unknown"}</p>}
           {expandRecipe[index] && (
             <div className="closedrecipe-container">
               <p>Prep Time: {recipe.prepTime} minutes</p>
