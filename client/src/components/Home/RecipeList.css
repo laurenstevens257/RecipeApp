@@ -1,9 +1,8 @@
-
-
 .recipe-item {
   transition: background-color 0.3s ease;
   background-color:rgb(214, 197, 175);
   border: none;
+  margin-bottom: 20px;
  }
  
  
@@ -41,19 +40,22 @@
  .flav-icon img {
   width: 30px;
   height: 30px;
+  margin-top: 22px;
  }
  
  
  .trash-icon img {
   width: 25px;
   height: 25px;
+  margin-top: 22px;
  }
  
 .cart-icon img {
   mix-blend-mode:multiply;
   width: 40px;
   height: 25px;
-  margin-left:-8px;
+  margin-top:22px;
+   margin-left:-8px;
 }
  
  .flav-count {
@@ -94,7 +96,8 @@
   .like-button,
   .add-to-list-button,
   .delete-button {
-    margin-right: 10px; /* Adjust as needed for spacing between buttons */
+    margin-right: 12px; 
+    margin-top: 5px;
   }
   
   .flav-arrow-container {
