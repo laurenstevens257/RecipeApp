@@ -1,9 +1,11 @@
-START BY CLONING
+# Welcome to GoodEats!
+
+## Start by cloning.
 
 First, clone the repo.
 $ git clone https://github.com/laurenstevens257/RecipeApp.git
 
-INSTALL NECESSARY DEPENDENCIES
+## Install necessary dependencies.
 
 Now you need to install the front-end and back-end package dependencies. 
 
@@ -18,11 +20,11 @@ For the back-end dependencies, run the following commands:
 $ cd server
 $ npm install
 
-DESCRIPTION
+## Description
 
 Welcome to GoodEats, our recipe sharing app! GoodEats allows users to conveniently create and save recipes so they can come back to them later. It also allows users to discover others’ recipes and save them to a collection of liked recipes (FLAVORites). Additional utilities are included, such as the option to add the necessary ingredients for a recipe to the grocery list, and a measurement converter (e.g. from tablespoons to teaspoons).
 
-NOW, TO RUN THE PROJECT:
+## Now, to run the project.
 
 Open up a split terminal.
 From the root directory, in the first one do:
@@ -32,3 +34,5 @@ $ node server.js
 In the second one, do:
 $ cd client
 $ npm start
+
+# Good Eats!
